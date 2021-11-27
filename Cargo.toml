@@ -1,0 +1,18 @@
+[package]
+name = "yew-bootstrap"
+version = "0.1.0"
+authors = ["Foorack <max@foorack.com>"]
+edition = "2021"
+description = "Components for easier using Bootstrap with Yew"
+repository = "https://github.com/foorack/yew-bootstrap/"
+license = "MIT"
+keywords = ["yew", "bootstrap", "yew-bootstrap"]
+
+[lib]
+# You should include "rlib" (the default crate type) otherwise your crate can't be used as a Rust library
+# which, among other things, breaks unit testing
+crate-type = ["rlib", "cdylib"]
+
+[dependencies]
+yew = "0.18"
+yewtil = "0.4.0"
