@@ -1,6 +1,5 @@
 use yew::prelude::*;
 use yew_bootstrap::component::*;
-use yew_bootstrap::init_cdn;
 use yew_bootstrap::util::*;
 
 enum Msg {
@@ -46,6 +45,35 @@ impl Component for Model {
             <>
                 {init_cdn()}
                 <div>
+                    <h1>{ "Alerts" }</h1>
+                    <Alert style=Color::Primary>
+                        { "This is a primary alert—check it out!" }
+                    </Alert>
+                    <Alert style=Color::Secondary>
+                        { "This is a secondary alert—check it out!" }
+                    </Alert>
+                    <Alert style=Color::Success>
+                        { "This is a success alert—check it out!" }
+                    </Alert>
+                    <Alert style=Color::Danger>
+                        { "This is a danger alert—check it out!" }
+                    </Alert>
+                    <Alert style=Color::Warning>
+                        { "This is a warning alert—check it out!" }
+                    </Alert>
+                    <Alert style=Color::Info>
+                        { "This is a info alert—check it out!" }
+                    </Alert>
+                    <Alert style=Color::Light>
+                        { "This is a light alert—check it out!" }
+                    </Alert>
+                    <Alert style=Color::Dark>
+                        { "This is a dark alert—check it out!" }
+                    </Alert>
+                    <Alert style=Color::Link>
+                        { "This is a link alert—check it out!" }
+                    </Alert>
+
                     <h1>{"Buttons"}</h1>
                     <Button style=Color::Primary>{"Primary"}</Button>
                     <Button style=Color::Secondary>{"Secondary"}</Button>

@@ -1,7 +1,9 @@
 use yew::prelude::*;
 use yewtil::NeqAssign;
 
-pub struct ButtonGroup {
+use crate::util::Color;
+
+pub struct Link {
     props: ComponentProps,
 }
 
@@ -14,16 +16,16 @@ pub struct ComponentProps {
     pub children: Children,
 
     #[prop_or_default]
-    pub label: String,
+    pub stretched: bool,
 
     #[prop_or_default]
-    pub role: String,
+    pub style: Option<Color>,
 
     #[prop_or_default]
-    pub vertical: bool,
+    pub text: String,
 }
 
-impl Component for ButtonGroup {
+impl Component for Link {
     type Message = ();
     type Properties = ComponentProps;
 
@@ -41,21 +43,21 @@ impl Component for ButtonGroup {
 
     fn view(&self) -> Html {
         let mut classes = Classes::new();
-        if self.props.vertical {
-            classes.push("btn-group-vertical");
-        } else {
-            classes.push("btn-group");
+        if let Some(style) = self.props.style.clone() {
+            classes.push(format!("link-{}", style.to_bootstrap()));
+        }
+        if self.props.stretched {
+            classes.push("stretched-link");
         }
         classes.push(self.props.class.clone());
 
         html! {
-            <div
+            <a
                 class=classes
-                role=self.props.role.clone()
-                aria-label=self.props.label.clone()
             >
+                { &self.props.text }
                 { for self.props.children.iter() }
-            </div>
+            </a>
         }
     }
 }

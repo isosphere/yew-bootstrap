@@ -3,10 +3,12 @@ name = "yew-bootstrap"
 version = "0.1.0"
 authors = ["Foorack <max@foorack.com>"]
 edition = "2021"
+license = "MIT"
+readme = "README.md"
+keywords = ["yew", "bootstrap", "web"]
+categories = ["gui", "web-programming"]
 description = "Components for easier using Bootstrap with Yew"
 repository = "https://github.com/foorack/yew-bootstrap/"
-license = "MIT"
-keywords = ["yew", "bootstrap", "yew-bootstrap"]
 
 [lib]
 # You should include "rlib" (the default crate type) otherwise your crate can't be used as a Rust library
@@ -16,3 +18,15 @@ crate-type = ["rlib", "cdylib"]
 [dependencies]
 yew = "0.18"
 yewtil = "0.4.0"
+
+[profile.release]
+# less code to include into binary
+panic = 'abort' 
+# optimization over all codebase ( better optimization, slower build )
+codegen-units = 1
+# optimization for size ( more aggressive )
+opt-level = 'z' 
+# optimization for size 
+# opt-level = 's' 
+# link time optimization using using whole-program analysis
+lto = true
