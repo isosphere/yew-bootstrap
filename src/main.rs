@@ -67,6 +67,38 @@ impl Component for Model {
                     <Button style=Color::Light outline=true>{"Light"}</Button>
                     <Button style=Color::Dark outline=true>{"Dark"}</Button>
                     <Button style=Color::Link outline=true text="Link2" />
+
+                    <h2>{"Sizes"}</h2>
+                    <Button style=Color::Primary size=ButtonSize::Large>{"Large button"}</Button>
+                    <Button style=Color::Secondary size=ButtonSize::Large>{"Large button"}</Button>
+                    <br />
+                    <Button style=Color::Primary size=ButtonSize::Normal>{"Normal button"}</Button>
+                    <Button style=Color::Secondary size=ButtonSize::Normal>{"Normal button"}</Button>
+                    <br />
+                    <Button style=Color::Primary size=ButtonSize::Small>{"Small button"}</Button>
+                    <Button style=Color::Secondary size=ButtonSize::Small>{"Small button"}</Button>
+
+                    <h2>{"Disabled state"}</h2>
+                    <Button style=Color::Primary disabled=true>{"Primary"}</Button>
+                    <Button style=Color::Secondary disabled=true>{"Secondary"}</Button>
+
+                    <h2>{"Block buttons"}</h2>
+                    <div class="d-grid gap-2">
+                        <Button style=Color::Primary block=true>{"Primary"}</Button>
+                        <Button style=Color::Secondary block=true>{"Secondary"}</Button>
+                    </div>
+
+                    <h1>{"Button groups"}</h1>
+                    <ButtonGroup>
+                        <Button style=Color::Primary>{"Primary"}</Button>
+                        <Button style=Color::Secondary>{"Secondary"}</Button>
+                    </ButtonGroup>
+
+                    <h2>{"Vertical variation"}</h2>
+                    <ButtonGroup vertical=true>
+                        <Button style=Color::Primary>{"Primary"}</Button>
+                        <Button style=Color::Secondary>{"Secondary"}</Button>
+                    </ButtonGroup>
                 </div>
             </>
         }

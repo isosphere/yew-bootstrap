@@ -2,12 +2,25 @@ use crate::util::Color;
 use yew::prelude::*;
 use yewtil::NeqAssign;
 
+#[derive(Clone, PartialEq)]
+pub enum ButtonSize {
+    Large,
+    Normal,
+    Small,
+}
+
+impl Default for ButtonSize {
+    fn default() -> Self {
+        ButtonSize::Normal
+    }
+}
+
 pub struct Button {
-    props: ButtonProps,
+    props: ComponentProps,
 }
 
 #[derive(Properties, Clone, PartialEq)]
-pub struct ButtonProps {
+pub struct ComponentProps {
     #[prop_or_default]
     pub class: String,
 
@@ -15,10 +28,22 @@ pub struct ButtonProps {
     pub children: Children,
 
     #[prop_or_default]
+    pub block: bool,
+
+    #[prop_or_default]
+    pub disabled: bool,
+
+    #[prop_or_default]
+    pub name: String,
+
+    #[prop_or_default]
     pub onclick: Callback<MouseEvent>,
 
     #[prop_or_default]
     pub outline: bool,
+
+    #[prop_or_default]
+    pub size: ButtonSize,
 
     #[prop_or(Color::Primary)]
     pub style: Color,
@@ -29,7 +54,7 @@ pub struct ButtonProps {
 
 impl Component for Button {
     type Message = ();
-    type Properties = ButtonProps;
+    type Properties = ComponentProps;
 
     fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
         Self { props }
@@ -51,10 +76,21 @@ impl Component for Button {
         } else {
             classes.push(format!("btn-{}", self.props.style.to_bootstrap()));
         }
+        match self.props.size {
+            ButtonSize::Large => classes.push("btn-lg"),
+            ButtonSize::Small => classes.push("btn-sm"),
+            _ => (),
+        }
+        if self.props.block {
+            classes.push("btn-block");
+        }
         classes.push(self.props.class.clone());
+
         html! {
             <button
                 class=classes
+                disabled=self.props.disabled
+                name=self.props.name.clone()
                 onclick=self.props.onclick.clone()
             >
                 { &self.props.text }
