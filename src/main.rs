@@ -43,7 +43,7 @@ impl Component for Model {
         */
         html! {
             <>
-                {init_cdn()}
+                {init_inline()}
                 <div>
                     <h1>{ "Alerts" }</h1>
                     <Alert style=Color::Primary>

@@ -13,5 +13,8 @@ pub fn init_cdn() -> VNode {
 
 pub fn init_inline() -> VNode {
     html! {
+        <style>
+            {include_str!("bootstrap-5.1.3.min.css")}
+        </style>
     }
 }
