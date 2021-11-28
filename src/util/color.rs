@@ -8,6 +8,7 @@ pub enum Color {
     Danger,
     Light,
     Dark,
+    Link,
 }
 
 impl Color {
@@ -21,6 +22,7 @@ impl Color {
             Color::Danger => "danger".to_string(),
             Color::Light => "light".to_string(),
             Color::Dark => "dark".to_string(),
+            Color::Link => "link".to_string(),
         }
     }
 }

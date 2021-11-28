@@ -8,14 +8,23 @@ pub struct Button {
 
 #[derive(Properties, Clone, PartialEq)]
 pub struct ButtonProps {
-    #[prop_or(Color::Primary)]
-    pub style: Color,
+    #[prop_or_default]
+    pub class: String,
+
+    #[prop_or_default]
+    pub children: Children,
 
     #[prop_or_default]
     pub onclick: Callback<MouseEvent>,
 
     #[prop_or_default]
-    pub children: Children,
+    pub outline: bool,
+
+    #[prop_or(Color::Primary)]
+    pub style: Color,
+
+    #[prop_or_default]
+    pub text: String,
 }
 
 impl Component for Button {
@@ -35,11 +44,20 @@ impl Component for Button {
     }
 
     fn view(&self) -> Html {
+        let mut classes = Classes::new();
+        classes.push("btn");
+        if self.props.outline {
+            classes.push(format!("btn-outline-{}", self.props.style.to_bootstrap()));
+        } else {
+            classes.push(format!("btn-{}", self.props.style.to_bootstrap()));
+        }
+        classes.push(self.props.class.clone());
         html! {
             <button
-                class={ format!("btn btn-{}", self.props.style.to_bootstrap()) }
+                class=classes
                 onclick=self.props.onclick.clone()
             >
+                { &self.props.text }
                 { for self.props.children.iter() }
             </button>
         }
