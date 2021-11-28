@@ -31,6 +31,7 @@ Then in the beginning of your application, include the `init_cdn()` or `init_inl
 ## Coverage
 
 Currently missing the following Core content:
+
 - [] Container
 - [] Grid
 - [] Display headings
