@@ -12,7 +12,7 @@ Add the dependency next to the regular yew dependency:
 ```toml
 [dependencies]
 yew = "0.18"
-yew-bootstrap = "0.2"
+yew-bootstrap = "0.3"
 ```
 
 Then in the beginning of your application, include the `include_cdn()` or `include_inline()` function to load the required CSS and JS, either from JSDeliver CDN or to inline the CSS:
@@ -69,9 +69,9 @@ Following Components has been implemented:
 
 The following Helpers has been implemented:
 
-- [] Clearfix
+- [ ] Clearfix
 - [x] Colored links
-- [] Stacks
+- [ ] Stacks
 - [x] Stretched
-- [] Text truncation
-- [] Vertical/Horizontal rule/line
+- [ ] Text truncation
+- [X] Vertical/Horizontal rule/line
