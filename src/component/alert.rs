@@ -41,7 +41,7 @@ impl Component for Alert {
     fn view(&self) -> Html {
         let mut classes = Classes::new();
         classes.push("alert");
-        classes.push(format!("alert-{}", self.props.style.to_bootstrap()));
+        classes.push(format!("alert-{}", self.props.style));
         classes.push(self.props.class.clone());
 
         html! {

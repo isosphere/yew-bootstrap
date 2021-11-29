@@ -1,9 +1,8 @@
+use crate::util::*;
 use yew::prelude::*;
 use yewtil::NeqAssign;
 
-use crate::util::Color;
-
-pub struct Link {
+pub struct Line {
     props: ComponentProps,
 }
 
@@ -13,19 +12,19 @@ pub struct ComponentProps {
     pub class: String,
 
     #[prop_or_default]
-    pub children: Children,
+    pub height: Option<Size>,
 
     #[prop_or_default]
-    pub stretched: bool,
+    pub vertical: bool,
 
     #[prop_or_default]
     pub style: Option<Color>,
 
     #[prop_or_default]
-    pub text: String,
+    pub width: Option<Size>,
 }
 
-impl Component for Link {
+impl Component for Line {
     type Message = ();
     type Properties = ComponentProps;
 
@@ -43,21 +42,30 @@ impl Component for Link {
 
     fn view(&self) -> Html {
         let mut classes = Classes::new();
-        if let Some(style) = self.props.style.clone() {
-            classes.push(format!("link-{}", style));
+        if self.props.vertical {
+            classes.push("vr");
         }
-        if self.props.stretched {
-            classes.push("stretched-link");
+        if let Some(style) = self.props.style.clone() {
+            classes.push(format!("bg-{}", style));
         }
         classes.push(self.props.class.clone());
 
-        html! {
-            <a
-                class=classes
-            >
-                { &self.props.text }
-                { for self.props.children.iter() }
-            </a>
+        let mut css = String::new();
+        if let Some(height) = self.props.height.clone() {
+            css = format!("height: {}", height);
+        }
+        if let Some(width) = self.props.width.clone() {
+            css = format!("{}; width: {}", css, width);
+        }
+
+        if self.props.vertical {
+            html! {
+                <div class=classes style=css />
+            }
+        } else {
+            html! {
+                <hr class=classes style=css />
+            }
         }
     }
 }

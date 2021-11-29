@@ -72,9 +72,9 @@ impl Component for Button {
         let mut classes = Classes::new();
         classes.push("btn");
         if self.props.outline {
-            classes.push(format!("btn-outline-{}", self.props.style.to_bootstrap()));
+            classes.push(format!("btn-outline-{}", self.props.style));
         } else {
-            classes.push(format!("btn-{}", self.props.style.to_bootstrap()));
+            classes.push(format!("btn-{}", self.props.style));
         }
         match self.props.size {
             ButtonSize::Large => classes.push("btn-lg"),

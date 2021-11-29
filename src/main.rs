@@ -44,7 +44,7 @@ impl Component for Model {
         html! {
             <>
                 {include_inline()}
-                <div>
+                <div id="components" class="p-3">
                     <h1>{ "Alerts" }</h1>
                     <Alert style=Color::Primary>
                         { "This is a primary alert—check it out!" }
@@ -127,6 +127,19 @@ impl Component for Model {
                         <Button style=Color::Primary>{"Primary"}</Button>
                         <Button style=Color::Secondary>{"Secondary"}</Button>
                     </ButtonGroup>
+                </div>
+                <div id="helpers" class="p-3">
+                    <h1>{"Vertical/Horizontal rule"}</h1>
+                    <h2>{"Horizontal"}</h2>
+                    <Line />
+                    <Line style=Color::Primary />
+                    <Line height=Size::Px(5) />
+                    <Line width=Size::Px(100) />
+                    <h2>{"Vertical"}</h2>
+                    <Line vertical=true /><br />
+                    <Line vertical=true style=Color::Primary /><br />
+                    <Line vertical=true height=Size::Px(50) /><br />
+                    <Line vertical=true width=Size::Px(100) /><br />
                 </div>
             </>
         }
