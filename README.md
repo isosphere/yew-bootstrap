@@ -32,14 +32,14 @@ Then in the beginning of your application, include the `include_cdn()` or `inclu
 
 Currently missing the following Core content:
 
-- [] Container
-- [] Grid
-- [] Display headings
-- [] Lead
-- [] Blockquote
-- [] Image/Figure
-- [] Table
-- [] Forms
+- [ ] Container
+- [ ] Grid
+- [ ] Display headings
+- [ ] Lead
+- [ ] Blockquote
+- [ ] Image/Figure
+- [ ] Table
+- [ ] Forms
 
 Following Components has been implemented:
 
