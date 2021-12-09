@@ -33,7 +33,7 @@ Then in the beginning of your application, include the `include_cdn()` or `inclu
 Currently missing the following Core content:
 
 - [X] Container (`<Container>`)
-- [ ] Grid
+- [X] Grid (`<Row>`, `<Column>`)
 - [ ] Display headings
 - [ ] Lead
 - [ ] Blockquote

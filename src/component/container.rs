@@ -4,6 +4,7 @@ use log::*;
 
 #[derive(Clone, PartialEq)]
 pub enum ContainerSize {
+    ExtraSmall,
     Small,
     Medium,
     Large,
@@ -13,6 +14,7 @@ pub enum ContainerSize {
 impl ToString for ContainerSize {
     fn to_string(&self) -> String {
         match self {
+            &ContainerSize::ExtraSmall => "".to_string(),
             ContainerSize::Small => "sm".to_string(),
             ContainerSize::Medium => "md".to_string(),
             ContainerSize::Large => "lg".to_string(),
@@ -34,8 +36,8 @@ pub struct ComponentProps {
     #[prop_or_default]
     pub children: Children,
 
-    #[prop_or_default]
-    pub size: Option<ContainerSize>,
+    #[prop_or(ContainerSize::ExtraSmall)]
+    pub size: ContainerSize,
 
     #[prop_or_default]
     pub fluid: bool,
@@ -59,11 +61,12 @@ impl Component for Container {
 
     fn view(&self) -> Html {
         let mut classes = Classes::new();
-        if let Some(size) = &self.props.size {
+        // ExtraSmall have no size class
+        if self.props.size != ContainerSize::ExtraSmall {
             if self.props.fluid {
                 warn!("Fluid is set to true, but a size is also set. Fluid will be ignored.");
             }
-            classes.push(format!("container-{}", size.to_string()));
+            classes.push(format!("container-{}", self.props.size.to_string()));
         } else if self.props.fluid {
             classes.push("container-fluid");
         } else {

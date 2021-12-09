@@ -54,6 +54,54 @@ impl Component for Model {
                     <Container class="bg-warning" size=ContainerSize::Large>{"Large"}</Container>
                     <Container class="bg-info" size=ContainerSize::ExtraLarge>{"Extra Large"}</Container>
                     <Container class="bg-light" size=ContainerSize::ExtraExtraLarge>{"Extra Large"}</Container>
+
+                    <h1>{ "Grid" }</h1>
+                    <Row>
+                        <Column class="bg-info">
+                            {"1 of 2"}
+                        </Column>
+                        <Column class="bg-primary">
+                            {"2 of 2"}
+                        </Column>
+                    </Row>
+                    <Row>
+                        <Column class="bg-danger">
+                            {"1 of 3"}
+                        </Column>
+                        <Column class="bg-warning">
+                            {"2 of 3"}
+                        </Column>
+                        <Column class="bg-success">
+                            {"3 of 3"}
+                        </Column>
+                    </Row>
+                    <Row>
+                        <Column class="bg-info">
+                            {"1 of 3"}
+                        </Column>
+                        <Column size=6 class="bg-secondary">
+                            {"2 of 3 (wider)"}
+                        </Column>
+                        <Column class="bg-primary">
+                            {"3 of 3"}
+                        </Column>
+                    </Row>
+                    <Row>
+                        <Column class="bg-danger">
+                            {"1 of 3"}
+                        </Column>
+                        <Column size=5 class="bg-secondary">
+                            {"2 of 3 (wider)"}
+                        </Column>
+                        <Column class="bg-success">
+                            {"3 of 3"}
+                        </Column>
+                    </Row>
+                    <Row>
+                        <Column size=None md=5 class="bg-info">
+                            {"md-only"}
+                        </Column>
+                    </Row>
                 </div>
                 <div id="components" class="p-3">
                     <h1>{ "Alerts" }</h1>
