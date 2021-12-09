@@ -18,6 +18,8 @@ crate-type = ["rlib", "cdylib"]
 [dependencies]
 yew = "0.18"
 yewtil = "0.4.0"
+log = "0.4"
+#console_log = { version = "0.2", features = ["color"] }
 
 [profile.release]
 # less code to include into binary

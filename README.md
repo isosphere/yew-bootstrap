@@ -32,7 +32,7 @@ Then in the beginning of your application, include the `include_cdn()` or `inclu
 
 Currently missing the following Core content:
 
-- [ ] Container
+- [X] Container (`<Container>`)
 - [ ] Grid
 - [ ] Display headings
 - [ ] Lead
@@ -44,11 +44,11 @@ Currently missing the following Core content:
 Following Components has been implemented:
 
 - [ ] Accordion
-- [x] Alert
+- [x] Alert (`<Alert>`)
 - [ ] Badge
 - [ ] Breadcrumb
-- [x] Button
-- [x] Button group
+- [x] Button (`<Button>`)
+- [x] Button group (`<ButtonGroup>`)
 - [ ] Card
 - [ ] Carousel
 - [ ] Close button
@@ -70,8 +70,8 @@ Following Components has been implemented:
 The following Helpers has been implemented:
 
 - [ ] Clearfix
-- [x] Colored links
+- [x] Colored links (`<Link>`)
 - [ ] Stacks
-- [x] Stretched
+- [x] Stretched (`<Link stretched=true>`)
 - [ ] Text truncation
-- [X] Vertical/Horizontal rule/line
+- [X] Vertical/Horizontal rule/line (`<Line>`)

@@ -3,13 +3,14 @@ use yew_bootstrap::component::*;
 use yew_bootstrap::util::*;
 
 enum Msg {
+    #[allow(dead_code)]
     AddOne,
 }
 
 struct Model {
     // `ComponentLink` is like a reference to a component.
     // It can be used to send messages to the component
-    link: ComponentLink<Self>,
+    _link: ComponentLink<Self>,
     value: i64,
 }
 
@@ -18,7 +19,7 @@ impl Component for Model {
     type Properties = ();
 
     fn create(_props: Self::Properties, link: ComponentLink<Self>) -> Self {
-        Self { link, value: 0 }
+        Self { _link: link, value: 0 }
     }
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
@@ -44,6 +45,16 @@ impl Component for Model {
         html! {
             <>
                 {include_inline()}
+                <div id="layout" class="p-3">
+                    <h1>{ "Containers" }</h1>
+                    <Container class="bg-primary">{"Normal"}</Container>
+                    <Container class="bg-secondary" fluid=true>{"Fluid"}</Container>
+                    <Container class="bg-success" size=ContainerSize::Small>{"Small"}</Container>
+                    <Container class="bg-danger" size=ContainerSize::Medium>{"Medium"}</Container>
+                    <Container class="bg-warning" size=ContainerSize::Large>{"Large"}</Container>
+                    <Container class="bg-info" size=ContainerSize::ExtraLarge>{"Extra Large"}</Container>
+                    <Container class="bg-light" size=ContainerSize::ExtraExtraLarge>{"Extra Large"}</Container>
+                </div>
                 <div id="components" class="p-3">
                     <h1>{ "Alerts" }</h1>
                     <Alert style=Color::Primary>
