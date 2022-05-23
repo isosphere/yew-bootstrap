@@ -1,11 +1,8 @@
 use yew::prelude::*;
-use yewtil::NeqAssign;
 
 use crate::util::Color;
 
-pub struct Link {
-    props: ComponentProps,
-}
+pub struct Link {}
 
 #[derive(Properties, Clone, PartialEq)]
 pub struct ComponentProps {
@@ -29,34 +26,27 @@ impl Component for Link {
     type Message = ();
     type Properties = ComponentProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
-        Self { props }
+    fn create(_ctx: &Context<Self>) -> Self {
+        Self {}
     }
 
-    fn update(&mut self, _msg: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
+    fn view(&self, ctx: &Context<Self>) -> Html {
+        let props = ctx.props();
         let mut classes = Classes::new();
-        if let Some(style) = self.props.style.clone() {
+        if let Some(style) = props.style.clone() {
             classes.push(format!("link-{}", style));
         }
-        if self.props.stretched {
+        if props.stretched {
             classes.push("stretched-link");
         }
-        classes.push(self.props.class.clone());
+        classes.push(props.class.clone());
 
         html! {
             <a
-                class=classes
+                class={classes}
             >
-                { &self.props.text }
-                { for self.props.children.iter() }
+                { &props.text }
+                { for props.children.iter() }
             </a>
         }
     }

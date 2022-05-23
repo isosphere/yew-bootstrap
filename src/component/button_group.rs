@@ -1,9 +1,6 @@
 use yew::prelude::*;
-use yewtil::NeqAssign;
 
-pub struct ButtonGroup {
-    props: ComponentProps,
-}
+pub struct ButtonGroup {}
 
 #[derive(Properties, Clone, PartialEq)]
 pub struct ComponentProps {
@@ -27,34 +24,27 @@ impl Component for ButtonGroup {
     type Message = ();
     type Properties = ComponentProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
-        Self { props }
+    fn create(_ctx: &Context<Self>) -> Self {
+        Self {}
     }
 
-    fn update(&mut self, _msg: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
+    fn view(&self, ctx: &Context<Self>) -> Html {
+        let props = ctx.props();
         let mut classes = Classes::new();
-        if self.props.vertical {
+        if props.vertical {
             classes.push("btn-group-vertical");
         } else {
             classes.push("btn-group");
         }
-        classes.push(self.props.class.clone());
+        classes.push(props.class.clone());
 
         html! {
             <div
-                class=classes
-                role=self.props.role.clone()
-                aria-label=self.props.label.clone()
+                class={classes}
+                role={props.role.clone()}
+                aria-label={props.label.clone()}
             >
-                { for self.props.children.iter() }
+                { for props.children.iter() }
             </div>
         }
     }

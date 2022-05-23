@@ -1,6 +1,5 @@
-use yew::prelude::*;
-use yewtil::NeqAssign;
 use log::*;
+use yew::prelude::*;
 
 #[derive(Clone, PartialEq)]
 pub enum ContainerSize {
@@ -24,9 +23,7 @@ impl ToString for ContainerSize {
     }
 }
 
-pub struct Container {
-    props: ComponentProps,
-}
+pub struct Container {}
 
 #[derive(Properties, Clone, PartialEq)]
 pub struct ComponentProps {
@@ -47,38 +44,31 @@ impl Component for Container {
     type Message = ();
     type Properties = ComponentProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
-        Self { props }
+    fn create(_ctx: &Context<Self>) -> Self {
+        Self {}
     }
 
-    fn update(&mut self, _msg: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
+    fn view(&self, ctx: &Context<Self>) -> Html {
+        let props = ctx.props();
         let mut classes = Classes::new();
         // ExtraSmall have no size class
-        if self.props.size != ContainerSize::ExtraSmall {
-            if self.props.fluid {
+        if props.size != ContainerSize::ExtraSmall {
+            if props.fluid {
                 warn!("Fluid is set to true, but a size is also set. Fluid will be ignored.");
             }
-            classes.push(format!("container-{}", self.props.size.to_string()));
-        } else if self.props.fluid {
+            classes.push(format!("container-{}", props.size.to_string()));
+        } else if props.fluid {
             classes.push("container-fluid");
         } else {
             classes.push("container");
         }
-        classes.push(self.props.class.clone());
+        classes.push(props.class.clone());
 
         html! {
             <div
-                class=classes
+                class={classes}
             >
-                { for self.props.children.iter() }
+                { for props.children.iter() }
             </div>
         }
     }
