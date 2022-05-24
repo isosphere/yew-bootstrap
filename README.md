@@ -11,18 +11,18 @@ Add the dependency next to the regular yew dependency:
 
 ```toml
 [dependencies]
-yew = "0.18"
-yew-bootstrap = "0.3"
+yew = "0.19"
+yew-bootstrap = "0.4"
 ```
 
 Then in the beginning of your application, include the `include_cdn()` or `include_inline()` function to load the required CSS and JS, either from JSDeliver CDN or to inline the CSS:
 
 ```Rust
-    fn view(&self) -> Html {
+    fn view(&self, _ctx: &Context<Self>) -> Html {
         html! {
             <>
                 {include_cdn()}
-                <Button style=Color::Primary>{"Primary"}</Button>
+                <Button style={Color::Primary}>{"Primary"}</Button>
             </>
         }
     }
@@ -72,6 +72,6 @@ The following Helpers has been implemented:
 - [ ] Clearfix
 - [x] Colored links (`<Link>`)
 - [ ] Stacks
-- [x] Stretched (`<Link stretched=true>`)
+- [x] Stretched (`<Link stretched={true}>`)
 - [ ] Text truncation
 - [X] Vertical/Horizontal rule/line (`<Line>`)

@@ -1,6 +1,5 @@
 use crate::util::Color;
 use yew::prelude::*;
-use yewtil::NeqAssign;
 
 #[derive(Clone, PartialEq)]
 pub enum ButtonSize {
@@ -15,9 +14,7 @@ impl Default for ButtonSize {
     }
 }
 
-pub struct Button {
-    props: ComponentProps,
-}
+pub struct Button {}
 
 #[derive(Properties, Clone, PartialEq)]
 pub struct ComponentProps {
@@ -56,45 +53,38 @@ impl Component for Button {
     type Message = ();
     type Properties = ComponentProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
-        Self { props }
+    fn create(_ctx: &Context<Self>) -> Self {
+        Self {}
     }
 
-    fn update(&mut self, _msg: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
+    fn view(&self, ctx: &Context<Self>) -> Html {
+        let props = ctx.props();
         let mut classes = Classes::new();
         classes.push("btn");
-        if self.props.outline {
-            classes.push(format!("btn-outline-{}", self.props.style));
+        if props.outline {
+            classes.push(format!("btn-outline-{}", props.style));
         } else {
-            classes.push(format!("btn-{}", self.props.style));
+            classes.push(format!("btn-{}", props.style));
         }
-        match self.props.size {
+        match props.size {
             ButtonSize::Large => classes.push("btn-lg"),
             ButtonSize::Small => classes.push("btn-sm"),
             _ => (),
         }
-        if self.props.block {
+        if props.block {
             classes.push("btn-block");
         }
-        classes.push(self.props.class.clone());
+        classes.push(props.class.clone());
 
         html! {
             <button
-                class=classes
-                disabled=self.props.disabled
-                name=self.props.name.clone()
-                onclick=self.props.onclick.clone()
+                class={classes}
+                disabled={props.disabled}
+                name={props.name.clone()}
+                onclick={props.onclick.clone()}
             >
-                { &self.props.text }
-                { for self.props.children.iter() }
+                { &props.text }
+                { for props.children.iter() }
             </button>
         }
     }

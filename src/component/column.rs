@@ -1,10 +1,7 @@
 use log::warn;
 use yew::prelude::*;
-use yewtil::NeqAssign;
 
-pub struct Column {
-    props: ComponentProps,
-}
+pub struct Column {}
 
 #[derive(Properties, Clone, PartialEq)]
 pub struct ComponentProps {
@@ -37,67 +34,60 @@ impl Component for Column {
     type Message = ();
     type Properties = ComponentProps;
 
-    fn create(props: Self::Properties, _link: ComponentLink<Self>) -> Self {
-        Self { props }
+    fn create(_ctx: &Context<Self>) -> Self {
+        Self {}
     }
 
-    fn update(&mut self, _msg: Self::Message) -> ShouldRender {
-        false
-    }
-
-    fn change(&mut self, props: Self::Properties) -> ShouldRender {
-        self.props.neq_assign(props)
-    }
-
-    fn view(&self) -> Html {
-        if self.props.size.unwrap_or(0) > 12 {
+    fn view(&self, ctx: &Context<Self>) -> Html {
+        let props = ctx.props();
+        if props.size.unwrap_or(0) > 12 {
             warn!("Column `size` cannot be greater than 12");
         }
-        if self.props.sm.unwrap_or(0) > 12 {
+        if props.sm.unwrap_or(0) > 12 {
             warn!("Column `sm` size cannot be greater than 12");
         }
-        if self.props.md.unwrap_or(0) > 12 {
+        if props.md.unwrap_or(0) > 12 {
             warn!("Column `md` size cannot be greater than 12");
         }
-        if self.props.lg.unwrap_or(0) > 12 {
+        if props.lg.unwrap_or(0) > 12 {
             warn!("Column `lg` size cannot be greater than 12");
         }
-        if self.props.xl.unwrap_or(0) > 12 {
+        if props.xl.unwrap_or(0) > 12 {
             warn!("Column `xl` size cannot be greater than 12");
         }
-        if self.props.xxl.unwrap_or(0) > 12 {
+        if props.xxl.unwrap_or(0) > 12 {
             warn!("Column `xxl` size cannot be greater than 12");
         }
         let mut classes = Classes::new();
-        if let Some(size) = self.props.size {
+        if let Some(size) = props.size {
             if size == 0 {
                 classes.push("col");
             } else {
                 classes.push("col-".to_string() + &size.to_string());
             }
         }
-        if let Some(sm) = self.props.sm {
+        if let Some(sm) = props.sm {
             classes.push("col-sm-".to_string() + &sm.to_string());
         }
-        if let Some(md) = self.props.md {
+        if let Some(md) = props.md {
             classes.push("col-md-".to_string() + &md.to_string());
         }
-        if let Some(lg) = self.props.lg {
+        if let Some(lg) = props.lg {
             classes.push("col-lg-".to_string() + &lg.to_string());
         }
-        if let Some(xl) = self.props.xl {
+        if let Some(xl) = props.xl {
             classes.push("col-xl-".to_string() + &xl.to_string());
         }
-        if let Some(xxl) = self.props.xxl {
+        if let Some(xxl) = props.xxl {
             classes.push("col-xxl-".to_string() + &xxl.to_string());
         }
-        classes.push(self.props.class.clone());
+        classes.push(props.class.clone());
 
         html! {
             <div
-                class=classes
+                class={classes}
             >
-                { for self.props.children.iter() }
+                { for props.children.iter() }
             </div>
         }
     }
