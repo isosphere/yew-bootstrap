@@ -1,6 +1,6 @@
 # yew-bootstrap
 
-`yew-bootstrap` is a collection of frontend components made to simplify the usage of Bootstrap within the Yew framework.
+`yew-bootstrap` is a collection of frontend components made to simplify the usage of Bootstrap 5 within the Yew framework.
 
 ## Usage
 
