@@ -11,7 +11,7 @@ Add the dependency next to the regular yew dependency:
 
 ```toml
 [dependencies]
-yew = "0.19"
+yew = "0.20"
 yew-bootstrap = "0.4"
 ```
 
