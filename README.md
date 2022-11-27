@@ -5,7 +5,7 @@
 ## Usage
 
 This project assumes that you have an existing web application that uses the Yew framework.
-If you do not, refer to the [Yew Getting Started](https://yew.rs/getting-started/build-a-sample-app) project to get started.
+If you do not, refer to [Yew Getting Started](https://yew.rs/getting-started/build-a-sample-app) to get started.
 
 Add the dependency next to the regular yew dependency:
 
