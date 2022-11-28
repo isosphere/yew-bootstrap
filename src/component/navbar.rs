@@ -1,4 +1,5 @@
 use yew::prelude::*;
+use super::Container;
 
 #[derive(Properties, Clone, PartialEq, Eq)]
 pub struct NavBarBrandImage {
@@ -214,6 +215,62 @@ impl Component for NavLinkItem {
                     { for props.dropdown.iter() }
                 }                
             }
+        }
+    }
+}
+
+pub struct NavBar { }
+
+#[derive(Properties, Clone, PartialEq)]
+pub struct NavBarProps {
+    #[prop_or_default]
+    pub items: Children,
+    #[prop_or_default]
+    pub brand: Children,
+    #[prop_or_default]
+    pub class: String,
+
+    /// the id of the div that contains the nav-items
+    #[prop_or_default]
+    pub nav_id: String,
+
+    #[prop_or_default]
+    pub expanded: bool
+}
+
+impl Component for NavBar {
+    type Message = ();
+    type Properties = NavBarProps;
+
+    fn create(_ctx: &Context<Self>) -> Self {
+        Self {}
+    }
+
+    fn view(&self, ctx: &Context<Self>) -> Html {
+        let props = ctx.props();
+
+        // todo: use our container component?
+        let expanded = String::from(match &props.expanded {
+            true => {
+                "true"
+            },
+            false => {
+                "false"
+            }
+        });
+
+        html! {
+            <nav class={props.class.clone()}>
+                <div class="container-fluid">
+                    { for props.brand.clone() }
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target={format!("#{}", props.nav_id.clone())} aria-controls={props.nav_id.clone()} aria-expanded={expanded} aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id={props.nav_id.clone()}>
+                        { for props.items.clone() }
+                    </div>
+                </div>
+            </nav>
         }
     }
 }
