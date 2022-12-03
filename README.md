@@ -11,8 +11,8 @@ Add the dependency next to the regular yew dependency:
 
 ```toml
 [dependencies]
-yew = "0.19"
-yew-bootstrap = "0.4.1"
+yew = "0.20"
+yew-bootstrap = "0.5.1"
 ```
 
 Then in the beginning of your application, include the `include_cdn()` or `include_inline()` function to load the required CSS and JS, either from JSDeliver CDN or to inline the CSS:
