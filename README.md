@@ -56,6 +56,7 @@ Following Components has been implemented:
 - [ ] Dropdown
 - [ ] List group
 - [ ] Modal
+- [x] Navbar (`<NavBar>, <NavItem>, <NavDropdown>, <NavDropdownItem>`)
 - [ ] Navs & tabs
 - [ ] Offcanvas
 - [ ] Pagination
