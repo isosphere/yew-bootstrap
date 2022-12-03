@@ -1,18 +1,18 @@
 # yew-bootstrap
 
-`yew-bootstrap` is a collection of frontend components made to simplify the usage of Bootstrap within the Yew framework.
+`yew-bootstrap` is a collection of frontend components made to simplify the usage of Bootstrap 5 within the Yew framework.
 
 ## Usage
 
-This project assumes that you have an existing web application that uses the Seed framework.
-If you do not, refer to the [Yew Getting Started](https://yew.rs/getting-started/build-a-sample-app) project to get started.
+This project assumes that you have an existing web application that uses the Yew framework.
+If you do not, refer to [Yew Getting Started](https://yew.rs/getting-started/build-a-sample-app) to get started.
 
 Add the dependency next to the regular yew dependency:
 
 ```toml
 [dependencies]
 yew = "0.20"
-yew-bootstrap = "0.5"
+yew-bootstrap = "0.5.1"
 ```
 
 Then in the beginning of your application, include the `include_cdn()` or `include_inline()` function to load the required CSS and JS, either from JSDeliver CDN or to inline the CSS:
@@ -30,7 +30,7 @@ Then in the beginning of your application, include the `include_cdn()` or `inclu
 
 ## Coverage
 
-Currently missing the following Core content:
+### Core Content
 
 - [X] Container (`<Container>`)
 - [X] Grid (`<Row>`, `<Column>`)
@@ -41,7 +41,7 @@ Currently missing the following Core content:
 - [ ] Table
 - [ ] Forms
 
-Following Components has been implemented:
+### Components
 
 - [ ] Accordion
 - [x] Alert (`<Alert>`)
@@ -56,6 +56,7 @@ Following Components has been implemented:
 - [ ] Dropdown
 - [ ] List group
 - [ ] Modal
+- [x] Navbar (`<NavBar>, <NavItem>, <NavDropdown>, <NavDropdownItem>`)
 - [ ] Navs & tabs
 - [ ] Offcanvas
 - [ ] Pagination
@@ -67,7 +68,7 @@ Following Components has been implemented:
 - [ ] Toast
 - [ ] Tooltips
 
-The following Helpers has been implemented:
+### Helpers
 
 - [ ] Clearfix
 - [x] Colored links (`<Link>`)

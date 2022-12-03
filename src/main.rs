@@ -35,9 +35,20 @@ impl Component for Model {
             <p>{ self.value }</p>
         </div>
         */
+
+        let brand = BrandType::BrandSimple { text: String::from("Yew Bootstrap"), url: Some(String::from("https://yew.rs")) };
+
         html! {
             <>
                 {include_inline()}
+                <NavBar nav_id={"test-nav"} class="navbar-expand-lg navbar-light bg-light" brand={brand}>
+                    <NavItem text="link 1" />
+                    <NavItem text="link 2" />
+                    <NavItem text="several items">
+                        <NavDropdownItem text="hello 1" />
+                        <NavDropdownItem text="hello 2" />
+                    </NavItem>
+                </NavBar>
                 <div id="layout" class="p-3">
                     <h1>{ "Containers" }</h1>
                     <Container class="bg-primary">{"Normal"}</Container>
@@ -193,6 +204,7 @@ impl Component for Model {
                     <Line vertical={true} height={Size::Px(50)} /><br />
                     <Line vertical={true} width={Size::Px(100)} /><br />
                 </div>
+                { include_cdn_js() }
             </>
         }
     }
