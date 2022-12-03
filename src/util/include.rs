@@ -28,7 +28,6 @@ pub fn include_cdn_js() -> VNode {
 }
 
 
-
 pub fn include_inline() -> VNode {
     html! {
         <style>

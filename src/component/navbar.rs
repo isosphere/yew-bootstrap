@@ -1,78 +1,7 @@
 use yew::prelude::*;
 use super::Container;
+use crate::util::Dimension;
 
-#[derive(Properties, Clone, PartialEq, Eq)]
-pub struct NavBarBrandImage {
-    pub url: String,
-    /// descriptive text for users of screen readers
-    pub alt: String,
-    pub width: Option<String>,
-    pub height: Option<String>,
-}
-
-
-pub struct NavBarBrand { }
-
-#[derive(Properties, Clone, PartialEq, Eq)]
-pub struct NavBarBrandProperties {
-    #[prop_or_default]
-    pub text: String,
-    
-    /// Optional brand image
-    #[prop_or_default]
-    pub image: Option<NavBarBrandImage>,
-
-    #[prop_or_default]
-    pub url: Option<String>,
-}
-
-impl Component for NavBarBrand { 
-    type Message = ();
-    type Properties = NavBarBrandProperties;
-
-    fn create(_ctx: &Context<Self>) -> Self {
-        Self {}
-    }
-
-    fn view(&self, ctx: &Context<Self>) -> Html {
-        let props = ctx.props();
-
-        let url = match &props.url { 
-            Some(u) => u.clone(),
-            None => String::from("#")
-        };
-
-        match &props.image {
-            Some(i) => {
-                match (&i.width, &i.height) {
-                    (None, _) | (_, None)=> {
-                        html! {
-                            <a class="navbar-brand" href={url}>
-                                <img src={i.url.clone()} alt={i.alt.clone()} class="d-inline-block align-text-top" />
-                                {props.text.clone()}
-                            </a>
-                        }
-                    },
-                    (Some(w), Some(h)) => {
-                        html! {
-                            <a class="navbar-brand" href={url}>
-                                <img src={i.url.clone()} alt={i.alt.clone()} width={w.clone()} height={h.clone()} class="d-inline-block align-text-top" />
-                                {props.text.clone()}
-                            </a>
-                        }
-                    }
-                }
-            },
-            None => {
-                html! {
-                    <a class="navbar-brand" href={url}>
-                        {props.text.clone()}
-                    </a>
-                }
-            }
-        }
-    }
-} 
 
 pub struct NavDropdownItem { }
 
@@ -109,7 +38,7 @@ pub struct NavDropdown { }
 #[derive(Properties, Clone, PartialEq)]
 pub struct NavDropdownProps {
     #[prop_or_default]
-    pub items: Children,
+    pub children: Children,
     /// the id of the link with the dropdown-toggle class, referenced by aria-labelledby
     #[prop_or_default]
     pub id: String,
@@ -141,14 +70,14 @@ impl Component for NavDropdown {
                     {props.text.clone()}
                 </a>
                 <ul class="dropdown-menu" aria-labelledby={props.id.clone()}>
-                    { for props.items.iter() }
+                    { for props.children.iter() }
                 </ul>
             </li>
         }
     }
 }
 
-pub struct NavLinkItem { }
+pub struct NavItem { }
 
 #[derive(Properties, Clone, PartialEq)]
 pub struct NavItemProperties {
@@ -162,11 +91,16 @@ pub struct NavItemProperties {
     #[prop_or_default]
     pub text: String,
 
+    /// required for dropdowns
     #[prop_or_default]
-    pub dropdown: Children
+    pub id: String,
+
+    /// dropdown items
+    #[prop_or_default]
+    pub children: Children
 }
 
-impl Component for NavLinkItem {
+impl Component for NavItem {
     type Message = ();
     type Properties = NavItemProperties;
 
@@ -177,9 +111,10 @@ impl Component for NavLinkItem {
     fn view(&self, ctx: &Context<Self>) -> Html {
         let props = ctx.props();
 
-        match &props.dropdown.is_empty() {
+        match &props.children.is_empty() {
             true => {
                 let mut classes = Classes::new();
+                classes.push(String::from("nav-link"));
 
                 if props.active {
                     classes.push(String::from("active"));
@@ -212,10 +147,34 @@ impl Component for NavLinkItem {
             },
             false => {
                 html! {
-                    { for props.dropdown.iter() }
+                    <NavDropdown text={props.text.clone()} id={props.id.clone()}>
+                        { for props.children.iter() }
+                    </NavDropdown>
                 }                
             }
         }
+    }
+}
+
+#[derive(Clone, PartialEq, Eq)]
+pub enum BrandType {
+    BrandSimple { text: String, url: Option<String> },
+    BrandImage { 
+        /// browser-accessible url to the brand image
+        image_url: String, 
+        /// descriptive text for screen reader users
+        alt: String, 
+        dimension: Option<Dimension>
+    },
+    BrandCombined {
+        text: String, 
+        /// hyperlink destination for brand text
+        url: Option<String>,
+        /// browser-accessible url to the brand image
+        image_url: String, 
+        /// descriptive text for screen reader users
+        alt: String, 
+        dimension: Option<Dimension>
     }
 }
 
@@ -224,9 +183,7 @@ pub struct NavBar { }
 #[derive(Properties, Clone, PartialEq)]
 pub struct NavBarProps {
     #[prop_or_default]
-    pub items: Children,
-    #[prop_or_default]
-    pub brand: Children,
+    pub children: Children,
     #[prop_or_default]
     pub class: String,
 
@@ -235,7 +192,10 @@ pub struct NavBarProps {
     pub nav_id: String,
 
     #[prop_or_default]
-    pub expanded: bool
+    pub expanded: bool,
+
+    #[prop_or_default]
+    pub brand: Option<BrandType>
 }
 
 impl Component for NavBar {
@@ -249,7 +209,6 @@ impl Component for NavBar {
     fn view(&self, ctx: &Context<Self>) -> Html {
         let props = ctx.props();
 
-        // todo: use our container component?
         let expanded = String::from(match &props.expanded {
             true => {
                 "true"
@@ -259,17 +218,85 @@ impl Component for NavBar {
             }
         });
 
+        let mut classes = Classes::new();
+        classes.push("navbar");
+        classes.push(props.class.clone());
+
+        let brand = match &props.brand {
+            None => html!{},
+            Some(b) => {
+                match b {
+                    BrandType::BrandSimple{text, url} => {
+                        let url = match url { 
+                            Some(u) => u.clone(),
+                            None => String::from("#")
+                        };
+
+                        html!{
+                            <a class="navbar-brand" href={url}>
+                                {text.clone()}
+                            </a>
+                        }
+                    },
+                    BrandType::BrandImage { image_url, alt, dimension } => {
+                        match dimension {
+                            None => {
+                                html! {
+                                    <a class="navbar-brand" href={"#"}>
+                                        <img src={image_url.clone()} alt={alt.clone()} class="d-inline-block align-text-top" />
+                                    </a>
+                                }
+                            }
+                            Some(Dimension{width, height}) => {
+                                html! {
+                                    <a class="navbar-brand" href={"#"}>
+                                        <img src={image_url.clone()} alt={alt.clone()} width={width.clone()} height={height.clone()} class="d-inline-block align-text-top" />
+                                    </a>
+                                }
+                            }
+                        }
+                    }
+                    BrandType::BrandCombined { text, url, image_url, alt, dimension } => {
+                        let url = match url { 
+                            Some(u) => u.clone(),
+                            None => String::from("#")
+                        };
+                        match dimension {
+                            None => {
+                                html! {
+                                    <a class="navbar-brand" href={url}>
+                                        <img src={image_url.clone()} alt={alt.clone()} class="d-inline-block align-text-top" />
+                                        {text.clone()}
+                                    </a>
+                                }
+                            },
+                            Some(Dimension{width, height}) => {
+                                html! {
+                                    <a class="navbar-brand" href={url}>
+                                        <img src={image_url.clone()} alt={alt.clone()} width={width.clone()} height={height.clone()} class="d-inline-block align-text-top" />
+                                        {text.clone()}
+                                    </a>
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
         html! {
-            <nav class={props.class.clone()}>
-                <div class="container-fluid">
-                    { for props.brand.clone() }
+            <nav class={classes}>
+                <Container fluid=true>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target={format!("#{}", props.nav_id.clone())} aria-controls={props.nav_id.clone()} aria-expanded={expanded} aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
+                    {brand}
                     <div class="collapse navbar-collapse" id={props.nav_id.clone()}>
-                        { for props.items.clone() }
+                        <ul class="navbar-nav">
+                            { for props.children.clone() }
+                        </ul>
                     </div>
-                </div>
+                </Container>
             </nav>
         }
     }
