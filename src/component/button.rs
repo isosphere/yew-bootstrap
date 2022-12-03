@@ -1,7 +1,7 @@
 use crate::util::Color;
 use yew::prelude::*;
 
-#[derive(Clone, PartialEq)]
+#[derive(Clone, PartialEq, Eq)]
 pub enum ButtonSize {
     Large,
     Normal,

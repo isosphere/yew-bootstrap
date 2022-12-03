@@ -1,7 +1,7 @@
 use log::*;
 use yew::prelude::*;
 
-#[derive(Clone, PartialEq)]
+#[derive(Clone, PartialEq, Eq)]
 pub enum ContainerSize {
     ExtraSmall,
     Small,
