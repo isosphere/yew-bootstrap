@@ -56,6 +56,7 @@ Then in the beginning of your application, include the `include_cdn()` or `inclu
 - [ ] Dropdown
 - [ ] List group
 - [ ] Modal
+- [x] Navbar (`<NavBar>, <NavItem>, <NavDropdown>, <NavDropdownItem>`)
 - [ ] Navs & tabs
 - [ ] Offcanvas
 - [ ] Pagination
