@@ -5,6 +5,7 @@ mod container;
 mod column;
 mod line;
 mod link;
+mod modal;
 mod navbar;
 mod row;
 
@@ -15,5 +16,6 @@ pub use self::button_group::*;
 pub use self::container::*;
 pub use self::line::*;
 pub use self::link::*;
+pub use self::modal::*;
 pub use self::navbar::*;
 pub use self::row::*;
