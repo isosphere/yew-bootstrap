@@ -49,6 +49,16 @@ impl Component for Model {
                         <NavDropdownItem text="hello 2" />
                     </NavItem>
                 </NavBar>
+                <Modal id="ExampleModal">
+                    <ModalHeader title="Modal title" id="ExampleModal" />
+                    <ModalBody>
+                        <p>{"Modal body text goes here."}</p>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button class="btn-secondary" modal_dismiss={true}>{"Close"}</Button>
+                        <Button class="btn-primary">{"Save changes"}</Button>
+                    </ModalFooter>
+                </Modal>
                 <div id="layout" class="p-3">
                     <h1>{ "Containers" }</h1>
                     <Container class="bg-primary">{"Normal"}</Container>
@@ -136,6 +146,8 @@ impl Component for Model {
                     <Alert style={Color::Link}>
                         { "This is a link alert—check it out!" }
                     </Alert>
+                    <h1>{"Modals"}</h1>
+                    <Button style={Color::Primary} modal_target={"ExampleModal"}>{"Open Modal"}</Button>
 
                     <h1>{"Buttons"}</h1>
                     <Button style={Color::Primary}>{"Primary"}</Button>
