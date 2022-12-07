@@ -2,10 +2,24 @@ use yew::prelude::*;
 
 use crate::util::Color;
 
+/// # Alert component
+/// [https://getbootstrap.com/docs/5.1/components/alerts/](https://getbootstrap.com/docs/5.1/components/alerts/)
+/// Used alongside [crate::util::Color] to create Alert components 
+/// 
+/// See [AlertProps] for a listing of properties
+/// 
+/// ## Example
+/// ```rust
+/// html!{
+///    <Alert style={Color::Primary}>
+///     {"This is a primary alert!"}
+///    </Alert>
+/// }
+/// ```
 pub struct Alert {}
 
 #[derive(Properties, Clone, PartialEq)]
-pub struct ComponentProps {
+pub struct AlertProps {
     #[prop_or_default]
     pub class: String,
 
@@ -21,7 +35,7 @@ pub struct ComponentProps {
 
 impl Component for Alert {
     type Message = ();
-    type Properties = ComponentProps;
+    type Properties = AlertProps;
 
     fn create(_ctx: &Context<Self>) -> Self {
         Self {}
