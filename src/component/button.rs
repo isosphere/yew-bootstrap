@@ -47,6 +47,14 @@ pub struct ComponentProps {
 
     #[prop_or_default]
     pub text: String,
+
+    /// if provided, we will set data-bs-toggle and data-bs-target for modal opening
+    #[prop_or_default]
+    pub modal_target: Option<String>,
+
+    /// true if this button dismisses the modal that contains it
+    #[prop_or_default]
+    pub modal_dismiss: bool,
 }
 
 impl Component for Button {
@@ -76,16 +84,39 @@ impl Component for Button {
         }
         classes.push(props.class.clone());
 
-        html! {
-            <button
-                class={classes}
-                disabled={props.disabled}
-                name={props.name.clone()}
-                onclick={props.onclick.clone()}
-            >
-                { &props.text }
-                { for props.children.iter() }
-            </button>
+        let modal_dismiss = match props.modal_dismiss {
+            true => "modal",
+            false => "",
+        };
+
+        if let Some(target) = &props.modal_target {
+            html! {
+                <button
+                    class={classes}
+                    disabled={props.disabled}
+                    name={props.name.clone()}
+                    onclick={props.onclick.clone()}
+                    data-bs-toggle="modal"
+                    data-bs-target={format!("#{}",target.clone())}
+                >
+                    { &props.text }
+                    { for props.children.iter() }
+                </button>
+            }
+        } else {
+            html! {
+                <button
+                    class={classes}
+                    disabled={props.disabled}
+                    name={props.name.clone()}
+                    onclick={props.onclick.clone()}
+                    data-bs-dismiss={modal_dismiss}
+                >
+                    { &props.text }
+                    { for props.children.iter() }
+                </button>
+            }
         }
+
     }
 }
