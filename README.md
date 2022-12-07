@@ -44,8 +44,8 @@ There is currently no indication of which version of Bootstrap is targeted, howe
 
 ### Core Content
 
-- [X] Container (`<Container>`)
-- [X] Grid (`<Row>`, `<Column>`)
+- [X] Container ([component::Container])
+- [X] Grid ([component::Row], [component::Column])
 - [ ] Display headings
 - [ ] Lead
 - [ ] Blockquote
@@ -56,11 +56,11 @@ There is currently no indication of which version of Bootstrap is targeted, howe
 ### Components
 
 - [ ] Accordion
-- [x] Alert (`<Alert>`)
+- [x] Alert ([component::Alert])
 - [ ] Badge
 - [ ] Breadcrumb
-- [x] Button (`<Button>`)
-- [x] Button group (`<ButtonGroup>`)
+- [x] Button ([component::Button])
+- [x] Button group ([component::ButtonGroup])
 - [ ] Card
 - [ ] Carousel
 - [ ] Close button
@@ -68,7 +68,7 @@ There is currently no indication of which version of Bootstrap is targeted, howe
 - [ ] Dropdown
 - [ ] List group
 - [x] Modal
-- [x] Navbar (`<NavBar>, <NavItem>, <NavDropdown>, <NavDropdownItem>`)
+- [x] Navbar ([component::NavBar], [component::NavItem], [component::NavDropdown], [component::NavDropdownItem])
 - [ ] Navs & tabs
 - [ ] Offcanvas
 - [ ] Pagination
@@ -83,8 +83,8 @@ There is currently no indication of which version of Bootstrap is targeted, howe
 ### Helpers
 
 - [ ] Clearfix
-- [x] Colored links (`<Link>`)
+- [x] Colored links ([component::Link])
 - [ ] Stacks
-- [x] Stretched (`<Link stretched={true}>`)
+- [x] Stretched ([component::Link] with `stretched={true}>`)
 - [ ] Text truncation
-- [X] Vertical/Horizontal rule/line (`<Line>`)
+- [X] Vertical/Horizontal rule/line ([component::Line])
