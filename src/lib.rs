@@ -16,6 +16,7 @@
 //! There is currently no indication of which version of Bootstrap is targeted, however, we'll try to target the previous release pipeline. For example
 //! as of this writing the latest boostrap is 5.2.x, so we'll try to target the latest 5.1.x version.
 
-
+/// Components supported by this crate are listed here
 pub mod component;
+/// Helper functions and types are listed here, for example [util::Color] and the [util::include_cdn] function.
 pub mod util;

@@ -3,6 +3,8 @@ use super::Container;
 use crate::util::Dimension;
 
 
+/// # A singular dropdown item, child of [NavDropdown]
+/// Used as a child of [NavDropdown] to create a dropdown menu. See [NavDropdownItemProps] for a listing of properties.
 pub struct NavDropdownItem { }
 
 #[derive(Properties, Clone, PartialEq, Eq)]
@@ -32,6 +34,7 @@ impl Component for NavDropdownItem {
     }
 }
 
+/// A dropdown menu, child of [NavBar]. See [NavDropdownProps] for a listing of properties.
 #[derive(Clone, PartialEq, Eq)]
 pub struct NavDropdown { }
 
@@ -44,6 +47,7 @@ pub struct NavDropdownProps {
     pub id: String,
     #[prop_or_default]
     pub expanded: bool,
+    /// the text of the link with the dropdown-toggle class
     #[prop_or_default]
     pub text: String
 }
@@ -178,7 +182,7 @@ pub enum BrandType {
     }
 }
 
-/// # Navbar implementation
+/// # Navbar component, parent of [NavItem], [NavDropdown], and [NavDropdownItem]
 /// The navbar is a responsive horizontal menu bar that can contain links, dropdowns, and text.
 /// We have broken up this component into several sub-components to make it easier to use: [NavItem], [NavDropdown], and [NavDropdownItem].
 /// The brand property is set using the [BrandType] enum.
@@ -186,18 +190,22 @@ pub enum BrandType {
 /// See [NavBarProps] for more information on properties supported by this component.
 /// # Example
 /// ```rust
-/// let brand = BrandType::BrandSimple { 
-///     text: String::from("Yew Bootstrap"), 
-///     url: Some(String::from("https://yew.rs")) 
-/// };
+/// use yew::prelude::*;
+/// use yew_bootstrap::component::{BrandType, NavBar, NavDropdownItem, NavItem};
 /// 
-/// html!{
-///    <NavBar nav_id={"test-nav"} class="navbar-expand-lg navbar-light bg-light" brand={brand}>
-///       <NavItem text="Home" url={String::from("/")} />
-///       <NavItem text="more">
-///         <NavDropdownItem text="dropdown item 1" url={String::from("/dropdown1")} />
-///       </NavItem>
-///    </NavBar>
+/// fn test() -> Html {
+///     let brand = BrandType::BrandSimple { 
+///         text: String::from("Yew Bootstrap"), 
+///         url: Some(String::from("https://yew.rs")) 
+///     };
+///     html!{
+///         <NavBar nav_id={"test-nav"} class="navbar-expand-lg navbar-light bg-light" brand={brand}>
+///             <NavItem text="Home" url={String::from("/")} />
+///             <NavItem text="more">
+///                 <NavDropdownItem text="dropdown item 1" url={String::from("/dropdown1")} />
+///             </NavItem>
+///         </NavBar>
+///     }
 /// }
 /// ```
 pub struct NavBar { }

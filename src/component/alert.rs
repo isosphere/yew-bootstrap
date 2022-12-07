@@ -3,17 +3,21 @@ use yew::prelude::*;
 use crate::util::Color;
 
 /// # Alert component
-/// [https://getbootstrap.com/docs/5.1/components/alerts/](https://getbootstrap.com/docs/5.1/components/alerts/)
 /// Used alongside [crate::util::Color] to create Alert components 
 /// 
 /// See [AlertProps] for a listing of properties
 /// 
 /// ## Example
 /// ```rust
-/// html!{
-///    <Alert style={Color::Primary}>
-///     {"This is a primary alert!"}
-///    </Alert>
+/// use yew::prelude::*;
+/// use yew_bootstrap::component::Alert;
+/// use yew_bootstrap::util::Color;
+/// fn test() -> Html {
+///     html!{
+///         <Alert style={Color::Primary}>
+///             {"This is a primary alert!"}
+///         </Alert>
+///     }
 /// }
 /// ```
 pub struct Alert {}

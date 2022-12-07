@@ -44,10 +44,10 @@ impl Component for Model {
                 <NavBar nav_id={"test-nav"} class="navbar-expand-lg navbar-light bg-light" brand={brand}>
                     <NavItem text="link 1" />
                     <NavItem text="link 2" />
-                    <NavItem text="several items">
+                    <NavDropdown text="several items">
                         <NavDropdownItem text="hello 1" />
                         <NavDropdownItem text="hello 2" />
-                    </NavItem>
+                    </NavDropdown>
                 </NavBar>
                 <Modal id="ExampleModal">
                     <ModalHeader title="Modal title" id="ExampleModal" />
