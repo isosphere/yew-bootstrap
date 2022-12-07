@@ -1,6 +1,8 @@
 # yew-bootstrap
-
 `yew-bootstrap` is a collection of frontend components made to simplify the usage of Bootstrap 5 within the Yew framework.
+
+<a href="https://crates.io/crates/yew-bootstrap"><img alt="Crate info" src="https://img.shields.io/crates/v/yew-bootstrap.svg" /></a> 
+<a href="https://docs.rs/yew-bootstrap/"><img alt="API Docs" src="https://img.shields.io/badge/docs.rs-yew--bootstrap-green"/></a>
 
 ## Usage
 
