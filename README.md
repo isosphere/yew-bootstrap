@@ -17,7 +17,8 @@ yew = "0.20"
 yew-bootstrap = "0.5.2"
 ```
 
-Then in the beginning of your application, include the `include_cdn()` or `include_inline()` function to load the required CSS and JS, either from JSDeliver CDN or to inline the CSS:
+Then in the beginning of your application, include the `include_cdn()` or `include_inline()` function to load the required CSS. Some components require the Bootstrap JavaScript
+library to be loaded - for these you can use the `include_cdn_js()` function. It is recommended that you put this at the bottom of your `html!{}` macro, as done below:
 
 ```Rust
     fn view(&self, _ctx: &Context<Self>) -> Html {
@@ -25,6 +26,7 @@ Then in the beginning of your application, include the `include_cdn()` or `inclu
             <>
                 {include_cdn()}
                 <Button style={Color::Primary}>{"Primary"}</Button>
+                {include_cdn_js()}
             </>
         }
     }
