@@ -178,6 +178,28 @@ pub enum BrandType {
     }
 }
 
+/// # Navbar implementation
+/// The navbar is a responsive horizontal menu bar that can contain links, dropdowns, and text.
+/// We have broken up this component into several sub-components to make it easier to use: [NavItem], [NavDropdown], and [NavDropdownItem].
+/// The brand property is set using the [BrandType] enum.
+/// 
+/// See [NavBarProps] for more information on properties supported by this component.
+/// # Example
+/// ```rust
+/// let brand = BrandType::BrandSimple { 
+///     text: String::from("Yew Bootstrap"), 
+///     url: Some(String::from("https://yew.rs")) 
+/// };
+/// 
+/// html!{
+///    <NavBar nav_id={"test-nav"} class="navbar-expand-lg navbar-light bg-light" brand={brand}>
+///       <NavItem text="Home" url={String::from("/")} />
+///       <NavItem text="more">
+///         <NavDropdownItem text="dropdown item 1" url={String::from("/dropdown1")} />
+///       </NavItem>
+///    </NavBar>
+/// }
+/// ```
 pub struct NavBar { }
 
 #[derive(Properties, Clone, PartialEq)]
