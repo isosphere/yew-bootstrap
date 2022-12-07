@@ -1,7 +1,7 @@
 [package]
 name = "yew-bootstrap"
 version = "0.5.2"
-authors = ["Foorack <max@foorack.com>"]
+authors = ["Matthew Scheffel <matt@dataheck.com>", "Foorack <max@foorack.com>"]
 edition = "2021"
 license = "MIT"
 readme = "README.md"
