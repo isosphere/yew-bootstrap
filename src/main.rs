@@ -36,11 +36,12 @@ impl Component for Model {
         </div>
         */
 
-        let brand = BrandType::BrandSimple { text: String::from("Yew Bootstrap"), url: Some(String::from("https://yew.rs")) };
+        let brand = BrandType::BrandIcon { text: String::from("Yew Bootstrap"), url: Some(String::from("https://yew.rs")), icon: String::from("rocket") };
 
         html! {
             <>
                 {include_inline()}
+                {include_cdn_icons()}
                 <NavBar nav_id={"test-nav"} class="navbar-expand-lg navbar-light bg-light" brand={brand}>
                     <NavItem text="link 1" />
                     <NavItem text="link 2" />

@@ -163,6 +163,8 @@ impl Component for NavItem {
 #[derive(Clone, PartialEq, Eq)]
 pub enum BrandType {
     BrandSimple { text: String, url: Option<String> },
+    /// a brand icon is a bootstrap icon, requiring bootstrap-icons to be imported
+    BrandIcon { icon: String, text: String, url: Option<String> },
     BrandImage { 
         /// browser-accessible url to the brand image
         image_url: String, 
@@ -271,6 +273,18 @@ impl Component for NavBar {
                             </a>
                         }
                     },
+                    BrandType::BrandIcon { text, icon, url } => {
+                        let url = match url { 
+                            Some(u) => u.clone(),
+                            None => String::from("#")
+                        };
+                        html! {
+                            <a class="navbar-brand" href={url} onclick={props.brand_callback.clone()}>
+                                <i class={format!("bi-{}", icon)}></i>
+                                {text.clone()}
+                            </a>
+                        }
+                    }
                     BrandType::BrandImage { image_url, alt, dimension } => {
                         match dimension {
                             None => {
