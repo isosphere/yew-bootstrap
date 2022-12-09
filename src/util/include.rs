@@ -35,3 +35,16 @@ pub fn include_inline() -> VNode {
         </style>
     }
 }
+
+
+pub fn include_cdn_icons() -> VNode {
+    html! {
+        <link 
+            rel="stylesheet" 
+            data-trunk={"true"}
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" 
+            crossorigin="anonymous"
+            integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e"
+        />
+    }
+}

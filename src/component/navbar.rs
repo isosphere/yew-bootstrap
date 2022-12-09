@@ -163,6 +163,8 @@ impl Component for NavItem {
 #[derive(Clone, PartialEq, Eq)]
 pub enum BrandType {
     BrandSimple { text: String, url: Option<String> },
+    /// a brand icon is a bootstrap icon, requiring bootstrap-icons to be imported
+    BrandIcon { icon: String, text: String, url: Option<String> },
     BrandImage { 
         /// browser-accessible url to the brand image
         image_url: String, 
@@ -225,7 +227,10 @@ pub struct NavBarProps {
     pub expanded: bool,
 
     #[prop_or_default]
-    pub brand: Option<BrandType>
+    pub brand: Option<BrandType>,
+
+    #[prop_or_default]
+    pub brand_callback: Callback<MouseEvent>
 }
 
 impl Component for NavBar {
@@ -263,23 +268,35 @@ impl Component for NavBar {
                         };
 
                         html!{
-                            <a class="navbar-brand" href={url}>
+                            <a class="navbar-brand" href={url} onclick={props.brand_callback.clone()}>
                                 {text.clone()}
                             </a>
                         }
                     },
+                    BrandType::BrandIcon { text, icon, url } => {
+                        let url = match url { 
+                            Some(u) => u.clone(),
+                            None => String::from("#")
+                        };
+                        html! {
+                            <a class="navbar-brand" href={url} onclick={props.brand_callback.clone()}>
+                                <i class={format!("bi-{}", icon)}></i>
+                                {text.clone()}
+                            </a>
+                        }
+                    }
                     BrandType::BrandImage { image_url, alt, dimension } => {
                         match dimension {
                             None => {
                                 html! {
-                                    <a class="navbar-brand" href={"#"}>
+                                    <a class="navbar-brand" href={"#"} onclick={props.brand_callback.clone()}>
                                         <img src={image_url.clone()} alt={alt.clone()} class="d-inline-block align-text-top" />
                                     </a>
                                 }
                             }
                             Some(Dimension{width, height}) => {
                                 html! {
-                                    <a class="navbar-brand" href={"#"}>
+                                    <a class="navbar-brand" href={"#"} onclick={props.brand_callback.clone()}>
                                         <img src={image_url.clone()} alt={alt.clone()} width={width.clone()} height={height.clone()} class="d-inline-block align-text-top" />
                                     </a>
                                 }
@@ -294,7 +311,7 @@ impl Component for NavBar {
                         match dimension {
                             None => {
                                 html! {
-                                    <a class="navbar-brand" href={url}>
+                                    <a class="navbar-brand" href={url} onclick={props.brand_callback.clone()}>
                                         <img src={image_url.clone()} alt={alt.clone()} class="d-inline-block align-text-top" />
                                         {text.clone()}
                                     </a>
@@ -302,7 +319,7 @@ impl Component for NavBar {
                             },
                             Some(Dimension{width, height}) => {
                                 html! {
-                                    <a class="navbar-brand" href={url}>
+                                    <a class="navbar-brand" href={url} onclick={props.brand_callback.clone()}>
                                         <img src={image_url.clone()} alt={alt.clone()} width={width.clone()} height={height.clone()} class="d-inline-block align-text-top" />
                                         {text.clone()}
                                     </a>

@@ -14,7 +14,7 @@ Add the dependency next to the regular yew dependency:
 ```toml
 [dependencies]
 yew = "0.20"
-yew-bootstrap = "0.5.2"
+yew-bootstrap = "0.5.3"
 ```
 
 Then in the beginning of your application, include the `include_cdn()` or `include_inline()` function to load the required CSS. Some components require the Bootstrap JavaScript
