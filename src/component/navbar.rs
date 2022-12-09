@@ -225,7 +225,10 @@ pub struct NavBarProps {
     pub expanded: bool,
 
     #[prop_or_default]
-    pub brand: Option<BrandType>
+    pub brand: Option<BrandType>,
+
+    #[prop_or_default]
+    pub brand_callback: Callback<MouseEvent>
 }
 
 impl Component for NavBar {
@@ -263,7 +266,7 @@ impl Component for NavBar {
                         };
 
                         html!{
-                            <a class="navbar-brand" href={url}>
+                            <a class="navbar-brand" href={url} onclick={props.brand_callback.clone()}>
                                 {text.clone()}
                             </a>
                         }
@@ -272,14 +275,14 @@ impl Component for NavBar {
                         match dimension {
                             None => {
                                 html! {
-                                    <a class="navbar-brand" href={"#"}>
+                                    <a class="navbar-brand" href={"#"} onclick={props.brand_callback.clone()}>
                                         <img src={image_url.clone()} alt={alt.clone()} class="d-inline-block align-text-top" />
                                     </a>
                                 }
                             }
                             Some(Dimension{width, height}) => {
                                 html! {
-                                    <a class="navbar-brand" href={"#"}>
+                                    <a class="navbar-brand" href={"#"} onclick={props.brand_callback.clone()}>
                                         <img src={image_url.clone()} alt={alt.clone()} width={width.clone()} height={height.clone()} class="d-inline-block align-text-top" />
                                     </a>
                                 }
@@ -294,7 +297,7 @@ impl Component for NavBar {
                         match dimension {
                             None => {
                                 html! {
-                                    <a class="navbar-brand" href={url}>
+                                    <a class="navbar-brand" href={url} onclick={props.brand_callback.clone()}>
                                         <img src={image_url.clone()} alt={alt.clone()} class="d-inline-block align-text-top" />
                                         {text.clone()}
                                     </a>
@@ -302,7 +305,7 @@ impl Component for NavBar {
                             },
                             Some(Dimension{width, height}) => {
                                 html! {
-                                    <a class="navbar-brand" href={url}>
+                                    <a class="navbar-brand" href={url} onclick={props.brand_callback.clone()}>
                                         <img src={image_url.clone()} alt={alt.clone()} width={width.clone()} height={height.clone()} class="d-inline-block align-text-top" />
                                         {text.clone()}
                                     </a>
