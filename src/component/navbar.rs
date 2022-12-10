@@ -163,7 +163,7 @@ impl Component for NavItem {
 #[derive(Clone, PartialEq, Eq)]
 pub enum BrandType {
     BrandSimple { text: String, url: Option<String> },
-    /// a brand icon is a bootstrap icon, requiring bootstrap-icons to be imported
+    /// a brand icon is a bootstrap icon, requiring bootstrap-icons to be imported; see [crate::util::include_cdn_icons]
     BrandIcon { icon: String, text: String, url: Option<String> },
     BrandImage { 
         /// browser-accessible url to the brand image

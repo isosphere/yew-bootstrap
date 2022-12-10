@@ -1,5 +1,6 @@
 use yew::{html, virtual_dom::VNode};
 
+/// Links to the Bootstrap CSS CDN
 pub fn include_cdn() -> VNode {
     html! {
         <link
@@ -11,7 +12,7 @@ pub fn include_cdn() -> VNode {
     }
 }
 
-
+/// Links to the Bootstrap JS CDN, including the map file which must be explicitly mentioned for Trunk to copy it
 pub fn include_cdn_js() -> VNode {
     html! {
         <>
@@ -27,7 +28,7 @@ pub fn include_cdn_js() -> VNode {
     }
 }
 
-
+/// Inserts the bootstrap CSS directly into the content of the page
 pub fn include_inline() -> VNode {
     html! {
         <style>
@@ -37,6 +38,7 @@ pub fn include_inline() -> VNode {
 }
 
 
+/// Include the Bootstrap Icons CDN
 pub fn include_cdn_icons() -> VNode {
     html! {
         <link 
