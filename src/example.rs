@@ -36,7 +36,11 @@ impl Component for Model {
         </div>
         */
 
-        let brand = BrandType::BrandIcon { text: String::from("Yew Bootstrap"), url: Some(String::from("https://yew.rs")), icon: String::from("rocket") };
+        let brand = BrandType::BrandIcon { 
+            text: AttrValue::from("Yew Bootstrap"), 
+            url: Some(AttrValue::from("https://yew.rs")), 
+            icon: AttrValue::from("rocket") 
+        };
 
         html! {
             <>
