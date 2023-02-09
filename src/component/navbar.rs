@@ -2,15 +2,19 @@ use yew::prelude::*;
 use super::Container;
 use crate::util::Dimension;
 
-
 /// # A singular dropdown item, child of [NavDropdown]
-/// Used as a child of [NavDropdown] to create a dropdown menu. See [NavDropdownItemProps] for a listing of properties.
+/// Used as a child of [NavDropdown] to create a dropdown menu. 
+/// 
+/// See [NavDropdownItemProps] for a listing of properties.
 pub struct NavDropdownItem { }
 
+/// # Properties for [NavDropdown]
 #[derive(Properties, Clone, PartialEq, Eq)]
 pub struct NavDropdownItemProps {
+    /// Item text
     #[prop_or_default]
     pub text: AttrValue,
+    /// Link for the item
     #[prop_or_default]
     pub url: AttrValue,
 }
@@ -38,6 +42,7 @@ impl Component for NavDropdownItem {
 #[derive(Clone, PartialEq, Eq)]
 pub struct NavDropdown { }
 
+/// Properties for [NavDropdown]
 #[derive(Properties, Clone, PartialEq)]
 pub struct NavDropdownProps {
     #[prop_or_default]
@@ -45,6 +50,7 @@ pub struct NavDropdownProps {
     /// the id of the link with the dropdown-toggle class, referenced by aria-labelledby
     #[prop_or_default]
     pub id: AttrValue,
+    /// If true, menu is expanded (ie visible)
     #[prop_or_default]
     pub expanded: bool,
     /// the text of the link with the dropdown-toggle class
@@ -81,24 +87,30 @@ impl Component for NavDropdown {
     }
 }
 
+/// # Item of a [NavBar]
+/// This typically contains text inside a link
+/// 
+/// Refer to [NavItemProperties] for a listing of properties
 pub struct NavItem { }
 
+/// Properties for NavItem
 #[derive(Properties, Clone, PartialEq)]
 pub struct NavItemProperties {
+    /// If provided, text is inside a link
     #[prop_or_default]
     pub url: Option<AttrValue>,
+    /// Link is the currently active one
     #[prop_or_default]
     pub active: bool,
+    /// Link is disabled
     #[prop_or_default]
     pub disabled: bool,
-    /// ignored if dropdown is Some
+    /// Text of the item, ignored if dropdown is Some
     #[prop_or_default]
     pub text: AttrValue,
-
     /// required for dropdowns
     #[prop_or_default]
     pub id: AttrValue,
-
     /// dropdown items
     #[prop_or_default]
     pub children: Children
@@ -160,12 +172,18 @@ impl Component for NavItem {
     }
 }
 
+/// # Brand type for a [NavBar]
+/// 
+/// This can contain a text, icon, image or combined (text and image)
 #[derive(Clone, PartialEq, Eq)]
 pub enum BrandType {
+    /// Text with optional link
     BrandSimple { 
         text: AttrValue, url: Option<AttrValue> },
-    /// a brand icon is a bootstrap icon, requiring bootstrap-icons to be imported; see [crate::util::include_cdn_icons]
+    /// a brand icon is a bootstrap icon, requiring bootstrap-icons to be imported; 
+    /// see [crate::util::include_cdn_icons]
     BrandIcon { icon: AttrValue, text: AttrValue, url: Option<AttrValue> },
+    /// Image with optional dimensions, link and descriptive text
     BrandImage { 
         /// browser-accessible url to the brand image
         image_url: AttrValue, 
@@ -173,6 +191,7 @@ pub enum BrandType {
         alt: AttrValue, 
         dimension: Option<Dimension>
     },
+    /// Combined image and text with URL
     BrandCombined {
         text: AttrValue, 
         /// hyperlink destination for brand text
@@ -213,10 +232,12 @@ pub enum BrandType {
 /// ```
 pub struct NavBar { }
 
+/// Properties for [NavBar]
 #[derive(Properties, Clone, PartialEq)]
 pub struct NavBarProps {
     #[prop_or_default]
     pub children: Children,
+    /// CSS class
     #[prop_or_default]
     pub class: AttrValue,
 
@@ -224,12 +245,15 @@ pub struct NavBarProps {
     #[prop_or_default]
     pub nav_id: AttrValue,
 
+    /// Navbar is expanded (Aria)
     #[prop_or_default]
     pub expanded: bool,
 
+    /// Brand type, see [BrandType]
     #[prop_or_default]
     pub brand: Option<BrandType>,
 
+    /// Callback when brand is clicked
     #[prop_or_default]
     pub brand_callback: Callback<MouseEvent>
 }

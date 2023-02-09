@@ -1,5 +1,7 @@
 use std::fmt;
 
+/// # Colors
+/// Bootstrap colors for buttons, links, etc.
 #[derive(Clone, PartialEq, Eq)]
 pub enum Color {
     Primary,

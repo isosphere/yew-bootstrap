@@ -1,5 +1,7 @@
 use std::fmt;
 
+/// # Size enum
+/// Specify size with different units
 #[derive(Clone, PartialEq)]
 pub enum Size {
     Auto,

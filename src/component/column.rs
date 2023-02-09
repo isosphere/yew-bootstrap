@@ -1,38 +1,65 @@
 use log::warn;
 use yew::prelude::*;
 
+/// # Column container
+/// Used alongside [crate::component::Row] to create grids
+/// 
+/// See [crate::component::ColumnProps] for a listing of properties
+/// 
+/// ## Example
+/// ```rust
+/// use yew::prelude::*;
+/// use yew_bootstrap::component::{Column, Row};
+/// fn test() -> Html {
+///     html!{
+///         <Row>
+///             <Column sm=1 lg=4><p>{ "First column" }</p></Column>
+///             <Column sm=2 lg=8><p>{ "Second column" }</p></Column>
+///         </Row>
+///     }
+/// }
+/// ```
 pub struct Column {}
 
+/// # Properties for [Column]
 #[derive(Properties, Clone, PartialEq)]
-pub struct ComponentProps {
+pub struct ColumnProps {
+    /// CSS class
     #[prop_or_default]
     pub class: String,
 
+    /// Children
     #[prop_or_default]
     pub children: Children,
 
+    /// Default size (Out of 12)
     #[prop_or(Some(0))]
     pub size: Option<u8>,
 
+    /// Size (out of 12) for small screens
     #[prop_or_default]
     pub sm: Option<u8>,
 
+    /// Size (out of 12) for medium screens
     #[prop_or_default]
     pub md: Option<u8>,
 
+    /// Size (out of 12) for large screens
     #[prop_or_default]
     pub lg: Option<u8>,
 
+    /// Size (out of 12) for very large screens
     #[prop_or_default]
     pub xl: Option<u8>,
 
+    /// Size (out of 12) for very very large screens
     #[prop_or_default]
     pub xxl: Option<u8>,
 }
 
 impl Component for Column {
     type Message = ();
-    type Properties = ComponentProps;
+    type Properties = ColumnProps;
 
     fn create(_ctx: &Context<Self>) -> Self {
         Self {}
