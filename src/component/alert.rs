@@ -22,17 +22,22 @@ use crate::util::Color;
 /// ```
 pub struct Alert {}
 
+/// # Properties of [Alert]
 #[derive(Properties, Clone, PartialEq)]
 pub struct AlertProps {
+    /// CSS class
     #[prop_or_default]
     pub class: String,
 
+    /// Inner components
     #[prop_or_default]
     pub children: Children,
 
+    /// Color style, default [Color::Primary]
     #[prop_or(Color::Primary)]
     pub style: Color,
 
+    /// Optional text placed before the children
     #[prop_or_default]
     pub text: String,
 }

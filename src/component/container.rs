@@ -1,6 +1,7 @@
 use log::*;
 use yew::prelude::*;
 
+/// Size for a container, from extra small to extra large
 #[derive(Clone, PartialEq, Eq)]
 pub enum ContainerSize {
     ExtraSmall,
@@ -23,26 +24,49 @@ impl ToString for ContainerSize {
     }
 }
 
+/// # Container component
+/// Global container for a page.
+/// 
+/// See [ContainerProps] for a listing of properties.
+/// 
+/// ## Example
+/// Example container:
+/// 
+/// ```rust
+/// use yew::prelude::*;
+/// use yew_bootstrap::component::{Container, ContainerSize};
+/// use yew_bootstrap::util::Color;
+/// fn test() -> Html {
+///     html!{
+///         <Container size={ContainerSize::Large} fluid={ true }/>
+///     }
+/// }
+/// ```
 pub struct Container {}
 
+/// Properties for [Container]
 #[derive(Properties, Clone, PartialEq)]
-pub struct ComponentProps {
+pub struct ContainerProps {
+    /// CSS class
     #[prop_or_default]
     pub class: String,
 
+    /// Contents of the container
     #[prop_or_default]
     pub children: Children,
 
+    /// Size of the container
     #[prop_or(ContainerSize::ExtraSmall)]
     pub size: ContainerSize,
 
+    /// If true, fluid container - Size ignored and must be default.
     #[prop_or_default]
     pub fluid: bool,
 }
 
 impl Component for Container {
     type Message = ();
-    type Properties = ComponentProps;
+    type Properties = ContainerProps;
 
     fn create(_ctx: &Context<Self>) -> Self {
         Self {}
