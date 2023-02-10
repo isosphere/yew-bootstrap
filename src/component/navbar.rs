@@ -245,7 +245,7 @@ pub struct NavBarProps {
     #[prop_or_default]
     pub nav_id: AttrValue,
 
-    /// Navbar is expanded (Aria)
+    /// Navbar is expanded. Used to notify assitive technologies via aria-expanded
     #[prop_or_default]
     pub expanded: bool,
 

@@ -1,15 +1,13 @@
 use yew::prelude::*;
 
 /// # Button group
-/// [ButtonGroup] is used to group several [crate::component::Button] together.
+/// [ButtonGroup] is used to group several [crate::component::Button] instances together.
 /// Buttons can be arranged vertically.
-/// 
-/// Buttons can be grouped in a [ButtonGroup].
 /// 
 /// See [ButtonGroupProps] for a listing of properties.
 /// 
 /// ## Example
-/// Example of a simple button:
+/// Example of a simple button group:
 /// 
 /// ```rust
 /// use yew::prelude::*;
@@ -33,15 +31,15 @@ pub struct ButtonGroupProps {
     #[prop_or_default]
     pub class: String,
 
-    /// Children for the group
+    /// Children for the group (Button instances)
     #[prop_or_default]
     pub children: Children,
 
-    /// Aria label
+    /// Aria label used for assistive technologies
     #[prop_or_default]
     pub label: String,
 
-    /// Role
+    /// Role, used for assistive technoligies to describe the purpose of the group.
     #[prop_or_default]
     pub role: String,
 

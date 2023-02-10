@@ -30,7 +30,7 @@ impl ToString for ContainerSize {
 /// See [ContainerProps] for a listing of properties.
 /// 
 /// ## Example
-/// Example of container:
+/// Example container:
 /// 
 /// ```rust
 /// use yew::prelude::*;
@@ -51,7 +51,7 @@ pub struct ContainerProps {
     #[prop_or_default]
     pub class: String,
 
-    /// List of children
+    /// Contents of the container
     #[prop_or_default]
     pub children: Children,
 

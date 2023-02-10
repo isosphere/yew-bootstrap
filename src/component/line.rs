@@ -6,7 +6,7 @@ use yew::prelude::*;
 /// See [LineProps] for a listing of properties.
 /// 
 /// ## Example
-/// Example of line:
+/// Example line:
 /// 
 /// ```rust
 /// use yew::prelude::*;

@@ -15,8 +15,8 @@ impl Default for ButtonSize {
 }
 
 /// # Button component
-/// Button with various properties, including a button to open
-/// or close a modal dialog [crate::component::Modal].
+/// Button with various properties, including support for opening or closing a modal 
+/// dialog [crate::component::Modal].
 /// 
 /// Buttons can be grouped in a [crate::component::ButtonGroup].
 /// 
@@ -70,11 +70,11 @@ pub struct ButtonProps {
     #[prop_or_default]
     pub children: Children,
 
-    /// Treat button as block
+    /// Treat button as block that spans the full width of the parent
     #[prop_or_default]
     pub block: bool,
 
-    /// Button is disabled
+    /// Status of the button. Disabled buttons cannot be clicked.
     #[prop_or_default]
     pub disabled: bool,
 

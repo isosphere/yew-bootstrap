@@ -37,7 +37,7 @@ pub struct AlertProps {
     #[prop_or(Color::Primary)]
     pub style: Color,
 
-    /// Optional text placed before the children.
+    /// Optional text placed before the children
     #[prop_or_default]
     pub text: String,
 }

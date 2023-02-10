@@ -2,7 +2,7 @@ use log::warn;
 use yew::prelude::*;
 
 /// # Column container
-/// Used alongside [crate::component::Row] to create grids
+/// Used with [crate::component::Row] to create grids
 /// 
 /// See [crate::component::ColumnProps] for a listing of properties
 /// 
