@@ -1,4 +1,4 @@
-#![doc = include_str!("../README.md")]
+#![doc = include_str!("../../../README.md")]
 
 /// Components supported by this crate are listed here
 pub mod component;

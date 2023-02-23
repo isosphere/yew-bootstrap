@@ -1,38 +1,8 @@
-[package]
-name = "yew-bootstrap"
-version = "0.5.4"
-authors = ["Matthew Scheffel <matt@dataheck.com>", "Foorack <max@foorack.com>"]
-edition = "2021"
-license = "MIT"
-readme = "README.md"
-keywords = ["yew", "bootstrap", "web"]
-categories = ["gui", "web-programming"]
-description = "Components for easier using Bootstrap with Yew"
-repository = "https://github.com/foorack/yew-bootstrap/"
-
-[[bin]]
-name = "yew-bootstrap-example"
-path = "src/example.rs"
-
-[lib]
-# You should include "rlib" (the default crate type) otherwise your crate can't be used as a Rust library
-# which, among other things, breaks unit testing
-crate-type = ["rlib", "cdylib"]
-name = "yew_bootstrap"
-
-[dependencies]
-yew = { version = "0.20", features = ["csr"] }
-log = "0.4"
-#console_log = { version = "0.2", features = ["color"] }
-
-[profile.release]
-# less code to include into binary
-panic = 'abort' 
-# optimization over all codebase ( better optimization, slower build )
-codegen-units = 1
-# optimization for size ( more aggressive )
-opt-level = 'z' 
-# optimization for size 
-# opt-level = 's' 
-# link time optimization using using whole-program analysis
-lto = true
+[workspace]
+members = [
+    "packages/*"
+]
+exclude = [
+    "examples/*",
+]
+resolver = "2"
