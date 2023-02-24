@@ -10,4 +10,4 @@ Cargo.lock
 **/*.rs.bk
 
 # Trunk build output
-/dist/
+**/dist/
