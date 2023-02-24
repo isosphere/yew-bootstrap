@@ -1,0 +1,12 @@
+[package]
+name = "forms"
+version = "0.1.0"
+authors = ["Cédric Airaud <cairaud@gmail.com>"]
+edition = "2021"
+license = "MIT"
+
+[dependencies]
+wasm-bindgen = "0.2.*"
+web-sys = { version = "0.3.*", features = ["HtmlTextAreaElement", "HtmlSelectElement"] }
+yew = { version = "0.20", features = ["csr"] }
+yew-bootstrap = { path = "../../packages/yew-bootstrap" }
