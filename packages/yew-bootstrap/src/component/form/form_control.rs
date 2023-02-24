@@ -82,11 +82,7 @@ pub struct FormControlProps {
 /// Convert an option (Typically integer) to an AttrValue option
 fn convert_to_string_option<T>(value: &Option<T>) -> Option<AttrValue>
 where T: std::fmt::Display {
-    if let Some(value) = value {
-        Some(AttrValue::from(value.to_string()))
-    } else {
-        None
-    }
+    value.as_ref().map(|v| AttrValue::from(v.to_string()))
 }
 
 /// # Form Control field
@@ -233,12 +229,9 @@ pub fn FormControl(props: &FormControlProps) -> Html {
         }
     };
 
-    let help = match props.help.clone() {
-        None => None,
-        Some(text) => Some(html! {
-            <div class="form-text">{ text.clone() }</div>
-        })
-    };
+    let help = props.help.as_ref().map(|text| html! {
+        <div class="form-text">{ text.clone() }</div>
+    });
 
     let (validation, validation_class) = match props.validation.clone() {
         FormControlValidation::None => (None, None),
@@ -272,19 +265,27 @@ pub fn FormControl(props: &FormControlProps) -> Html {
 
             let input_classes = classes!("form-control", validation_class);
 
-            let cols_str = convert_to_string_option(&cols);
-            let rows_str = convert_to_string_option(&rows);
+            let cols_str = convert_to_string_option(cols);
+            let rows_str = convert_to_string_option(rows);
             let (label_before, label_after) =
                 if props.floating { (None, label) } else { (label, None) };
 
             html! {
                 <div class={ classes }>
                     { label_before }
-                    <textarea class={ input_classes } id={ props.id.clone() }
-                              name={ props.name.clone() } cols={ cols_str } rows={ rows_str }
-                              placeholder={ placeholder } value={ props.value.clone() }
-                              disabled={ props.disabled } oninput={props.oninput.clone() }
-                              onchange={ props.onchange.clone() } onclick={ props.onclick.clone() }/>
+                    <textarea 
+                        class={ input_classes } 
+                        id={ props.id.clone() }
+                        name={ props.name.clone() } 
+                        cols={ cols_str } 
+                        rows={ rows_str }
+                        placeholder={ placeholder } 
+                        value={ props.value.clone() }
+                        disabled={ props.disabled } 
+                        oninput={props.oninput.clone() }
+                        onchange={ props.onchange.clone() } 
+                        onclick={ props.onclick.clone() }
+                    />
                     { label_after }
                     { help }
                     { validation }
@@ -324,10 +325,17 @@ pub fn FormControl(props: &FormControlProps) -> Html {
 
             html! {
                 <div class={ classes }>
-                    <input type={ props.ctype.to_str() } class={ input_classes } id={ props.id.clone() }
-                           name={ props.name.clone() } checked={ props.checked } disabled={ props.disabled }
-                           value={ props.value.clone() }
-                           onchange={ props.onchange.clone() } onclick={ props.onclick.clone() }/>
+                    <input 
+                        type={ props.ctype.to_str() } 
+                        class={ input_classes } 
+                        id={ props.id.clone() }
+                        name={ props.name.clone() } 
+                        checked={ props.checked } 
+                        disabled={ props.disabled }
+                        value={ props.value.clone() }
+                        onchange={ props.onchange.clone() } 
+                        onclick={ props.onclick.clone() }
+                    />
                     { label }
                     { help }
                 </div>
@@ -340,13 +348,13 @@ pub fn FormControl(props: &FormControlProps) -> Html {
             let mut accept_str = None;
             match &props.ctype {
                 FormControlType::Number { min, max } => {
-                    min_str = convert_to_string_option(&min);
-                    max_str = convert_to_string_option(&max);
+                    min_str = convert_to_string_option(min);
+                    max_str = convert_to_string_option(max);
                 },
                 FormControlType::Range { min, max, step } => {
                     min_str = Some(AttrValue::from(min.to_string()));
                     max_str = Some(AttrValue::from(max.to_string()));
-                    step_str = convert_to_string_option(&step);
+                    step_str = convert_to_string_option(step);
                 },
                 FormControlType::DateMinMax { min, max } |
                 FormControlType::DatetimeMinMax { min, max } |
@@ -376,12 +384,23 @@ pub fn FormControl(props: &FormControlProps) -> Html {
             html! {
                 <div class={ classes }>
                     { label_before }
-                    <input type={ props.ctype.to_str() } class={ input_classes } id={ props.id.clone() }
-                           name={ props.name.clone() } value={ props.value.clone() }
-                           pattern={ pattern } accept={ accept_str } placeholder={ placeholder }
-                           min={ min_str } max={ max_str } step={ step_str } disabled={ props.disabled }
-                           onchange={ props.onchange.clone() } onclick={ props.onclick.clone() }
-                           oninput={ props.oninput.clone() } />
+                    <input 
+                        type={ props.ctype.to_str() } 
+                        class={ input_classes } 
+                        id={ props.id.clone() }
+                        name={ props.name.clone() } 
+                        value={ props.value.clone() }
+                        pattern={ pattern } 
+                        accept={ accept_str } 
+                        placeholder={ placeholder }
+                        min={ min_str } 
+                        max={ max_str } 
+                        step={ step_str } 
+                        disabled={ props.disabled }
+                        onchange={ props.onchange.clone() } 
+                        onclick={ props.onclick.clone() }
+                        oninput={ props.oninput.clone() } 
+                    />
                     { label_after }
                     { help }
                 </div>
