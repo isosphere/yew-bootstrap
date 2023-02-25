@@ -1,45 +1,24 @@
 use yew::prelude::*;
+
 use yew_bootstrap::component::*;
 use yew_bootstrap::util::*;
 
-enum Msg {
-    #[allow(dead_code)]
-    AddOne,
-}
-
-struct Model {
-    value: i64,
-}
+enum Msg {}
+struct Model {}
 
 impl Component for Model {
     type Message = Msg;
     type Properties = ();
 
     fn create(_ctx: &Context<Self>) -> Self {
-        Self { value: 0 }
-    }
-
-    fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
-        match msg {
-            Msg::AddOne => {
-                self.value += 1;
-                true
-            }
-        }
+        Self {}
     }
 
     fn view(&self, _ctx: &Context<Self>) -> Html {
-        /*
-        <div>
-            <button onclick={ctx.link().callback(|_| Msg::AddOne)}>{ "+1" }</button>
-            <p>{ self.value }</p>
-        </div>
-        */
-
-        let brand = BrandType::BrandIcon { 
-            text: AttrValue::from("Yew Bootstrap"), 
-            url: Some(AttrValue::from("https://yew.rs")), 
-            icon: AttrValue::from("rocket") 
+        let brand = BrandType::BrandIcon {
+            text: AttrValue::from("Yew Bootstrap"),
+            url: Some(AttrValue::from("https://yew.rs")),
+            icon: AttrValue::from("rocket")
         };
 
         html! {

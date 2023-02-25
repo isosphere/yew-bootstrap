@@ -1,7 +1,7 @@
 # yew-bootstrap
 `yew-bootstrap` is a collection of frontend components made to simplify the usage of Bootstrap 5 within the Yew framework.
 
-<a href="https://crates.io/crates/yew-bootstrap"><img alt="Crate info" src="https://img.shields.io/crates/v/yew-bootstrap.svg" /></a> 
+<a href="https://crates.io/crates/yew-bootstrap"><img alt="Crate info" src="https://img.shields.io/crates/v/yew-bootstrap.svg" /></a>
 <a href="https://docs.rs/yew-bootstrap/"><img alt="API Docs" src="https://img.shields.io/badge/docs.rs-yew--bootstrap-green"/></a>
 
 ## Usage
@@ -14,6 +14,14 @@ Add the dependency next to the regular yew dependency:
 [dependencies]
 yew = "0.20"
 yew-bootstrap = "0.5"
+```
+
+To use form callback functions, the following dependencies should be added:
+
+```toml
+[dependencies]
+wasm-bindgen = "0.2.*"
+web-sys = { version = "0.3.*", features = ["HtmlTextAreaElement", "HtmlSelectElement"] }
 ```
 
 Then in the beginning of your application, include the `include_cdn()` or `include_inline()` function to load the required CSS. Some components require the Bootstrap JavaScript
@@ -50,7 +58,7 @@ There is currently no indication of which version of Bootstrap is targeted, howe
 - [ ] Blockquote
 - [ ] Image/Figure
 - [ ] Table
-- [ ] Forms
+- [x] Forms ([component::form::FormControl])
 
 ### Components
 
@@ -87,3 +95,17 @@ There is currently no indication of which version of Bootstrap is targeted, howe
 - [x] Stretched ([component::Link] with `stretched={true}>`)
 - [ ] Text truncation
 - [X] Vertical/Horizontal rule/line ([component::Line])
+
+## Examples
+
+Several examples are provided:
+
+- `examples/basics`: Components
+- `examples/forms`: Form fields
+
+To run an example:
+
+```bash
+cd examples/<directory>
+trunk --serve
+```
