@@ -76,7 +76,7 @@ impl Component for Model {
                             },
                             Err(_) => {
                                 self.number_feedback = FormControlValidation::Invalid(
-                                    AttrValue::from(format!("Value cannot be parsed as a valid integer")))
+                                    AttrValue::from("Value cannot be parsed as a valid integer".to_string()))
                             }
                         }
                     },
@@ -526,7 +526,7 @@ impl Component for Model {
                             value={ self.value_select.clone()}
                             help={ Some(AttrValue::from(format!("Current value: {}", self.value_select))) }
                         >
-                            <SelectOption key=0 label="Select an option" selected={ &self.value_select[..] == "" } />
+                            <SelectOption key=0 label="Select an option" selected={ &self.value_select[..].is_empty() } />
                             <SelectOption key=1 label="Option 1" value="1" selected={ &self.value_select[..] == "1" }/>
                             <SelectOption key=2 label="Option 2" value="2" selected={ &self.value_select[..] == "2" }/>
                             <SelectOption key=3 label="Option 3" value="3" selected={ &self.value_select[..] == "3" }/>
