@@ -273,17 +273,17 @@ pub fn FormControl(props: &FormControlProps) -> Html {
             html! {
                 <div class={ classes }>
                     { label_before }
-                    <textarea 
-                        class={ input_classes } 
+                    <textarea
+                        class={ input_classes }
                         id={ props.id.clone() }
-                        name={ props.name.clone() } 
-                        cols={ cols_str } 
+                        name={ props.name.clone() }
+                        cols={ cols_str }
                         rows={ rows_str }
-                        placeholder={ placeholder } 
+                        placeholder={ placeholder }
                         value={ props.value.clone() }
-                        disabled={ props.disabled } 
+                        disabled={ props.disabled }
                         oninput={props.oninput.clone() }
-                        onchange={ props.onchange.clone() } 
+                        onchange={ props.onchange.clone() }
                         onclick={ props.onclick.clone() }
                     />
                     { label_after }
@@ -325,19 +325,20 @@ pub fn FormControl(props: &FormControlProps) -> Html {
 
             html! {
                 <div class={ classes }>
-                    <input 
-                        type={ props.ctype.to_str() } 
-                        class={ input_classes } 
+                    <input
+                        type={ props.ctype.to_str() }
+                        class={ input_classes }
                         id={ props.id.clone() }
-                        name={ props.name.clone() } 
-                        checked={ props.checked } 
+                        name={ props.name.clone() }
+                        checked={ props.checked }
                         disabled={ props.disabled }
                         value={ props.value.clone() }
-                        onchange={ props.onchange.clone() } 
+                        onchange={ props.onchange.clone() }
                         onclick={ props.onclick.clone() }
                     />
                     { label }
                     { help }
+                    { validation}
                 </div>
             }
         },
@@ -384,25 +385,26 @@ pub fn FormControl(props: &FormControlProps) -> Html {
             html! {
                 <div class={ classes }>
                     { label_before }
-                    <input 
-                        type={ props.ctype.to_str() } 
-                        class={ input_classes } 
+                    <input
+                        type={ props.ctype.to_str() }
+                        class={ input_classes }
                         id={ props.id.clone() }
-                        name={ props.name.clone() } 
+                        name={ props.name.clone() }
                         value={ props.value.clone() }
-                        pattern={ pattern } 
-                        accept={ accept_str } 
+                        pattern={ pattern }
+                        accept={ accept_str }
                         placeholder={ placeholder }
-                        min={ min_str } 
-                        max={ max_str } 
-                        step={ step_str } 
+                        min={ min_str }
+                        max={ max_str }
+                        step={ step_str }
                         disabled={ props.disabled }
-                        onchange={ props.onchange.clone() } 
+                        onchange={ props.onchange.clone() }
                         onclick={ props.onclick.clone() }
-                        oninput={ props.oninput.clone() } 
+                        oninput={ props.oninput.clone() }
                     />
                     { label_after }
                     { help }
+                    { validation }
                 </div>
             }
         }

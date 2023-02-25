@@ -1,7 +1,7 @@
 use yew::prelude::*;
 
 
-/// # Type of form control, to be used with [crate::form::FormControl].
+/// # Type of form control, to be used with [crate::component::form::FormControl].
 #[derive(Clone, PartialEq)]
 
 pub enum FormControlType {
@@ -20,8 +20,8 @@ pub enum FormControlType {
     /// Range selection from min to max, with optional step
     Range { min: i32, max: i32, step: Option<u32> },
 
-    /// Select to select one of more options. It typically contains [crate::form::SelectOption]
-    /// or [crate::form::SelectOptgroup] children
+    /// Select to select one of more options. It typically contains [crate::component::form::SelectOption]
+    /// or [crate::component::form::SelectOptgroup] children
     Select,
     /// Checkbox
     Checkbox,
