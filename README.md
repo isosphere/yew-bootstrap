@@ -58,7 +58,7 @@ There is currently no indication of which version of Bootstrap is targeted, howe
 - [ ] Blockquote
 - [ ] Image/Figure
 - [ ] Table
-- [x] Forms
+- [x] Forms ([component::form::FormControl])
 
 ### Components
 
@@ -95,3 +95,17 @@ There is currently no indication of which version of Bootstrap is targeted, howe
 - [x] Stretched ([component::Link] with `stretched={true}>`)
 - [ ] Text truncation
 - [X] Vertical/Horizontal rule/line ([component::Line])
+
+## Examples
+
+Several examples are provided:
+
+- `examples/basics`: Components
+- `examples/forms`: Form fields
+
+To run an example:
+
+```bash
+cd examples/<directory>
+trunk --serve
+```

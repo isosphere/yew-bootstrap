@@ -36,8 +36,8 @@ pub struct SelectOptionProps {
 /// Use to separate options inside a select. See [SelectOptgroupProps]
 /// for a list of properties.
 ///
-/// It can typically be used inside a [crate::form::FormControl] with
-/// [crate::form::FormControlType::Select] type
+/// It can typically be used inside a [crate::component::form::FormControl] with
+/// [crate::component::form::FormControlType::Select] type
 #[function_component]
 pub fn SelectOptgroup(props: &SelectOptgroupProps) -> Html {
     html! {
@@ -51,8 +51,8 @@ pub fn SelectOptgroup(props: &SelectOptgroupProps) -> Html {
 ///
 /// Options inside a select. See [SelectOptionProps] for a list of properties.
 ///
-/// It can typically be used inside a [crate::form::FormControl] with
-/// [crate::form::FormControlType::Select] type, or grouped inside a [SelectOptgroup]
+/// It can typically be used inside a [crate::component::form::FormControl] with
+/// [crate::component::form::FormControlType::Select] type, or grouped inside a [SelectOptgroup]
 #[function_component]
 pub fn SelectOption(props: &SelectOptionProps) -> Html {
     html! {
