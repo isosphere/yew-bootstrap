@@ -68,7 +68,7 @@ There is currently no indication of which version of Bootstrap is targeted, howe
 - [ ] Collapse
 - [ ] Dropdown
 - [ ] List group
-- [x] Modal
+- [x] Modal ([component::Modal])
 - [x] Navbar ([component::NavBar], [component::NavItem], [component::NavDropdown], [component::NavDropdownItem])
 - [ ] Navs & tabs
 - [ ] Offcanvas
