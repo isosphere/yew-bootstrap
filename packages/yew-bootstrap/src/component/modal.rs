@@ -27,7 +27,7 @@ impl Default for ModalSize {
 /// use yew_bootstrap::util::Color;
 /// fn test() -> Html {
 ///     html!{
-///         <Modal id="ExampleModal" size={ModalSize::Normal}>
+///         <Modal id="ExampleModal" size={ModalSize::Large}> // size defaults to Normal
 ///             <ModalHeader title="Modal title" id="ExampleModal"/>
 ///             <ModalBody>
 ///                 <p>{"Modal body text goes here."}</p>
