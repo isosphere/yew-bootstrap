@@ -1,5 +1,6 @@
 use yew::prelude::*;
 
+/// Represents the optional size of a Modal dialog, described [here](https://getbootstrap.com/docs/5.1/components/modal/#optional-sizes)
 #[derive(Clone, PartialEq, Eq)]
 pub enum ModalSize {
     ExtraLarge,
@@ -22,11 +23,11 @@ impl Default for ModalSize {
 /// ## Example
 /// ```rust
 /// use yew::prelude::*;
-/// use yew_bootstrap::component::{Modal, ModalHeader, ModalBody, ModalFooter, Button};
+/// use yew_bootstrap::component::{Modal, ModalHeader, ModalBody, ModalFooter, Button, ModalSize};
 /// use yew_bootstrap::util::Color;
 /// fn test() -> Html {
 ///     html!{
-///         <Modal id="ExampleModal">
+///         <Modal id="ExampleModal" size={ModalSize::Normal}>
 ///             <ModalHeader title="Modal title" id="ExampleModal"/>
 ///             <ModalBody>
 ///                 <p>{"Modal body text goes here."}</p>
