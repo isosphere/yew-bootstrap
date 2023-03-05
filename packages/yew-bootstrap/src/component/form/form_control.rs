@@ -114,8 +114,7 @@ where T: std::fmt::Display {
 /// }
 /// ```
 ///
-/// Some input types need parameters for `ctype` enum. When optional (`Option`),
-/// need to pass `None` or `Some(value)`.
+/// Some input types need parameters for the `ctype` enum. Optional parameters use `Option` enums. 
 /// ```rust
 /// use yew::prelude::*;
 /// use yew_bootstrap::component::form::*;
