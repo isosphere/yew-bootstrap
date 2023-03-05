@@ -18,61 +18,81 @@ pub enum FormControlValidation {
 pub struct FormControlProps {
     /// Type of control
     pub ctype: FormControlType,
+
     /// Id for the form field
     pub id: AttrValue,
 
     /// CSS class
     #[prop_or_default]
     pub class: Classes,
+
     /// Optional label for the control
     #[prop_or_default]
     pub label: Option<AttrValue>,
+
     /// Optional placeholder, only used for text fields
     #[prop_or_default]
     pub placeholder: Option<AttrValue>,
+
     /// Optional help text
     #[prop_or_default]
     pub help: Option<AttrValue>,
+
     /// Name for the form field.
     /// For [FormControlType::Radio], set same name to create a group
     #[prop_or_default]
     pub name: AttrValue,
+
     /// Value as string, ignored for checkbox (Use `checked` instead). For a radio,
     /// indicates the value in the group
     #[prop_or_default]
     pub value: AttrValue,
+
+    /// Is this field required? Defaults to false.
+    #[prop_or_default]
+    pub required: bool,
+
     /// Checked or default value:
     ///
     /// - For a checkbox, indicates the state (Checked or not)
     /// - For a radio, indicates the default value (Only one in the group should have it)
     #[prop_or_default]
     pub checked: bool,
+
     /// Disabled if true
     #[prop_or_default]
     pub disabled: bool,
+
     /// If true, label is floating inside the input. Ignored for checkbox/radio, date/time,
     /// color, range fields.
     ///
     /// When true, `label` is required and `placeholder` is ignored.
     #[prop_or_default]
     pub floating: bool,
+
     /// Multiple select, only used for select form input
     #[prop_or_default]
     pub multiple: bool,
+
     /// Children, only used for select form input
     #[prop_or_default]
     pub children: Children,
+
     /// Form validation feedback
+    /// Note: you must always validate user input server-side as well, this is only provided for better user experience
     #[prop_or(FormControlValidation::None)]
     pub validation: FormControlValidation,
+
     /// Optional onchange event applied on the input
     /// For a text input, this is called when leaving the input field
     #[prop_or_default]
     pub onchange: Callback<Event>,
+
     /// Optional oninput event applied on the input, only for text inputs
     /// This is called each time an input is received, after each character
     #[prop_or_default]
     pub oninput: Callback<InputEvent>,
+
     /// Optional onclick event applied on the input
     #[prop_or_default]
     pub onclick: Callback<MouseEvent>,
@@ -311,6 +331,7 @@ pub fn FormControl(props: &FormControlProps) -> Html {
                         oninput={props.oninput.clone() }
                         onchange={ props.onchange.clone() }
                         onclick={ props.onclick.clone() }
+                        required={ props.required }
                     />
                     { label_after }
                     { help }
@@ -332,9 +353,15 @@ pub fn FormControl(props: &FormControlProps) -> Html {
             html! {
                 <div class={ classes }>
                     { label_before }
-                    <select class={ input_classes } id={ props.id.clone()}
-                            name={ props.name.clone() } disabled={ props.disabled }
-                            onchange={ props.onchange.clone() } onclick={ props.onclick.clone() }>
+                    <select
+                        class={ input_classes } 
+                        id={ props.id.clone()}
+                        name={ props.name.clone() }
+                        disabled={ props.disabled }
+                        onchange={ props.onchange.clone() } 
+                        onclick={ props.onclick.clone() }
+                        required={ props.required }
+                    >
                         { for props.children.clone() }
                     </select>
                     { label_after }
@@ -361,6 +388,7 @@ pub fn FormControl(props: &FormControlProps) -> Html {
                         value={ props.value.clone() }
                         onchange={ props.onchange.clone() }
                         onclick={ props.onclick.clone() }
+                        required={ props.required }
                     />
                     { label }
                     { help }
@@ -427,6 +455,7 @@ pub fn FormControl(props: &FormControlProps) -> Html {
                         onchange={ props.onchange.clone() }
                         onclick={ props.onclick.clone() }
                         oninput={ props.oninput.clone() }
+                        required={ props.required }
                     />
                     { label_after }
                     { help }
