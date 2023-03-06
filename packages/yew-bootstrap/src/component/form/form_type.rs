@@ -47,28 +47,32 @@ pub enum FormControlType {
     File { accept: Vec<AttrValue> },
     /// Hidden input, used to transmit data
     Hidden,
+
+    /// Submit button
+    Submit,
 }
 
 impl FormControlType {
     /// Convert enum to HTML type string
     pub fn to_str(&self) -> AttrValue {
         let value = match &self {
-            Self::Text => "text",
-            Self::TextArea { .. } => "",
-            Self::Email { .. } => "email",
-            Self::Password { .. } => "password",
-            Self::Url { .. } => "url",
-            Self::Number { .. } => "number",
-            Self::Range { .. } => "range",
-            Self::Select => "select",
             Self::Checkbox => "checkbox",
-            Self::Radio => "radio",
+            Self::Color => "color",
             Self::Date | Self::DateMinMax { .. } => "date",
             Self::Datetime | Self::DatetimeMinMax { .. } => "datetime-local",
-            Self::Time | Self::TimeMinMax { .. } => "time",
-            Self::Color => "color",
+            Self::Email { .. } => "email",
             Self::File { .. } => "file",
-            Self::Hidden => "hidden"
+            Self::Hidden => "hidden",
+            Self::Number { .. } => "number",
+            Self::Password { .. } => "password",
+            Self::Radio => "radio",
+            Self::Range { .. } => "range",
+            Self::Select => "select",
+            Self::Submit => "submit",
+            Self::Text => "text",
+            Self::TextArea { .. } => "",
+            Self::Time | Self::TimeMinMax { .. } => "time",
+            Self::Url { .. } => "url",
         };
 
         AttrValue::from(value)
