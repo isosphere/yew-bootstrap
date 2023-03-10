@@ -58,7 +58,7 @@ There is currently no indication of which version of Bootstrap is targeted, howe
 
 - [ ] Accordion
 - [x] Alert ([component::Alert])
-- [ ] Badge
+- [x] Badge ([component::Badge])
 - [ ] Breadcrumb
 - [x] Button ([component::Button])
 - [x] Button group ([component::ButtonGroup])
