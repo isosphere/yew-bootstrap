@@ -9,6 +9,7 @@ mod link;
 mod modal;
 mod navbar;
 mod row;
+mod badge;
 
 pub use self::column::*;
 pub use self::alert::*;
@@ -20,3 +21,4 @@ pub use self::link::*;
 pub use self::modal::*;
 pub use self::navbar::*;
 pub use self::row::*;
+pub use self::badge::*;
