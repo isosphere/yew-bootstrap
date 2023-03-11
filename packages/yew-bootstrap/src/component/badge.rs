@@ -1,6 +1,6 @@
 use yew::prelude::*;
 
-use crate::util::Color;
+use crate::util::{Color, ArrangeX, ArrangeY};
 
 /// # Badge component
 /// Used alongside [crate::util::Color] to create Badge components
@@ -37,6 +37,10 @@ pub struct BadgeProps {
     #[prop_or_default]
     pub pill: bool,
 
+    /// Show badge positioned
+    #[prop_or_default]
+    pub position: Option<(ArrangeX, ArrangeY)>,
+
     /// Color style, default [Color::Primary]
     #[prop_or(Color::Primary)]
     pub style: Color,
@@ -57,6 +61,15 @@ impl Component for Badge {
     fn view(&self, ctx: &Context<Self>) -> Html {
         let props = ctx.props();
         let mut classes = Classes::new();
+        match &props.position {
+            Some(position) => {
+                classes.push(format!("position-absolute"));
+                classes.push(format!("{}", position.0));
+                classes.push(format!("{}", position.1));
+                classes.push(format!("translate-middle"));
+            }
+            None => {}
+        }
         classes.push("badge");
         if props.pill {
             classes.push("rounded-pill");
