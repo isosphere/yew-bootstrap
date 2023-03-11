@@ -1,7 +1,7 @@
 use std::fmt;
 
-/// # Positions
-/// Bootstrap positions.
+/// # Position
+/// Bootstrap positions for elements, but they are not responsive.
 #[derive(Clone, PartialEq, Eq)]
 pub enum Position {
     Static,
