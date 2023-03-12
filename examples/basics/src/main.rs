@@ -130,6 +130,33 @@ impl Component for Model {
                     <Alert style={Color::Link}>
                         { "This is a link alert—check it out!" }
                     </Alert>
+
+                    <h1>{ "Badges" }</h1>
+                    <Badge style={Color::Primary}>{"Primary"}</Badge>
+                    <Badge style={Color::Secondary}>{"Secondary"}</Badge>
+                    <Badge style={Color::Success}>{"Success"}</Badge>
+                    <Badge style={Color::Danger}>{"Danger"}</Badge>
+                    <Badge style={Color::Warning}>{"Warning"}</Badge>
+                    <Badge style={Color::Info}>{"Info"}</Badge>
+                    <Badge style={Color::Light}>{"Light"}</Badge>
+                    <Badge style={Color::Dark}>{"Dark"}</Badge>
+
+                    <h1>{ "Pill badges" }</h1>
+                    <Badge style={Color::Primary} pill={true}>{"Primary"}</Badge>
+                    <Badge style={Color::Secondary} pill={true}>{"Secondary"}</Badge>
+                    <Badge style={Color::Success} pill={true}>{"Success"}</Badge>
+                    <Badge style={Color::Danger} pill={true}>{"Danger"}</Badge>
+                    <Badge style={Color::Warning} pill={true}>{"Warning"}</Badge>
+                    <Badge style={Color::Info} pill={true}>{"Info"}</Badge>
+                    <Badge style={Color::Light} pill={true}>{"Light"}</Badge>
+                    <Badge style={Color::Dark} pill={true}>{"Dark"}</Badge>
+
+                    <h1>{ "Positioned badges" }</h1>
+                    <Button style={Color::Primary} class={"position-relative"}>
+                        {"Primary"}
+                        <Badge style={Color::Danger} position={(ArrangeX::Start100, ArrangeY::Top0)}>{"1"}</Badge>
+                    </Button>
+
                     <h1>{"Modals"}</h1>
                     <Button style={Color::Primary} modal_target={"ExampleModal"}>{"Open Modal"}</Button>
 
