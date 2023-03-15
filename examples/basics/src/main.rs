@@ -157,6 +157,36 @@ impl Component for Model {
                         <Badge style={Color::Danger} position={(ArrangeX::Start100, ArrangeY::Top0)}>{"1"}</Badge>
                     </Button>
 
+                    <h1>{"Border Spinner"}</h1>
+                    <Spinner style={Color::Primary} />
+                    <Spinner style={Color::Secondary} />
+                    <Spinner style={Color::Success} />
+                    <Spinner style={Color::Danger} />
+                    <Spinner style={Color::Warning} />
+                    <Spinner style={Color::Info} />
+                    <Spinner style={Color::Light} />
+                    <Spinner style={Color::Dark} />
+
+                    <h1>{"Growing Spinner"}</h1>
+                    <Spinner style={Color::Primary} grow={true} />
+                    <Spinner style={Color::Secondary} grow={true} />
+                    <Spinner style={Color::Success} grow={true} />
+                    <Spinner style={Color::Danger} grow={true} />
+                    <Spinner style={Color::Warning} grow={true} />
+                    <Spinner style={Color::Info} grow={true} />
+                    <Spinner style={Color::Light} grow={true} />
+                    <Spinner style={Color::Dark} grow={true} />
+
+                    <h1>{"Spinner on Buttons"}</h1>
+                    <Button style={Color::Primary}>
+                        <Spinner style={Color::Light} small={true} />
+                        {"Loading..."}
+                    </Button>
+                    <Button style={Color::Primary}>
+                        <Spinner style={Color::Light} grow={true} small={true} />
+                        {"Loading..."}
+                    </Button>
+
                     <h1>{"Modals"}</h1>
                     <Button style={Color::Primary} modal_target={"ExampleModal"}>{"Open Modal"}</Button>
 
