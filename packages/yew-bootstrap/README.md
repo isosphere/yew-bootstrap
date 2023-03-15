@@ -77,7 +77,7 @@ There is currently no indication of which version of Bootstrap is targeted, howe
 - [ ] Popovers
 - [ ] Progress
 - [ ] Scrollspy
-- [ ] Spinner
+- [x] Spinner ([component::Spinner])
 - [ ] Toast
 - [ ] Tooltips
 

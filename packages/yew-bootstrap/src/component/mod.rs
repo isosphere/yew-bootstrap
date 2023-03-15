@@ -10,6 +10,7 @@ mod modal;
 mod navbar;
 mod row;
 mod badge;
+mod spinner;
 
 pub use self::column::*;
 pub use self::alert::*;
@@ -22,3 +23,4 @@ pub use self::modal::*;
 pub use self::navbar::*;
 pub use self::row::*;
 pub use self::badge::*;
+pub use self::spinner::*;
