@@ -29,6 +29,10 @@ pub struct SpinnerProps {
     #[prop_or_default]
     pub class: String,
 
+    /// Inner components
+    #[prop_or_default]
+    pub children: Children,
+
     /// Color style, default [Color::Primary]
     #[prop_or(Color::Primary)]
     pub style: Color,
@@ -79,6 +83,7 @@ impl Component for Spinner {
                 <span class="visually-hidden">
                     {&props.text}
                 </span>
+                { for props.children.iter() }
             </div>
         }
     }
