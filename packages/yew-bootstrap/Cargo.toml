@@ -7,8 +7,8 @@ license = "MIT"
 readme = "README.md"
 keywords = ["yew", "bootstrap", "web"]
 categories = ["gui", "web-programming"]
-description = "Components for easier using Bootstrap with Yew"
-repository = "https://github.com/foorack/yew-bootstrap/"
+description = "Bootstrap 5 Components for Yew"
+repository = "https://github.com/isosphere/yew-bootstrap/"
 
 [lib]
 # You should include "rlib" (the default crate type) otherwise your crate can't be used as a Rust library
