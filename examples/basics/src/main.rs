@@ -187,6 +187,14 @@ impl Component for Model {
                         {"Loading..."}
                     </Button>
 
+                    <h1>{"Display headings"}</h1>
+                    <Display size={DisplaySize::One}>{"Display 1"}</Display>
+                    <Display size={DisplaySize::Two}>{"Display 2"}</Display>
+                    <Display size={DisplaySize::Three}>{"Display 3"}</Display>
+                    <Display size={DisplaySize::Four}>{"Display 4"}</Display>
+                    <Display size={DisplaySize::Five}>{"Display 5"}</Display>
+                    <Display size={DisplaySize::Six}>{"Display 6"}</Display>
+
                     <h1>{"Modals"}</h1>
                     <Button style={Color::Primary} modal_target={"ExampleModal"}>{"Open Modal"}</Button>
 
