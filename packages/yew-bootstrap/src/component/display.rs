@@ -23,7 +23,7 @@ use crate::util::Color;
 /// ```
 pub struct Display {}
 
-/// # Properties of [Alert]
+/// # Properties of [Display]
 #[derive(Properties, Clone, PartialEq)]
 pub struct DisplayProps {
     /// CSS class
