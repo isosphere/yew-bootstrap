@@ -9,7 +9,7 @@
 # Features Implemented
 Check the readme for the [`yew-bootstrap` package](/packages/yew-bootstrap/README.md), or the docs.rs link above.
 
-![Our "Basic" Example](https://raw.githubusercontent.com/isosphere/yew-bootstrap/main/yew-boostrap-examples-basic.webm.mp4)
+[Our "Basics" Example](https://user-images.githubusercontent.com/163370/225911985-d3928a8a-f8f4-45a0-8906-f554a68c15e5.webm)
 
 # Contributing
 Bug reports, feature requests, and pull requests are welcome!
