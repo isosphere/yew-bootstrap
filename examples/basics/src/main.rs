@@ -195,6 +195,11 @@ impl Component for Model {
                     <Display size={DisplaySize::Five}>{"Display 5"}</Display>
                     <Display size={DisplaySize::Six}>{"Display 6"}</Display>
 
+                    <h1>{"Lead paragraph"}</h1>
+                    <Lead>
+                        {"This is a lead paragraph. It stands out from regular paragraphs."}
+                    </Lead>
+
                     <h1>{"Modals"}</h1>
                     <Button style={Color::Primary} modal_target={"ExampleModal"}>{"Open Modal"}</Button>
 
