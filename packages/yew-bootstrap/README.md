@@ -48,7 +48,7 @@ There is currently no indication of which version of Bootstrap is targeted, howe
 - [X] Container ([component::Container])
 - [X] Grid ([component::Row], [component::Column])
 - [x] Display headings ([component::Display])
-- [ ] Lead
+- [x] Lead ([component::Lead])
 - [ ] Blockquote
 - [ ] Image/Figure
 - [ ] Table
