@@ -12,6 +12,7 @@ mod row;
 mod badge;
 mod spinner;
 mod display;
+mod lead;
 
 pub use self::column::*;
 pub use self::alert::*;
@@ -26,3 +27,4 @@ pub use self::row::*;
 pub use self::badge::*;
 pub use self::spinner::*;
 pub use self::display::*;
+pub use self::lead::*;
