@@ -123,8 +123,8 @@ where T: std::fmt::Display {
 /// use yew_bootstrap::component::form::*;
 /// fn test() -> Html {
 ///   html! {
-///     <FormControl 
-///         id="input-text" 
+///     <FormControl
+///         id="input-text"
 ///         ctype={FormControlType::Text}
 ///         class="mb-3"
 ///         label="Text"
@@ -134,22 +134,22 @@ where T: std::fmt::Display {
 /// }
 /// ```
 ///
-/// Some input types need parameters for the `ctype` enum. Optional parameters use `Option` enums. 
+/// Some input types need parameters for the `ctype` enum. Optional parameters use `Option` enums.
 /// ```rust
 /// use yew::prelude::*;
 /// use yew_bootstrap::component::form::*;
 /// fn test() -> Html {
 ///   html! {
-///     <FormControl 
+///     <FormControl
 ///         id="input-number"
-///         ctype={ 
-///             FormControlType::Number { 
-///                 min: Some(10), 
+///         ctype={
+///             FormControlType::Number {
+///                 min: Some(10),
 ///                 max: Some(20)
-///             } 
+///             }
 ///         }
-///         class="mb-3" 
-///         label="Number in range 10-20" 
+///         class="mb-3"
+///         label="Number in range 10-20"
 ///         value="12"
 ///     />
 ///   }
@@ -164,17 +164,17 @@ where T: std::fmt::Display {
 /// use yew_bootstrap::component::form::*;
 /// fn test() -> Html {
 ///   html! {
-///     <FormControl 
+///     <FormControl
 ///         id="input-datetime2"
-///         ctype={ 
+///         ctype={
 ///             FormControlType::DatetimeMinMax {
 ///                 min: Some(AttrValue::from("2023-01-01T12:00")),
-///                 max: Some(AttrValue::from("2023-01-01T18:00")) 
-///             } 
+///                 max: Some(AttrValue::from("2023-01-01T18:00"))
+///             }
 ///         }
-///         class="mb-3" 
+///         class="mb-3"
 ///         label="Date and time (1st Jan 2023, 12:00 to 18:00)"
-///         value="2023-01-01T15:00" 
+///         value="2023-01-01T15:00"
 ///     />
 ///   }
 /// }
@@ -187,13 +187,13 @@ where T: std::fmt::Display {
 /// use yew_bootstrap::component::form::*;
 /// fn test() -> Html {
 ///   html! {
-///     <FormControl 
-///         id="input-select-feedback" 
-///         ctype={ FormControlType::Select} 
+///     <FormControl
+///         id="input-select-feedback"
+///         ctype={ FormControlType::Select}
 ///         class="mb-3"
 ///         label={ "Form control invalid" }
-///         validation={ 
-///             FormControlValidation::Invalid(AttrValue::from("Select an option")) 
+///         validation={
+///             FormControlValidation::Invalid(AttrValue::from("Select an option"))
 ///         }
 ///     >
 ///       <SelectOption key=0 label="Select an option" selected=true />
@@ -354,11 +354,11 @@ pub fn FormControl(props: &FormControlProps) -> Html {
                 <div class={ classes }>
                     { label_before }
                     <select
-                        class={ input_classes } 
+                        class={ input_classes }
                         id={ props.id.clone()}
                         name={ props.name.clone() }
                         disabled={ props.disabled }
-                        onchange={ props.onchange.clone() } 
+                        onchange={ props.onchange.clone() }
                         onclick={ props.onclick.clone() }
                         required={ props.required }
                     >
