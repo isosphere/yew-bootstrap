@@ -46,10 +46,7 @@ pub enum FormControlType {
     /// File input. Accept is a vector of formats, like "image/png", ".docx"
     File { accept: Vec<AttrValue> },
     /// Hidden input, used to transmit data
-    Hidden,
-
-    /// Submit button
-    Submit,
+    Hidden
 }
 
 impl FormControlType {
@@ -68,7 +65,6 @@ impl FormControlType {
             Self::Radio => "radio",
             Self::Range { .. } => "range",
             Self::Select => "select",
-            Self::Submit => "submit",
             Self::Text => "text",
             Self::TextArea { .. } => "",
             Self::Time | Self::TimeMinMax { .. } => "time",
