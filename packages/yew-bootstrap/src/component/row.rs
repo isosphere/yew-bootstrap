@@ -3,9 +3,9 @@ use yew::prelude::*;
 
 /// # Row container
 /// Used alongside [crate::component::Column] to create grids
-/// 
+///
 /// See [crate::component::RowProps] for a listing of properties
-/// 
+///
 /// ## Example
 /// ```rust
 /// use yew::prelude::*;
@@ -27,6 +27,10 @@ pub struct RowProps {
     /// CSS class
     #[prop_or_default]
     pub class: String,
+
+    /// Event called when the element is clicked
+    #[prop_or_default]
+    pub onclick: Callback<MouseEvent>,
 
     /// Children of type [crate::component::Column]
     #[prop_or_default]
@@ -50,6 +54,7 @@ impl Component for Row {
         html! {
             <div
                 class={classes}
+                onclick={props.onclick.clone()}
             >
                 { for props.children.iter() }
             </div>
