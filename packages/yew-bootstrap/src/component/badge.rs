@@ -63,10 +63,10 @@ impl Component for Badge {
         let mut classes = Classes::new();
         match &props.position {
             Some(position) => {
-                classes.push(format!("position-absolute"));
+                classes.push("position-absolute".to_string());
                 classes.push(format!("{}", position.0));
                 classes.push(format!("{}", position.1));
-                classes.push(format!("translate-middle"));
+                classes.push("translate-middle".to_string());
             }
             None => {}
         }
