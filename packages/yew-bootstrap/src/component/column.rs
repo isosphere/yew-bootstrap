@@ -3,9 +3,9 @@ use yew::prelude::*;
 
 /// # Column container
 /// Used with [crate::component::Row] to create grids
-/// 
+///
 /// See [crate::component::ColumnProps] for a listing of properties
-/// 
+///
 /// ## Example
 /// ```rust
 /// use yew::prelude::*;
@@ -55,6 +55,10 @@ pub struct ColumnProps {
     /// Size (out of 12) for very very large screens
     #[prop_or_default]
     pub xxl: Option<u8>,
+
+    /// Event called when the element is clicked
+    #[prop_or_default]
+    pub onclick: Callback<MouseEvent>,
 }
 
 impl Component for Column {
@@ -113,6 +117,7 @@ impl Component for Column {
         html! {
             <div
                 class={classes}
+                onclick={props.onclick.clone()}
             >
                 { for props.children.iter() }
             </div>
