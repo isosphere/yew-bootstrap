@@ -11,3 +11,6 @@ Cargo.lock
 
 # Trunk build output
 **/dist/
+
+# A place to put Jupyter notebooks and other untracked files
+.sandbox/
