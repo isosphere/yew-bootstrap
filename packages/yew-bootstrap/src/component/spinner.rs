@@ -29,7 +29,7 @@ pub struct SpinnerProps {
     #[prop_or_default]
     pub class: String,
 
-    /// Inner components
+    /// Inner components (visually hidden text)
     #[prop_or_default]
     pub children: Children,
 
@@ -40,11 +40,6 @@ pub struct SpinnerProps {
     /// Grow style, default false
     #[prop_or_default]
     pub grow: bool,
-
-    /// Visually hidden text.
-    #[prop_or_default]
-    pub text: bool,
-
 
     /// Small size style, default false
     #[prop_or_default]
@@ -81,9 +76,8 @@ impl Component for Spinner {
         html! {
             <div class={classes} role="status">
                 <span class="visually-hidden">
-                    {&props.text}
+                    { for props.children.iter() }
                 </span>
-                { for props.children.iter() }
             </div>
         }
     }
