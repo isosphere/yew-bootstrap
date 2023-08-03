@@ -1,18 +1,19 @@
 mod alert;
-mod button;
+mod badge;
 mod button_group;
+mod button;
 mod column;
 mod container;
-pub mod form;
+mod display;
+mod lead;
 mod line;
 mod link;
 mod modal;
 mod navbar;
 mod row;
-mod badge;
 mod spinner;
-mod display;
-mod lead;
+mod table;
+pub mod form;
 
 pub use self::column::*;
 pub use self::alert::*;
