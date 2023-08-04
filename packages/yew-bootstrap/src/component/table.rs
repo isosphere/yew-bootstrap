@@ -1,6 +1,8 @@
 use std::fmt::Display;
 use yew::prelude::*;
 
+use crate::util::Color;
+
 /// # TableHeaderScope enum
 #[derive(Clone, PartialEq, Eq)]
 pub enum TableHeaderScope {
@@ -42,6 +44,10 @@ pub struct TableHeaderProps {
     /// Scope, used primarily to assist screen readers
     #[prop_or_default]
     pub scope: Option<TableHeaderScope>,
+
+    /// table [color variant](https://getbootstrap.com/docs/5.1/content/tables/#variants)
+    #[prop_or_default]
+    pub color: Option<Color>,    
 }
 
 impl Component for TableHeader {
@@ -57,6 +63,10 @@ impl Component for TableHeader {
 
         let mut classes = Classes::new();
         classes.push(props.class.clone());
+
+        if let Some(color) = props.color.clone() {
+            classes.push(format!("table-{}", color));
+        }
 
         html!{
             if let Some(scope) = props.scope.clone() {
@@ -123,6 +133,10 @@ pub struct TableRowProps {
     /// children
     #[prop_or_default]
     pub children: Children,
+
+    /// table [color variant](https://getbootstrap.com/docs/5.1/content/tables/#variants)
+    #[prop_or_default]
+    pub color: Option<Color>,
 }
 
 impl Component for TableRow {
@@ -138,6 +152,10 @@ impl Component for TableRow {
 
         let mut classes = Classes::new();
         classes.push(props.class.clone());
+
+        if let Some(color) = props.color.clone() {
+            classes.push(format!("table-{}", color));
+        }
 
         html!{
             <tr class={classes}>
@@ -201,6 +219,10 @@ pub struct TableCellProps {
     /// column span (i.e.: `colspan` attribute)
     #[prop_or_default]
     pub col_span: Option<usize>,
+
+    /// table [color variant](https://getbootstrap.com/docs/5.1/content/tables/#variants)
+    #[prop_or_default]
+    pub color: Option<Color>,
 }
 
 impl Component for TableCell {
@@ -216,6 +238,10 @@ impl Component for TableCell {
 
         let mut classes = Classes::new();
         classes.push(props.class.clone());
+
+        if let Some(color) = props.color.clone() {
+            classes.push(format!("table-{}", color));
+        }
 
         html!{
             if let Some(col_span) = props.col_span {
@@ -244,6 +270,10 @@ pub struct TableProps {
     /// children
     #[prop_or_default]
     pub children: Children,
+
+    /// table [color variant](https://getbootstrap.com/docs/5.1/content/tables/#variants)
+    #[prop_or_default]
+    pub color: Option<Color>,
 }
 
 impl Component for Table {
@@ -258,9 +288,13 @@ impl Component for Table {
         let props = ctx.props();    
 
         let mut classes = Classes::new();
-        classes.push("table");
-
         classes.push(props.class.clone());
+
+        if let Some(color) = props.color.clone() {
+            classes.push(format!("table-{}", color));
+        } else {
+            classes.push("table");
+        }
 
         html!{
             <table class={classes}>
