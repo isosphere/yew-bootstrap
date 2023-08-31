@@ -55,7 +55,10 @@ pub struct NavDropdownProps {
     pub expanded: bool,
     /// the text of the link with the dropdown-toggle class
     #[prop_or_default]
-    pub text: AttrValue
+    pub text: AttrValue,
+    /// Top level path is the currently active one
+    #[prop_or_default]
+    pub active: bool
 }
 
 impl Component for NavDropdown {
@@ -74,9 +77,18 @@ impl Component for NavDropdown {
             false => "false"
         });
 
+        
+        let mut dropdown_toggle_classes = Classes::new();
+        dropdown_toggle_classes.push(String::from("nav-link"));
+        dropdown_toggle_classes.push(String::from("dropdown-toggle"));
+
+        if props.active {
+            dropdown_toggle_classes.push(String::from("active"));
+        }
+
         html! {
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id={props.id.clone()} role="button" data-bs-toggle="dropdown" aria-expanded={expanded}>
+                <a class={dropdown_toggle_classes} href="#" id={props.id.clone()} role="button" data-bs-toggle="dropdown" aria-expanded={expanded}>
                     {props.text.clone()}
                 </a>
                 <ul class="dropdown-menu" aria-labelledby={props.id.clone()}>
@@ -163,7 +175,7 @@ impl Component for NavItem {
             },
             false => {
                 html! {
-                    <NavDropdown text={props.text.clone()} id={props.id.clone()}>
+                    <NavDropdown text={props.text.clone()} id={props.id.clone()} active={props.active}>
                         { for props.children.iter() }
                     </NavDropdown>
                 }                
