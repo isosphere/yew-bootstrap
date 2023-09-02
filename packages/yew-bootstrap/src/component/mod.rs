@@ -13,6 +13,7 @@ mod badge;
 mod spinner;
 mod display;
 mod lead;
+mod accordion;
 
 pub use self::column::*;
 pub use self::alert::*;
@@ -28,3 +29,4 @@ pub use self::badge::*;
 pub use self::spinner::*;
 pub use self::display::*;
 pub use self::lead::*;
+pub use self::accordion::*;
