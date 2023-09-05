@@ -56,7 +56,7 @@ There is currently no indication of which version of Bootstrap is targeted, howe
 
 ### Components
 
-- [ ] Accordion
+- [x] Accordion ([component::Accordion])
 - [x] Alert ([component::Alert])
 - [x] Badge ([component::Badge])
 - [ ] Breadcrumb
