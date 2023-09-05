@@ -44,6 +44,16 @@ impl Component for Model {
                     </ModalFooter>
                 </Modal>
                 <div id="layout" class="p-3">
+                    <h1>{ "Accordian" }</h1>
+                    <Accordion>
+                        <AccordionItem title={"Heading 1"}>
+                            <p>{"Some text inside "}<strong>{"THE BODY"}</strong>{" of the accordion item"}</p>
+                        </AccordionItem>
+                        <AccordionItem title={"Heading 2"}>
+                            <h3>{"Some other text under another accordion"}</h3>
+                            <button>{"Button with some functionality"}</button>
+                        </AccordionItem>
+                    </Accordion>
                     <h1>{ "Containers" }</h1>
                     <Container class="bg-primary">{"Normal"}</Container>
                     <Container class="bg-secondary" fluid={true}>{"Fluid"}</Container>
