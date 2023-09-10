@@ -41,6 +41,7 @@ pub fn include_inline() -> VNode {
 
 /// Include the Bootstrap Icons CDN
 #[inline(always)]
+#[deprecated = "Use icons::BIFiles::cdn() instead"]
 pub fn include_cdn_icons() -> VNode {
     BIFiles::cdn()
 }
