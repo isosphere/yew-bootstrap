@@ -157,7 +157,7 @@ impl Component for Model {
         let brand = BrandType::BrandIcon {
             text: AttrValue::from("Yew Bootstrap"),
             url: Some(AttrValue::from("https://yew.rs")),
-            icon: AttrValue::from("rocket")
+            icon: BI::ROCKET,
         };
 
         html! {
