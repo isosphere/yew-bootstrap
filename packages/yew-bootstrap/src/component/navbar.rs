@@ -193,7 +193,7 @@ pub enum BrandType {
     BrandSimple { 
         text: AttrValue, url: Option<AttrValue> },
     /// a brand icon is a bootstrap icon, requiring bootstrap-icons to be imported; 
-    /// see [crate::util::include_cdn_icons]
+    /// see [crate::icons::BIFiles::cdn]
     BrandIcon { icon: AttrValue, text: AttrValue, url: Option<AttrValue> },
     /// Image with optional dimensions, link and descriptive text
     BrandImage { 

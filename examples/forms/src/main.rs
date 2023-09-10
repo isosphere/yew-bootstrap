@@ -4,6 +4,7 @@ use yew::prelude::*;
 use gloo_console::debug;
 
 use yew_bootstrap::component::*;
+use yew_bootstrap::icons::*;
 use yew_bootstrap::util::*;
 use yew_bootstrap::component::form::*;
 
@@ -162,7 +163,7 @@ impl Component for Model {
         html! {
             <>
                 {include_inline()}
-                {include_cdn_icons()}
+                {BIFiles::cdn()}
                 <NavBar nav_id={"test-nav"} class="navbar-expand-lg navbar-light bg-light" brand={brand}>
                     <NavItem text="link 1" />
                     <NavItem text="link 2" />
