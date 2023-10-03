@@ -36,10 +36,7 @@ library to be loaded - for these you can use the `include_cdn_js()` function. It
 Check `main.rs` for example usage for every implemented component.
 
 ## Version Convention
-`0.x.y` 
-Versions that have the same `x` value target the same version of Yew.
-
-There is currently no indication of which version of Bootstrap is targeted, however, we’ll try to target the previous release pipeline. For example as of this writing the latest boostrap is 5.2.x, so we’ll try to target the latest 5.1.x version.
+This project uses [semantic versioning](https://semver.org/).
 
 ## Coverage
 
