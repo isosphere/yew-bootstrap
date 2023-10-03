@@ -4,7 +4,7 @@
 <a href="https://crates.io/crates/yew-bootstrap"><img alt="Crate info" src="https://img.shields.io/crates/v/yew-bootstrap.svg" /></a>
 <a href="https://docs.rs/yew-bootstrap/"><img alt="API Docs" src="https://img.shields.io/badge/docs.rs-yew--bootstrap-green"/></a>
 
-*Note*: This is not yet a mature project, breaking changes are expected.
+This project uses [semantic versioning](https://semver.org/).
 
 # Features Implemented
 Check the readme for the [`yew-bootstrap` package](/packages/yew-bootstrap/README.md), or the docs.rs link above.
