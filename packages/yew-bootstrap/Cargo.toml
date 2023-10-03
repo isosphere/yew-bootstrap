@@ -1,6 +1,6 @@
 [package]
 name = "yew-bootstrap"
-version = "0.5.18"
+version = "0.6.0-alpha"
 authors = ["Matthew Scheffel <matt@dataheck.com>", "Foorack <max@foorack.com>"]
 edition = "2021"
 license = "MIT"
@@ -17,7 +17,7 @@ crate-type = ["rlib", "cdylib"]
 name = "yew_bootstrap"
 
 [dependencies]
-yew = { version = "0.20", features = ["csr"] }
+yew = { version = "0.21", features = ["csr"] }
 log = "0.4"
 
 [dev-dependencies]
