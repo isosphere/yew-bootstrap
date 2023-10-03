@@ -6,8 +6,8 @@ Add the dependency next to the regular yew dependency:
 
 ```toml
 [dependencies]
-yew = "0.20"
-yew-bootstrap = "0.5"
+yew = "0.21"
+yew-bootstrap = "0.6"
 ```
 
 To use form callback functions, the following dependencies should be added:
