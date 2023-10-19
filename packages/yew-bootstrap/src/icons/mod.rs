@@ -1,9 +1,5 @@
 //! Bootstrap icons for yew
 //!
-//! # Version
-//!
-//! This release is for yew 0.21 and contains bootstrap-icons-v1.10.5.
-//!
 //! # Icons
 //!
 //! All icons are available as a constant:
