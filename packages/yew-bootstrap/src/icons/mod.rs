@@ -1,8 +1,6 @@
-//! Bootstrap icons for yew
-//!
 //! # Icons
 //!
-//! All icons are available as a constant:
+//! All icons are available as a constant, thanks to the build-executed script:
 //! ```
 //! # use yew::html;
 //! # use yew_bootstrap::icons::BI;
@@ -17,25 +15,25 @@
 //!
 //! # Required CSS
 //!
-//! Using this crate, and Bootstrap icons, requires the inclusion of a CSS file from Bootstrap (`bootstrap-icons.css`). This file can be added by:
+//! These icons require the inclusion of a CSS file from Bootstrap (`bootstrap-icons.css`). This file can be added by:
 //!
-//! * Copying it yourself from the Bootstrap website
-//! * Using [`BIFiles::copy()`](crate::icons::BIFiles::copy) - in build-executed code (see below)
-//! * Using [`BIFiles::cdn()`](crate::icons::BIFiles::cdn) (easiest, see below)
-//! * Accessing the data via [`BIFiles::FILES`](crate::icons::BIFiles::FILES) and deliver them yourself
+//! 1. Using [`BIFiles::cdn()`](crate::icons::BIFiles::cdn) (easiest, see below)
+//! 2. Using [`BIFiles::copy()`](crate::icons::BIFiles::copy) - in build-executed code (recommended, see below)
+//! 3. Copying it yourself from the Bootstrap website
+//! 4. Accessing the data via [`BIFiles::FILES`](crate::icons::BIFiles::FILES) and delivering it yourself
 //!
-//! # Installation - Quickstart - Using CDN
+//! # 1. Quickstart - Using CDN
 //!
 //! Call `BIFiles::cdn()` inside the `html!{}` returned by your application.
 //!
-//! # Installation - Automatically Copying Files
+//! # 2. Recommended - Automatically Copying Files
 //!
-//! This is copies the files to the dist directory, which is the recommended way.
+//! This is copies the files to the `dist`` directory, which is recommended.
 //!
-//! It is shown in the example `icons`.
+//! It is shown in `/examples/icons`.
 //!
-//! The possible downside is that trunk does not add a hash and thus a change can't be detected easily.
-//! But since the version of bootstrap-icons is included and it should not change, it's not a problem.
+//! A copy of `bootstrap-icons` is included and should change only rarely. `trunk` does not add a hash to generated files, 
+//! and thus a change in those files won't be detected by `trunk`. 
 //!
 //! 1. `Cargo.toml`
 //!
@@ -68,9 +66,9 @@
 //!
 //! 3. `index.html`
 //!
-//!    Set base reference, link the css and specify your wasm-program.
+//!    Set base reference, link the required CSS and specify your WASM program[^1].
 //!
-//!    (Because there are now two binaries and trunk can't decide which binary to run.)
+//!    [^1]: Since we'll be writing a build-executed program, there are now two binaries and trunk needs to know which is your WASM binary.
 //!
 //!    ```html
 //!    <base data-trunk-public-url />
@@ -80,7 +78,7 @@
 //!
 //! 4. `Trunk.toml`
 //!
-//!    Add a hook to run the program.
+//!    Add a hook to run the build-executed program.
 //!
 //!    ```toml
 //!    [[hooks]]
@@ -98,11 +96,11 @@ use yew::html::{ChildrenRenderer, IntoPropValue};
 use yew::virtual_dom::{VNode, VRaw};
 use yew::{AttrValue, Html, ToHtml};
 
-/// Represents an bootstrap-icon.
+/// Represents an bootstrap-icon[^2].
 ///
-/// (Or nothing, see [`BI::empty()`]/[`BI::default()`].)
+/// [^2]: or nothing, see [`BI::empty()`]/[`BI::default()`].
 ///
-/// It's a transparent wrapper of a `&'static str`, so `Copy` is cheap.
+/// This is a transparent wrapper of a `&'static str`, so `Copy` is cheap.
 ///
 /// Use [`BI::html`] or the `From` or `IntoPropValue` implementation to generate the actual html.
 ///
