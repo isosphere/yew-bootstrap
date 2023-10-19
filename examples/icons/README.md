@@ -1,11 +1,10 @@
 # Example of automatically copying the bootstrap-icons files
 
-This is copies the files to the dist directory, which is the recommended way.
+This is copies the required files to the `dist` directory, which is recommended.
 
-Please see https://docs.rs/yew-bootstrap/latest/yew_bootstrap/icons/index.html for documentation.
+Please see [the documentation](https://docs.rs/yew-bootstrap/latest/yew_bootstrap/icons/index.html) for more information.
 
-The possible downside is that trunk does not add a hash and thus a change can't be detected easily.
-But since the version of bootstrap-icons is included and it should not change, it's not a problem.
+A copy of `bootstrap-icons` is included and should change only rarely. `trunk` does not add a hash to generated files, and thus a change in those files won't be detected by `trunk`. 
 
 ## Instructions
 
@@ -40,9 +39,9 @@ But since the version of bootstrap-icons is included and it should not change, i
 
 3. `index.html`
 
-   Set base reference, link the css and specify your wasm-program.
+   Set base reference, link the required CSS and specify your WASM program[^1].
 
-   (Since we'll be writing a build-executed program, there are now two binaries and trunk needs to know which is your WASM binary.)
+   [^1]: Since we'll be writing a build-executed program, there are now two binaries and trunk needs to know which is your WASM binary.
 
     ```html
     <base data-trunk-public-url />
@@ -52,7 +51,7 @@ But since the version of bootstrap-icons is included and it should not change, i
 
 4. `Trunk.toml`
 
-   Add a hook to run the program.
+   Add a hook to run the build-executed program.
 
     ```toml
     [[hooks]]
