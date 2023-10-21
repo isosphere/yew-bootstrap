@@ -32,8 +32,8 @@
 //!
 //! It is shown in `/examples/icons`.
 //!
-//! A copy of `bootstrap-icons` is included and should change only rarely. `trunk` does not add a hash to generated files, 
-//! and thus a change in those files won't be detected by `trunk`. 
+//! A copy of `bootstrap-icons` is included and should change only rarely. `trunk` does not add a hash to generated files,
+//! and thus a change in those files won't be detected by `trunk`.
 //!
 //! 1. `Cargo.toml`
 //!
@@ -216,7 +216,7 @@ impl ToHtml for BI {
 /// Intended use:
 /// ```
 /// # use yew_bootstrap::icons::BIFiles;
-/// let BIFiles {css, font_woff, font_woff2} = BIFiles::FILES;
+/// let BIFiles {css, font_woff, font_woff2, license} = BIFiles::FILES;
 /// ```
 /// (That way it will be an error if a file is added/removed.)
 pub struct BIFiles {
@@ -226,6 +226,8 @@ pub struct BIFiles {
     pub font_woff: &'static [u8],
     /// Contents of the file `fonts/bootstrap-icons.woff2`.
     pub font_woff2: &'static [u8],
+    /// Contents of the file `fonts/LICENSE`.
+    pub license: &'static str,
 }
 
 impl BIFiles {
@@ -240,13 +242,14 @@ impl BIFiles {
     /// Intended use:
     /// ```
     /// # use yew_bootstrap::icons::BIFiles;
-    /// let BIFiles {css, font_woff, font_woff2} = BIFiles::FILES;
+    /// let BIFiles {css, font_woff, font_woff2, license} = BIFiles::FILES;
     /// ```
     /// (That way it will be an error if a file is added/removed.)
     pub const FILES: Self = Self {
         css: include_str!("../../bootstrap-icons-v1.10.5/bootstrap-icons.css"),
         font_woff: include_bytes!("../../bootstrap-icons-v1.10.5/fonts/bootstrap-icons.woff"),
         font_woff2: include_bytes!("../../bootstrap-icons-v1.10.5/fonts/bootstrap-icons.woff2"),
+        license: include_str!("../../bootstrap-icons-v1.10.5/fonts/LICENSE"),
     };
 
     /// Load the bootstrap-icons files from the official cdn.
@@ -271,6 +274,7 @@ impl BIFiles {
             css,
             font_woff,
             font_woff2,
+            license,
         } = Self::FILES;
 
         let fonts = to.join("fonts");
@@ -280,6 +284,7 @@ impl BIFiles {
         std::fs::write(to.join("bootstrap-icons.css"), css)?;
         std::fs::write(fonts.join("bootstrap-icons.woff"), font_woff)?;
         std::fs::write(fonts.join("bootstrap-icons.woff2"), font_woff2)?;
+        std::fs::write(fonts.join("LICENSE"), license)?;
 
         Ok(())
     }
