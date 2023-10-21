@@ -96,9 +96,7 @@ use yew::html::{ChildrenRenderer, IntoPropValue};
 use yew::virtual_dom::{VNode, VRaw};
 use yew::{AttrValue, Html, ToHtml};
 
-/// Represents an bootstrap-icon[^2].
-///
-/// [^2]: or nothing, see [`BI::empty()`]/[`BI::default()`].
+/// Represents an bootstrap-icon.
 ///
 /// This is a transparent wrapper of a `&'static str`, so `Copy` is cheap.
 ///
@@ -113,20 +111,6 @@ use yew::{AttrValue, Html, ToHtml};
 pub struct BI(pub(crate) &'static str);
 
 impl BI {
-    /// Create an empty `BI`.
-    #[inline]
-    #[must_use]
-    pub const fn empty() -> Self {
-        BI("")
-    }
-
-    /// Returns true is self is empty.
-    #[inline]
-    #[must_use]
-    pub const fn is_empty(self) -> bool {
-        self.0.is_empty()
-    }
-
     /// Returns the `Html` of this icon.
     #[inline]
     pub const fn html(self) -> Html {
@@ -162,13 +146,6 @@ impl Hash for BI {
         // Invariant: this is guaranteed due to the fact that it's not possible to create new.
         // Performance hack: Only hash the ptr to the middle of the string.
         (self.0.as_ptr() as usize + (self.0.len() >> 1)).hash(state);
-    }
-}
-
-impl Default for BI {
-    #[inline]
-    fn default() -> Self {
-        Self::empty()
     }
 }
 
