@@ -129,7 +129,6 @@ impl BI {
 
     /// Returns the `Html` of this icon.
     #[inline]
-    #[must_use]
     pub const fn html(self) -> Html {
         VNode::VRaw(VRaw {
             html: AttrValue::Static(self.0),
@@ -255,7 +254,6 @@ impl BIFiles {
     /// Load the bootstrap-icons files from the official cdn.
     ///
     /// Call `BIFiles::cdn()` inside the `html!{}` returned by your application.
-    #[must_use]
     pub const fn cdn() -> VNode {
         VNode::VRaw(VRaw {
             html: AttrValue::Static(
