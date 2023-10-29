@@ -28,7 +28,7 @@
 //!
 //! # 2. Recommended - Automatically Copying Files
 //!
-//! This is copies the files to the `dist`` directory, which is recommended.
+//! This is copies the files to the `dist` directory, which is recommended.
 //!
 //! It is shown in `/examples/icons`.
 //!
