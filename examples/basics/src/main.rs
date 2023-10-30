@@ -266,6 +266,26 @@ impl Component for Model {
                         <Button style={Color::Primary}>{"Primary"}</Button>
                         <Button style={Color::Secondary}>{"Secondary"}</Button>
                     </ButtonGroup>
+
+                    <h1>{"List groups"}</h1>
+                    <ListGroup>
+                        <ListGroupItem>{"A"}</ListGroupItem>
+                        <ListGroupItem active=true>{"B"}</ListGroupItem>
+                        <ListGroupItem disabled=true>{"C"}</ListGroupItem>
+                    </ListGroup>
+
+                    <h2>{"Flush and with numbers"}</h2>
+                    <ListGroup variant={ListGroupVariant::Flush} numbered=true>
+                        <ListGroupItem style={Color::Primary}>{"Primary"}</ListGroupItem>
+                        <ListGroupItem action=true style={Color::Secondary} url="#ref">{"Secondary w/ link"}</ListGroupItem>
+                        <ListGroupItem action=true style={Color::Info}>{"Secondary w/ action"}</ListGroupItem>
+                    </ListGroup>
+
+                    <h2>{"Horizontal"}</h2>
+                    <ListGroup horizontal={SizeTrigger::Always}>
+                        <ListGroupItem action=true active=true>{"Active action"}</ListGroupItem>
+                        <ListGroupItem action=true disabled=true>{"Disabled action"}</ListGroupItem>
+                    </ListGroup>
                 </div>
                 <div id="helpers" class="p-3">
                     <h1>{"Vertical/Horizontal rule"}</h1>
