@@ -76,6 +76,8 @@ pub struct ListGroupProps {
 pub fn ListGroup(props: &ListGroupProps) -> Html {
     let mut classes = Classes::from("list-group");
 
+    classes.extend(&props.class);
+
     match props.variant {
         ListGroupVariant::Default => (),
         ListGroupVariant::Flush => classes.push("list-group-flush"),
@@ -152,6 +154,9 @@ pub struct ListGroupItemProps {
 #[function_component]
 pub fn ListGroupItem(props: &ListGroupItemProps) -> Html {
     let mut classes = Classes::from("list-group-item");
+
+    classes.extend(&props.class);
+
     if props.active {
         classes.push("active");
     }
