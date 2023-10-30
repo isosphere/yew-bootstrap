@@ -3,6 +3,7 @@ mod alert;
 mod badge;
 mod button;
 mod button_group;
+pub mod card;
 mod column;
 mod container;
 mod display;

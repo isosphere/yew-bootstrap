@@ -30,3 +30,38 @@ impl fmt::Display for Color {
         }
     }
 }
+
+/// # Colors
+/// Bootstrap colors for text. Like [Color] but includes white and muted.
+#[derive(Clone, PartialEq, Eq)]
+pub enum TextColor {
+    Primary,
+    Secondary,
+    Success,
+    Info,
+    Warning,
+    Danger,
+    Light,
+    Dark,
+    Link,
+    White,
+    Muted,
+}
+
+impl fmt::Display for TextColor {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match *self {
+            TextColor::Primary => write!(f, "primary"),
+            TextColor::Secondary => write!(f, "secondary"),
+            TextColor::Success => write!(f, "success"),
+            TextColor::Info => write!(f, "info"),
+            TextColor::Warning => write!(f, "warning"),
+            TextColor::Danger => write!(f, "danger"),
+            TextColor::Light => write!(f, "light"),
+            TextColor::Dark => write!(f, "dark"),
+            TextColor::Link => write!(f, "link"),
+            TextColor::White => write!(f, "white"),
+            TextColor::Muted => write!(f, "muted"),
+        }
+    }
+}
