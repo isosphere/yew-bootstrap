@@ -59,7 +59,7 @@ This project uses [semantic versioning](https://semver.org/).
 - [ ] Breadcrumb
 - [x] Button ([component::Button])
 - [x] Button group ([component::ButtonGroup])
-- [ ] Card
+- [x] Card ([component::Card], [component::CardGroup])
 - [ ] Carousel
 - [ ] Close button
 - [ ] Collapse
