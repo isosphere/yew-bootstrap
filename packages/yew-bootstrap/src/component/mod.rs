@@ -3,6 +3,7 @@ mod alert;
 mod badge;
 mod button;
 mod button_group;
+#[warn(missing_docs)]
 pub mod card;
 mod column;
 mod container;
