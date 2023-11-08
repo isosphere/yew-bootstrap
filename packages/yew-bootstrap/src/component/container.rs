@@ -2,7 +2,7 @@ use log::*;
 use yew::prelude::*;
 
 /// Size for a container, from extra small to extra large
-#[derive(Clone, PartialEq, Eq)]
+#[derive(Clone, Debug, PartialEq, Eq)]
 pub enum ContainerSize {
     ExtraSmall,
     Small,
