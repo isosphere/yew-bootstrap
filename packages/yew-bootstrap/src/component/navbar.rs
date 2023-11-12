@@ -1,6 +1,7 @@
 use yew::prelude::*;
 use super::Container;
 use crate::util::Dimension;
+use crate::icons::BI;
 
 /// # A singular dropdown item, child of [NavDropdown]
 /// Used as a child of [NavDropdown] to create a dropdown menu. 
@@ -193,8 +194,8 @@ pub enum BrandType {
     BrandSimple { 
         text: AttrValue, url: Option<AttrValue> },
     /// a brand icon is a bootstrap icon, requiring bootstrap-icons to be imported; 
-    /// see [crate::util::include_cdn_icons]
-    BrandIcon { icon: AttrValue, text: AttrValue, url: Option<AttrValue> },
+    /// see [crate::icons]
+    BrandIcon { icon: BI, text: AttrValue, url: Option<AttrValue> },
     /// Image with optional dimensions, link and descriptive text
     BrandImage { 
         /// browser-accessible url to the brand image
@@ -317,7 +318,7 @@ impl Component for NavBar {
                         };
                         html! {
                             <a class="navbar-brand" href={url} onclick={props.brand_callback.clone()}>
-                                <i class={format!("bi-{}", icon)}></i>
+                                {icon}
                                 {text.clone()}
                             </a>
                         }

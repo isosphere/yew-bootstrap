@@ -1,3 +1,4 @@
+use crate::icons::BIFiles;
 use yew::{html, virtual_dom::VNode};
 
 /// Links to the Bootstrap CSS CDN
@@ -39,14 +40,8 @@ pub fn include_inline() -> VNode {
 
 
 /// Include the Bootstrap Icons CDN
+#[inline(always)]
+#[deprecated = "Use icons::BIFiles::cdn() instead"]
 pub fn include_cdn_icons() -> VNode {
-    html! {
-        <link 
-            rel="stylesheet" 
-            data-trunk={"true"}
-            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css" 
-            crossorigin="anonymous"
-            integrity="sha384-b6lVK+yci+bfDmaY1u0zE8YYJt0TZxLEAFyYSLHId4xoVvsrQu3INevFKo+Xir8e"
-        />
-    }
+    BIFiles::cdn()
 }
