@@ -9,7 +9,7 @@ This project uses [semantic versioning](https://semver.org/).
 # Features Implemented
 Check the readme for the [`yew-bootstrap` package](/packages/yew-bootstrap/README.md), or the docs.rs link above.
 
-[Our "Basics" Example](https://user-images.githubusercontent.com/163370/225911985-d3928a8a-f8f4-45a0-8906-f554a68c15e5.webm)
+[basics-example.webm](https://github.com/isosphere/yew-bootstrap/assets/163370/4d5e80e8-9d1a-4493-804a-20aa5bc46948)
 
 # Contributing
 Bug reports, feature requests, and pull requests are welcome!

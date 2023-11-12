@@ -64,7 +64,7 @@ This project uses [semantic versioning](https://semver.org/).
 - [ ] Close button
 - [ ] Collapse
 - [ ] Dropdown
-- [ ] List group
+- [x] List group ([component::ListGroup], [component::ListGroupItem])
 - [x] Modal ([component::Modal])
 - [x] Navbar ([component::NavBar], [component::NavItem], [component::NavDropdown], [component::NavDropdownItem])
 - [ ] Navs & tabs
