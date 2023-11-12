@@ -5,7 +5,6 @@
 //! # use yew::html;
 //! # use yew_bootstrap::icons::BI;
 //! let icon = BI::HEART;
-//! let empty_icon = BI::empty(); // or BI::default()
 //! # let result =
 //! html!{
 //!     <h1>{"I"} {icon} {BI::GEAR}</h1>
