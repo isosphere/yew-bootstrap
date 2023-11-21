@@ -16,7 +16,7 @@ Bug reports, feature requests, and pull requests are welcome!
 
 Please try to match your code style to the existing codebase. If you think a change in that style is warranted, feel free to make a suggestion in a new Issue. 
 
-Much of this codebase uses struct components. **For new contributions please use functional components** unless you have good reason to use struct components. It is the [recommended default from Yew](https://yew.rs/docs/concepts/function-components)[^1], and we should be consistent. 
+**For new contributions please use functional components** unless you have good reason to use struct components. It is the [recommended default from Yew](https://yew.rs/docs/concepts/function-components)[^1], and we should be consistent. 
 [^1]: > function components - the recommended way to write components when starting with Yew and when writing simple presentation logic.
 
 Please be sure to try `cargo test` before submitting a PR.
