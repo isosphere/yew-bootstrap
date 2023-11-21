@@ -2,25 +2,6 @@ use yew::prelude::*;
 
 use crate::util::Color;
 
-/// # Spinner component
-/// Used alongside [crate::util::Color] to create Spinner components
-///
-/// See [SpinnerProps] for a listing of properties
-///
-/// ## Example
-/// ```rust
-/// use yew::prelude::*;
-/// use yew_bootstrap::component::Spinner;
-/// use yew_bootstrap::util::Color;
-/// fn test() -> Html {
-///     html!{
-///         <Spinner style={Color::Primary}>
-///             {"Visually hidden text"}
-///         </Spinner>
-///     }
-/// }
-/// ```
-pub struct Spinner {}
 
 /// # Properties of [Spinner]
 #[derive(Properties, Clone, PartialEq)]
@@ -46,39 +27,48 @@ pub struct SpinnerProps {
     pub small: bool,
 }
 
-impl Component for Spinner {
-    type Message = ();
-    type Properties = SpinnerProps;
+/// # Spinner component
+/// Used alongside [crate::util::Color] to create Spinner components
+///
+/// See [SpinnerProps] for a listing of properties
+///
+/// ## Example
+/// ```rust
+/// use yew::prelude::*;
+/// use yew_bootstrap::component::Spinner;
+/// use yew_bootstrap::util::Color;
+/// fn test() -> Html {
+///     html!{
+///         <Spinner style={Color::Primary}>
+///             {"Visually hidden text"}
+///         </Spinner>
+///     }
+/// }
+/// ```
+#[function_component]
+pub fn Spinner(props: &SpinnerProps) -> Html {
+    let mut classes = Classes::new();
 
-    fn create(_ctx: &Context<Self>) -> Self {
-        Self {}
+    if props.grow {
+        classes.push("spinner-grow");
+        if props.small {
+            classes.push("spinner-grow-sm");
+        }
+    } else {
+        classes.push("spinner-border");
+        if props.small {
+            classes.push("spinner-border-sm");
+        }
     }
 
-    fn view(&self, ctx: &Context<Self>) -> Html {
-        let props = ctx.props();
-        let mut classes = Classes::new();
+    classes.push(format!("text-{}", props.style));
+    classes.push(props.class.clone());
 
-        if props.grow {
-            classes.push("spinner-grow");
-            if props.small {
-                classes.push("spinner-grow-sm");
-            }
-        } else {
-            classes.push("spinner-border");
-            if props.small {
-                classes.push("spinner-border-sm");
-            }
-        }
-
-        classes.push(format!("text-{}", props.style));
-        classes.push(props.class.clone());
-
-        html! {
-            <div class={classes} role="status">
-                <span class="visually-hidden">
-                    { for props.children.iter() }
-                </span>
-            </div>
-        }
+    html! {
+        <div class={classes} role="status">
+            <span class="visually-hidden">
+                { for props.children.iter() }
+            </span>
+        </div>
     }
 }
