@@ -25,6 +25,56 @@ pub struct CardProps {
     pub body: bool,
 }
 
+/// # Card component
+/// Container for a Card, a component generally used for dynamic display of items in a grid pattern.
+/// Takes any item as child, but most often [body](super::body) items, [image](super::image) items,
+/// or a flush [ListGroup](crate::component::ListGroup).
+///
+/// See [CardProps] for a list of properties.
+///
+/// ## Examples
+///
+/// With header and footer text:
+/// ```
+/// use yew::prelude::*;
+/// use yew_bootstrap::component::card::*;
+/// fn test() -> Html {
+///   html! {
+///     <Card>
+///         <CardHeader>{"Card Head"}</CardHeader>
+///         <CardBody>{"Body text"}</CardBody>
+///         <CardFooter>{"Card Foot"}</CardFooter>
+///     </Card>
+///   }
+/// }
+/// ```
+///
+/// With a top image and image description, instead:
+/// ```
+/// use yew::prelude::*;
+/// use yew_bootstrap::component::card::*;
+/// fn test() -> Html {
+///   html! {
+///     <Card>
+///         <CardImage variant={ImageVariant::Top} src="imgsrc.jpg"/>
+///         <CardBody>{"Image description"}</CardBody>
+///     </Card>
+///   }
+/// }
+/// ```
+///
+/// Setting the `body` property, everything is implicitly wrapped in a [CardBody]:
+/// ```
+/// use yew::prelude::*;
+/// use yew_bootstrap::component::card::*;
+/// fn test() -> Html {
+///   html! {
+///     <Card body=true>
+///         {"Body text, great for simple cards"}
+///     </Card>
+///   }
+/// }
+/// ```
 #[function_component]
 pub fn Card(props: &CardProps) -> Html {
     let mut classes = props.class.clone();

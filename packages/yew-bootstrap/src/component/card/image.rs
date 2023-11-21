@@ -27,6 +27,11 @@ pub struct CardImageProps {
     pub alt: AttrValue,
 }
 
+/// # Card Image component
+/// An image contained within a [Card](super::Card). Can be styled to match with being on the top
+/// or bottom using [ImageVariant].
+///
+/// See [CardImageProps] for a list of properties.
 #[function_component]
 pub fn CardImage(props: &CardImageProps) -> Html {
     let mut classes = match props.variant {
@@ -53,6 +58,25 @@ pub struct CardImageOverlayProps {
     pub class: Classes,
 }
 
+/// # Card Image Overlay component
+/// Used in combination with a [CardImage] to create content overlayed on an image.
+///
+/// See [CardImageOverlayProps] for a list of properties.
+///
+/// ## Examples
+///
+/// ```
+/// use yew::prelude::*;
+/// use yew_bootstrap::component::card::*;
+/// fn test() -> Html {
+///   html! {
+///     <Card>
+///         <CardImage variant={ImageVariant::Top} src="imgsrc.jpg" />
+///         <CardImageOverlay>{"Text on top of image"}</CardImageOverlay>
+///     </Card>
+///   }
+/// }
+/// ```
 #[function_component]
 pub fn CardImageOverlay(props: &CardImageOverlayProps) -> Html {
     let mut classes = props.class.clone();
