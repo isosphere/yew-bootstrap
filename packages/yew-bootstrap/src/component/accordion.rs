@@ -245,8 +245,8 @@ pub struct AccordionProps {
 ///             {
 ///                 items.iter().map(|item| {
 ///                     html_nested! {
-///                         <AccordionItem title={item.0.clone()}>
-///                             {item.0.clone()}
+///                         <AccordionItem title={item.0}>
+///                             {item.0}
 ///                         </AccordionItem>
 ///                     }
 ///                 }).collect::<Vec<VChild<AccordionItem>>>()

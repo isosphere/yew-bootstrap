@@ -1,6 +1,23 @@
 use super::Column;
 use yew::prelude::*;
 
+
+/// # Properties for [Row]
+#[derive(Properties, Clone, PartialEq)]
+pub struct RowProps {
+    /// CSS class
+    #[prop_or_default]
+    pub class: String,
+
+    /// Event called when the element is clicked
+    #[prop_or_default]
+    pub onclick: Callback<MouseEvent>,
+
+    /// Children of type [crate::component::Column]
+    #[prop_or_default]
+    pub children: ChildrenWithProps<Column>,
+}
+
 /// # Row container
 /// Used alongside [crate::component::Column] to create grids
 ///
@@ -19,45 +36,18 @@ use yew::prelude::*;
 ///     }
 /// }
 /// ```
-pub struct Row {}
+#[function_component]
+pub fn Row(props: &RowProps) -> Html {
+    let mut classes = Classes::new();
+    classes.push("row");
+    classes.push(props.class.clone());
 
-/// # Properties for [Row]
-#[derive(Properties, Clone, PartialEq)]
-pub struct RowProps {
-    /// CSS class
-    #[prop_or_default]
-    pub class: String,
-
-    /// Event called when the element is clicked
-    #[prop_or_default]
-    pub onclick: Callback<MouseEvent>,
-
-    /// Children of type [crate::component::Column]
-    #[prop_or_default]
-    pub children: ChildrenWithProps<Column>,
-}
-
-impl Component for Row {
-    type Message = ();
-    type Properties = RowProps;
-
-    fn create(_ctx: &Context<Self>) -> Self {
-        Self {}
-    }
-
-    fn view(&self, ctx: &Context<Self>) -> Html {
-        let props = ctx.props();
-        let mut classes = Classes::new();
-        classes.push("row");
-        classes.push(props.class.clone());
-
-        html! {
-            <div
-                class={classes}
-                onclick={props.onclick.clone()}
-            >
-                { for props.children.iter() }
-            </div>
-        }
+    html! {
+        <div
+            class={classes}
+            onclick={props.onclick.clone()}
+        >
+            { for props.children.iter() }
+        </div>
     }
 }

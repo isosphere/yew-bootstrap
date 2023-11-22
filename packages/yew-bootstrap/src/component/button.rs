@@ -14,51 +14,6 @@ impl Default for ButtonSize {
     }
 }
 
-/// # Button component
-/// Button with various properties, including support for opening or closing a modal 
-/// dialog [crate::component::Modal].
-/// 
-/// Buttons can be grouped in a [crate::component::ButtonGroup].
-/// 
-/// See [ButtonProps] for a listing of properties.
-/// 
-/// ## Example
-/// Example of a simple button:
-/// 
-/// ```rust
-/// use yew::prelude::*;
-/// use yew_bootstrap::component::Button;
-/// use yew_bootstrap::util::Color;
-/// fn test() -> Html {
-///     html!{
-///         <Button style={Color::Primary} text={ "Button text" }/>
-///     }
-/// }
-/// ```
-/// 
-/// A button can be linked to a [crate::component::Modal] dialog or 
-/// close this modal.
-/// 
-/// ```rust
-/// use yew::prelude::*;
-/// use yew_bootstrap::component::Button;
-/// use yew_bootstrap::component::Modal;
-/// use yew_bootstrap::util::Color;
-/// fn test() -> Html {
-///     html ! {
-///         <>
-///             <Modal id="ExampleModal">
-///                <Button modal_dismiss={true}>{ "Close the modal" }</Button>
-///             </Modal>
-///             <Button style={Color::Primary} modal_target={ "ExampleModal" }>
-///                 { "Open Modal" }
-///             </Button>
-///         </>
-///     }
-/// }
-/// ```
-pub struct Button {}
-
 /// # Properties for [Button]
 #[derive(Properties, Clone, PartialEq)]
 pub struct ButtonProps {
@@ -111,66 +66,99 @@ pub struct ButtonProps {
     pub modal_dismiss: bool,
 }
 
-impl Component for Button {
-    type Message = ();
-    type Properties = ButtonProps;
-
-    fn create(_ctx: &Context<Self>) -> Self {
-        Self {}
+/// # Button component
+/// Button with various properties, including support for opening or closing a modal
+/// dialog [crate::component::Modal].
+///
+/// Buttons can be grouped in a [crate::component::ButtonGroup].
+///
+/// See [ButtonProps] for a listing of properties.
+///
+/// ## Example
+/// Example of a simple button:
+///
+/// ```rust
+/// use yew::prelude::*;
+/// use yew_bootstrap::component::Button;
+/// use yew_bootstrap::util::Color;
+/// fn test() -> Html {
+///     html!{
+///         <Button style={Color::Primary} text={ "Button text" }/>
+///     }
+/// }
+/// ```
+///
+/// A button can be linked to a [crate::component::Modal] dialog or
+/// close this modal.
+///
+/// ```rust
+/// use yew::prelude::*;
+/// use yew_bootstrap::component::Button;
+/// use yew_bootstrap::component::Modal;
+/// use yew_bootstrap::util::Color;
+/// fn test() -> Html {
+///     html ! {
+///         <>
+///             <Modal id="ExampleModal">
+///                <Button modal_dismiss={true}>{ "Close the modal" }</Button>
+///             </Modal>
+///             <Button style={Color::Primary} modal_target={ "ExampleModal" }>
+///                 { "Open Modal" }
+///             </Button>
+///         </>
+///     }
+/// }
+/// ```
+#[function_component]
+pub fn Button(props: &ButtonProps) -> Html {
+    let mut classes = Classes::new();
+    classes.push("btn");
+    if props.outline {
+        classes.push(format!("btn-outline-{}", props.style));
+    } else {
+        classes.push(format!("btn-{}", props.style));
     }
+    match props.size {
+        ButtonSize::Large => classes.push("btn-lg"),
+        ButtonSize::Small => classes.push("btn-sm"),
+        _ => (),
+    }
+    if props.block {
+        classes.push("btn-block");
+    }
+    classes.push(props.class.clone());
 
-    fn view(&self, ctx: &Context<Self>) -> Html {
-        let props = ctx.props();
-        let mut classes = Classes::new();
-        classes.push("btn");
-        if props.outline {
-            classes.push(format!("btn-outline-{}", props.style));
-        } else {
-            classes.push(format!("btn-{}", props.style));
-        }
-        match props.size {
-            ButtonSize::Large => classes.push("btn-lg"),
-            ButtonSize::Small => classes.push("btn-sm"),
-            _ => (),
-        }
-        if props.block {
-            classes.push("btn-block");
-        }
-        classes.push(props.class.clone());
+    let modal_dismiss = match props.modal_dismiss {
+        true => "modal",
+        false => "",
+    };
 
-        let modal_dismiss = match props.modal_dismiss {
-            true => "modal",
-            false => "",
-        };
-
-        if let Some(target) = &props.modal_target {
-            html! {
-                <button
-                    class={classes}
-                    disabled={props.disabled}
-                    name={props.name.clone()}
-                    onclick={props.onclick.clone()}
-                    data-bs-toggle="modal"
-                    data-bs-target={format!("#{}",target.clone())}
-                >
-                    { &props.text }
-                    { for props.children.iter() }
-                </button>
-            }
-        } else {
-            html! {
-                <button
-                    class={classes}
-                    disabled={props.disabled}
-                    name={props.name.clone()}
-                    onclick={props.onclick.clone()}
-                    data-bs-dismiss={modal_dismiss}
-                >
-                    { &props.text }
-                    { for props.children.iter() }
-                </button>
-            }
+    if let Some(target) = &props.modal_target {
+        html! {
+            <button
+                class={classes}
+                disabled={props.disabled}
+                name={props.name.clone()}
+                onclick={props.onclick.clone()}
+                data-bs-toggle="modal"
+                data-bs-target={format!("#{}",target.clone())}
+            >
+                { &props.text }
+                { for props.children.iter() }
+            </button>
         }
-
+    } else {
+        html! {
+            <button
+                class={classes}
+                disabled={props.disabled}
+                name={props.name.clone()}
+                onclick={props.onclick.clone()}
+                data-bs-dismiss={modal_dismiss}
+            >
+                { &props.text }
+                { for props.children.iter() }
+            </button>
+        }
     }
 }
