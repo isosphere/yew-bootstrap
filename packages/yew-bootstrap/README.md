@@ -7,7 +7,7 @@ Add the dependency next to the regular yew dependency:
 ```toml
 [dependencies]
 yew = "0.21"
-yew-bootstrap = "0.7"
+yew-bootstrap = "0.8"
 ```
 
 To use form callback functions, the following dependencies should be added:
@@ -59,7 +59,7 @@ This project uses [semantic versioning](https://semver.org/).
 - [ ] Breadcrumb
 - [x] Button ([component::Button])
 - [x] Button group ([component::ButtonGroup])
-- [ ] Card
+- [x] Card ([component::Card], [component::CardGroup])
 - [ ] Carousel
 - [ ] Close button
 - [ ] Collapse
