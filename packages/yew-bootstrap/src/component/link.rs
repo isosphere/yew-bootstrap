@@ -1,22 +1,22 @@
-use yew::prelude::*;
 use crate::util::Color;
+use yew::prelude::*;
 
 /// # Link component
 /// Link component rendered as `<a/>` component. This link can contain
 /// any element.
-/// 
+///
 /// See [LinkProps] for a listing of properties.
-/// 
+///
 /// ## Example
 /// Example of link:
-/// 
+///
 /// ```rust
 /// use yew::prelude::*;
 /// use yew_bootstrap::component::Link;
 /// use yew_bootstrap::util::Color;
 /// fn test() -> Html {
 ///     html!{
-///         <Link style={Color::Primary} stretched={ true } text={ "Link text" }/>
+///         <Link style={Color::Primary} stretched={ true } text={ "Link text" } url={ "https://github.com/isosphere/yew-bootstrap/" }/>
 ///     }
 /// }
 /// ```
@@ -40,6 +40,14 @@ pub struct LinkProps {
     /// Color style
     #[prop_or_default]
     pub style: Option<Color>,
+
+    /// URL to direct to when the link is clicked
+    #[prop_or_default]
+    pub url: Option<AttrValue>,
+
+    /// Target frame or window ID for the link
+    #[prop_or_default]
+    pub target: Option<AttrValue>,
 
     /// Optional text for the link
     #[prop_or_default]
@@ -68,6 +76,9 @@ impl Component for Link {
         html! {
             <a
                 class={classes}
+                role={props.url.is_none().then_some("button")}
+                href={props.url.clone()}
+                target={props.target.clone()}
             >
                 { &props.text }
                 { for props.children.iter() }
