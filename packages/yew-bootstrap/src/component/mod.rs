@@ -16,6 +16,7 @@ mod modal;
 mod navbar;
 mod row;
 mod spinner;
+mod progress;
 
 pub use self::accordion::*;
 pub use self::alert::*;
@@ -33,3 +34,4 @@ pub use self::modal::*;
 pub use self::navbar::*;
 pub use self::row::*;
 pub use self::spinner::*;
+pub use self::progress::*;
