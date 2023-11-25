@@ -298,6 +298,40 @@ impl Component for Model {
                         <ListGroupItem action=true active=true>{"Active action"}</ListGroupItem>
                         <ListGroupItem action=true disabled=true>{"Disabled action"}</ListGroupItem>
                     </ListGroup>
+
+                    <h1>{"Progress bars"}</h1>
+                    <h2>{"Simple"}</h2>
+                    <Progress class={"mb-3"}><ProgressBar value=0   /></Progress>
+                    <Progress class={"mb-3"}><ProgressBar value=25  /></Progress>
+                    <Progress class={"mb-3"}><ProgressBar value=50  /></Progress>
+                    <Progress class={"mb-3"}><ProgressBar value=75  /></Progress>
+                    <Progress class={"mb-3"}><ProgressBar value=100 /></Progress>
+
+                    <h2>{"Labels"}</h2>
+                    <Progress class={"mb-3"}><ProgressBar value=25 label={"25%"}/></Progress>
+
+                    <h2>{"Height"}</h2>
+                    <Progress class={"mb-3"} height=1><ProgressBar  value=25/></Progress>
+                    <Progress class={"mb-3"} height=20><ProgressBar value=25/></Progress>
+
+                    <h2>{"Backgrounds"}</h2>
+                    <Progress class={"mb-3"}><ProgressBar value=25  style={Some(Color::Success)}/></Progress>
+                    <Progress class={"mb-3"}><ProgressBar value=50  style={Some(Color::Info)}/></Progress>
+                    <Progress class={"mb-3"}><ProgressBar value=75  style={Some(Color::Warning)}/></Progress>
+                    <Progress class={"mb-3"}><ProgressBar value=100 style={Some(Color::Danger)}/></Progress>
+
+                    <h2>{"Multiple bars"}</h2>
+                    <Progress class={"mb-3"}>
+                        <ProgressBar value=15/>
+                        <ProgressBar value=30 style={Some(Color::Success)}/>
+                        <ProgressBar value=20 style={Some(Color::Info)}/>
+                    </Progress>
+
+                    <h2>{"Striped"}</h2>
+                    <Progress class={"mb-3"}><ProgressBar value=25 striped={true}/></Progress>
+
+                    <h2>{"Animated"}</h2>
+                    <Progress class={"mb-3"}><ProgressBar value=25 animated={true}/></Progress>
                 </div>
                 <div id="helpers" class="p-3">
                     <h1>{"Vertical/Horizontal rule"}</h1>
