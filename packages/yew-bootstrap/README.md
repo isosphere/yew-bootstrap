@@ -72,7 +72,7 @@ This project uses [semantic versioning](https://semver.org/).
 - [ ] Pagination
 - [ ] Placeholders
 - [ ] Popovers
-- [ ] Progress
+- [x] Progress ([component::Progress], [component::ProgressBar])
 - [ ] Scrollspy
 - [x] Spinner ([component::Spinner])
 - [ ] Toast
