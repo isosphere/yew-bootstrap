@@ -15,16 +15,16 @@ impl Default for ButtonSize {
 }
 
 /// # Button component
-/// Button with various properties, including support for opening or closing a modal 
+/// Button with various properties, including support for opening or closing a modal
 /// dialog [crate::component::Modal].
-/// 
+///
 /// Buttons can be grouped in a [crate::component::ButtonGroup].
-/// 
+///
 /// See [ButtonProps] for a listing of properties.
-/// 
+///
 /// ## Example
 /// Example of a simple button:
-/// 
+///
 /// ```rust
 /// use yew::prelude::*;
 /// use yew_bootstrap::component::Button;
@@ -35,10 +35,10 @@ impl Default for ButtonSize {
 ///     }
 /// }
 /// ```
-/// 
-/// A button can be linked to a [crate::component::Modal] dialog or 
+///
+/// A button can be linked to a [crate::component::Modal] dialog or
 /// close this modal.
-/// 
+///
 /// ```rust
 /// use yew::prelude::*;
 /// use yew_bootstrap::component::Button;
@@ -54,6 +54,19 @@ impl Default for ButtonSize {
 ///                 { "Open Modal" }
 ///             </Button>
 ///         </>
+///     }
+/// }
+/// ```
+///
+/// A button may also link to a web page.
+///
+/// ```rust
+/// use yew::prelude::*;
+/// use yew_bootstrap::component::Button;
+/// use yew_bootstrap::util::Color;
+/// fn test() -> Html {
+///     html!{
+///         <Button style={Color::Primary} text={ "Button text" } url={ "https://getbootstrap.com/docs/5.3/components/buttons/#button-tags" } target={"_blank"} />
 ///     }
 /// }
 /// ```
@@ -109,6 +122,23 @@ pub struct ButtonProps {
     /// true if this button dismisses the modal that contains it
     #[prop_or_default]
     pub modal_dismiss: bool,
+
+    /// URL to direct to when the button is clicked. This turns the button into
+    /// an `<a>` element.
+    ///
+    /// This property is ignored if the button is `disabled` to
+    /// [avoid link functionality caveats][0], which may result in
+    /// [slightly different rendering on some browsers / platforms][1].
+    ///
+    /// [0]: https://getbootstrap.com/docs/5.3/components/buttons/#link-functionality-caveat
+    /// [1]: https://getbootstrap.com/docs/5.3/components/buttons/#button-tags
+    #[prop_or_default]
+    pub url: Option<AttrValue>,
+
+    /// Target frame or window ID for the link. Only used if `url` is set and
+    /// the button is not `disabled`.
+    #[prop_or_default]
+    pub target: Option<AttrValue>,
 }
 
 impl Component for Button {
@@ -157,6 +187,21 @@ impl Component for Button {
                     { for props.children.iter() }
                 </button>
             }
+        } else if let Some(url) = props.url.as_ref().filter(|_| !props.disabled) {
+            html! {
+                <a
+                    class={classes}
+                    disabled={props.disabled}
+                    name={props.name.clone()}
+                    onclick={props.onclick.clone()}
+                    data-bs-dismiss={modal_dismiss}
+                    href={url.clone()}
+                    target={props.target.clone()}
+                >
+                    { &props.text }
+                    { for props.children.iter() }
+                </a>
+            }
         } else {
             html! {
                 <button
@@ -171,6 +216,5 @@ impl Component for Button {
                 </button>
             }
         }
-
     }
 }

@@ -250,6 +250,11 @@ impl Component for Model {
                     <Button style={Color::Primary} disabled={true}>{"Primary"}</Button>
                     <Button style={Color::Secondary} disabled={true}>{"Secondary"}</Button>
 
+                    <h2>{"Links which look like buttons"}</h2>
+                    <Button style={Color::Primary} target={"_blank"} url={"https://github.com/isosphere/yew-bootstrap/"}>{"Primary link"}</Button>
+                    <Button style={Color::Secondary} target={"_blank"} url={"https://github.com/isosphere/yew-bootstrap/"}>{"Secondary link"}</Button>
+                    <Button style={Color::Primary} disabled={true} target={"_blank"} url={"https://github.com/isosphere/yew-bootstrap/"}>{"Disabled link"}</Button>
+
                     <h2>{"Block buttons"}</h2>
                     <div class="d-grid gap-2">
                         <Button style={Color::Primary} block={true}>{"Primary"}</Button>
@@ -267,6 +272,12 @@ impl Component for Model {
                         <Button style={Color::Primary}>{"Primary"}</Button>
                         <Button style={Color::Secondary}>{"Secondary"}</Button>
                     </ButtonGroup>
+
+                    <h1>{"Links"}</h1>
+                    <div class="d-grid gap-2">
+                        <Link text={"Primary link"} style={Color::Primary} url={"https://github.com/isosphere/yew-bootstrap/"} />
+                        <Link text={"Secondary link"} style={Color::Secondary} url={"https://github.com/isosphere/yew-bootstrap/"} />
+                    </div>
 
                     <h1>{"List groups"}</h1>
                     <ListGroup>
