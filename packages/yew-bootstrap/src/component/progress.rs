@@ -1,4 +1,5 @@
 use yew::prelude::*;
+use log::warn;
 
 use crate::util::Color;
 
@@ -102,15 +103,15 @@ pub fn Progress(props: &ProgressProps) -> Html {
 /// # ProgressBar component, contained inside a [Progress] parent
 #[function_component]
 pub fn ProgressBar(props: &ProgressBarProps) -> Html {
-    if props.value < props.min || props.value > props.max {
-        panic!("ProgressBar: value is {}, should be between {} and {}", props.value, props.min, props.max)
-    }
-
     if props.min >= props.max {
-        panic!("ProgressBar: min ({}) needs to be less than max ({})", props.min, props.max)
+        warn!("ProgressBar: min ({}) needs to be less than max ({})", props.min, props.max);
     }
 
-    let width = 100 * (props.value - props.min) / (props.max - props.min);
+    if props.value < props.min || props.value > props.max {
+        warn!("ProgressBar: value is {}, should be between {} and {}", props.value, props.min, props.max);
+    }
+
+    let width = if props.min < props.max { 100 * (props.value - props.min) / (props.max - props.min) } else { props.min };
     let width = format!("width: {width}%;");
 
     let mut progress_classes = props.class.clone();
