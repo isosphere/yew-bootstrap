@@ -1162,7 +1162,7 @@ version = "0.8.1"
 dependencies = [
  "anyhow",
  "convert_case",
- "log",
+ "gloo-console 0.3.0",
  "yew",
 ]
 

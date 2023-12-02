@@ -1,5 +1,5 @@
 use yew::prelude::*;
-use log::warn;
+use gloo_console::warn;
 
 use crate::util::Color;
 
@@ -104,11 +104,11 @@ pub fn Progress(props: &ProgressProps) -> Html {
 #[function_component]
 pub fn ProgressBar(props: &ProgressBarProps) -> Html {
     if props.min >= props.max {
-        warn!("ProgressBar: min ({}) needs to be less than max ({})", props.min, props.max);
+        warn!(format!("ProgressBar: min ({}) needs to be less than max ({})", props.min, props.max));
     }
 
     if props.value < props.min || props.value > props.max {
-        warn!("ProgressBar: value is {}, should be between {} and {}", props.value, props.min, props.max);
+        warn!(format!("ProgressBar: value is {}, should be between {} and {}", props.value, props.min, props.max));
     }
 
     let width = if props.min < props.max { 100 * (props.value - props.min) / (props.max - props.min) } else { props.min };
