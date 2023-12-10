@@ -1,4 +1,4 @@
-use log::*;
+use gloo_console::warn;
 use yew::prelude::*;
 
 /// Size for a container, from extra small to extra large
@@ -26,12 +26,12 @@ impl ToString for ContainerSize {
 
 /// # Container component
 /// Global container for a page.
-/// 
+///
 /// See [ContainerProps] for a listing of properties.
-/// 
+///
 /// ## Example
 /// Example container:
-/// 
+///
 /// ```rust
 /// use yew::prelude::*;
 /// use yew_bootstrap::component::{Container, ContainerSize};

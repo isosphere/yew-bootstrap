@@ -1,4 +1,4 @@
-use log::warn;
+use gloo_console::warn;
 use yew::prelude::*;
 
 /// # Column container
