@@ -38,6 +38,10 @@ pub struct FormControlProps {
     #[prop_or_default]
     pub help: Option<AttrValue>,
 
+    /// Optional autocomplete text
+    #[prop_or_default]
+    pub autocomplete: Option<AttrValue>,
+
     /// Name for the form field.
     /// For [FormControlType::Radio], set same name to create a group
     #[prop_or_default]
@@ -332,6 +336,7 @@ pub fn FormControl(props: &FormControlProps) -> Html {
                         onchange={ props.onchange.clone() }
                         onclick={ props.onclick.clone() }
                         required={ props.required }
+                        autocomplete={ props.autocomplete.clone() }
                     />
                     { label_after }
                     { help }
@@ -456,6 +461,7 @@ pub fn FormControl(props: &FormControlProps) -> Html {
                         onclick={ props.onclick.clone() }
                         oninput={ props.oninput.clone() }
                         required={ props.required }
+                        autocomplete={ props.autocomplete.clone() }
                     />
                     { label_after }
                     { help }
