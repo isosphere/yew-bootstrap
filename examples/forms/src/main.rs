@@ -184,13 +184,23 @@ impl Component for Model {
                         <FormControl
                             id="input-email"
                             ctype={ FormControlType::Email { pattern: None } }
-                            class="mb-3" label="Email"
+                            class="mb-3" 
+                            label="Email"
+                            autocomplete={ FormAutocompleteType::Email }
                         />
-                        <FormControl id="input-password" ctype={ FormControlType::Password } class="mb-3" label="Password"/>
+                        <FormControl 
+                            id="input-password" 
+                            ctype={ FormControlType::Password } 
+                            class="mb-3" 
+                            label="Password"
+                            autocomplete={ FormAutocompleteType::Password { value: AutocompletePasswordType::NewPassword }}
+                        />
                         <FormControl
                             id="input-url"
                             ctype={ FormControlType::Url { pattern: Some(AttrValue::from("https://.*")) } }
-                            class="mb-3" label="Url with pattern"
+                            class="mb-3" 
+                            label="Url with pattern"
+                            autocomplete={ FormAutocompleteType::Url }
                         />
                         <FormControl
                             id="input-number"
