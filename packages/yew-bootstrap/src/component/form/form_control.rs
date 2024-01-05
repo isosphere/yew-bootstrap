@@ -38,6 +38,10 @@ pub struct FormControlProps {
     #[prop_or_default]
     pub help: Option<AttrValue>,
 
+    /// Autocomplete 
+    #[prop_or(FormAutocompleteType::Off)]
+    pub autocomplete: FormAutocompleteType,
+
     /// Name for the form field.
     /// For [FormControlType::Radio], set same name to create a group
     #[prop_or_default]
@@ -134,6 +138,7 @@ where T: std::fmt::Display {
 /// }
 /// ```
 ///
+/// 
 /// Some input types need parameters for the `ctype` enum. Optional parameters use `Option` enums.
 /// ```rust
 /// use yew::prelude::*;
@@ -332,6 +337,7 @@ pub fn FormControl(props: &FormControlProps) -> Html {
                         onchange={ props.onchange.clone() }
                         onclick={ props.onclick.clone() }
                         required={ props.required }
+                        autocomplete={ props.autocomplete.to_str() }
                     />
                     { label_after }
                     { help }
@@ -456,6 +462,7 @@ pub fn FormControl(props: &FormControlProps) -> Html {
                         onclick={ props.onclick.clone() }
                         oninput={ props.oninput.clone() }
                         required={ props.required }
+                        autocomplete={ props.autocomplete.to_str() }
                     />
                     { label_after }
                     { help }
