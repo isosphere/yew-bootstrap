@@ -71,7 +71,7 @@
 //!
 //!    ```html
 //!    <base data-trunk-public-url />
-//!    <link rel="stylesheet" href="bootstrap-icons-v1.10.5/bootstrap-icons.css" />
+//!    <link rel="stylesheet" href="bootstrap-icons-v1.11.3/bootstrap-icons.css" />
 //!    <link data-trunk rel="rust" data-bin="name-of-app" />
 //!    ```
 //!
@@ -208,7 +208,7 @@ pub struct BIFiles {
 /// allows compile time concatenation with other strings to make const 'static str
 macro_rules! version {
     () => {
-        "v1.10.5"
+        "v1.11.3"
     };
 }
 /// provides a resuable path to the bootstrap-icons files that we can make const 'static str with
