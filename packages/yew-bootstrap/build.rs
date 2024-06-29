@@ -7,7 +7,7 @@ use std::path::Path;
 
 fn bootstrap_icons<W: Write>(output: &mut W) -> Result<()> {
     let mut sorted_icons = BTreeMap::new();
-    for ln in include_str!("bootstrap-icons-v1.10.5/bootstrap-icons.css").lines() {
+    for ln in include_str!("bootstrap-icons-v1.11.3/bootstrap-icons.css").lines() {
         if let Some(ln) = ln.strip_prefix(".bi-") {
             if let Some((lower_kebab_case, _)) = ln.split_once("::before") {
                 if !lower_kebab_case.is_empty() {

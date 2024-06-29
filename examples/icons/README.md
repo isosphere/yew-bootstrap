@@ -45,7 +45,7 @@ A copy of `bootstrap-icons` is included and should change only rarely. `trunk` d
 
     ```html
     <base data-trunk-public-url />
-    <link rel="stylesheet" href="bootstrap-icons-v1.10.5/bootstrap-icons.css" />
+    <link rel="stylesheet" href="bootstrap-icons-v1.11.3/bootstrap-icons.css" />
     <link data-trunk rel="rust" data-bin="name-of-app" />
     ```
 

@@ -616,7 +616,7 @@ dependencies = [
 
 [[package]]
 name = "icons"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "yew",
  "yew-bootstrap",
@@ -1158,7 +1158,7 @@ dependencies = [
 
 [[package]]
 name = "yew-bootstrap"
-version = "0.8.2"
+version = "0.10.1"
 dependencies = [
  "anyhow",
  "convert_case",

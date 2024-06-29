@@ -1,4 +1,4 @@
 [[hooks]]
-stage = "build"
+stage = "post_build"
 command = "cargo"
-command_arguments = ["run", "--bin", "copy-bootstrap-icons"]
+command_arguments = ["run", "--bin", "include-bootstrap-icons"]
