@@ -71,7 +71,7 @@
 //!
 //!    ```html
 //!    <base data-trunk-public-url />
-//!    <link rel="stylesheet" href="bootstrap-icons-v1.10.5/bootstrap-icons.css" />
+//!    <link rel="stylesheet" href="bootstrap-icons-v1.11.3/bootstrap-icons.css" />
 //!    <link data-trunk rel="rust" data-bin="name-of-app" />
 //!    ```
 //!
@@ -205,12 +205,25 @@ pub struct BIFiles {
     pub license: &'static str,
 }
 
+/// allows compile time concatenation with other strings to make const 'static str
+macro_rules! version {
+    () => {
+        "v1.11.3"
+    };
+}
+/// provides a resuable path to the bootstrap-icons files that we can make const 'static str with
+macro_rules! path {
+    () => {
+        concat!("../../bootstrap-icons-", version!(), "/")
+    };
+}
+
 impl BIFiles {
     /// Version of the package.
-    pub const VERSION: &'static str = "v1.10.5";
+    pub const VERSION: &'static str = version!();
 
     /// Name of the package.
-    pub const NAME: &'static str = "bootstrap-icons-v1.10.5";
+    pub const NAME: &'static str = concat!("bootstrap-icons-", version!());
 
     /// All bootstrap-icons files.
     ///
@@ -221,10 +234,10 @@ impl BIFiles {
     /// ```
     /// (That way it will be an error if a file is added/removed.)
     pub const FILES: Self = Self {
-        css: include_str!("../../bootstrap-icons-v1.10.5/bootstrap-icons.css"),
-        font_woff: include_bytes!("../../bootstrap-icons-v1.10.5/fonts/bootstrap-icons.woff"),
-        font_woff2: include_bytes!("../../bootstrap-icons-v1.10.5/fonts/bootstrap-icons.woff2"),
-        license: include_str!("../../bootstrap-icons-v1.10.5/fonts/LICENSE"),
+        css: include_str!(concat!(path!(), "bootstrap-icons.css")),
+        font_woff: include_bytes!(concat!(path!(), "fonts/bootstrap-icons.woff")),
+        font_woff2: include_bytes!(concat!(path!(), "fonts/bootstrap-icons.woff2")),
+        license: include_str!(concat!(path!(), "fonts/LICENSE")),
     };
 
     /// Load the bootstrap-icons files from the official cdn.
@@ -232,9 +245,11 @@ impl BIFiles {
     /// Call `BIFiles::cdn()` inside the `html!{}` returned by your application.
     pub const fn cdn() -> VNode {
         VNode::VRaw(VRaw {
-            html: AttrValue::Static(
-                r#"<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">"#,
-            ),
+            html: AttrValue::Static(concat!(
+                r#"<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@"#,
+                version!(),
+                r#"/font/bootstrap-icons.css">"#
+            )),
         })
     }
 

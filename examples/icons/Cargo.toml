@@ -1,6 +1,6 @@
 [package]
 name = "icons"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["ALeX Kazik <alex@kazik.de>"]
 edition = "2021"
 license = "MIT"
@@ -10,4 +10,4 @@ yew = { version = "0.21", features = ["csr"] }
 yew-bootstrap = { path = "../../packages/yew-bootstrap" }
 
 [[bin]]
-name = "copy-bootstrap-icons"
+name = "include-bootstrap-icons"
