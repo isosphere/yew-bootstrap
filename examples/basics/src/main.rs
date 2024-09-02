@@ -22,6 +22,8 @@ impl Component for Model {
             icon: BI::ROCKET,
         };
 
+        let tooltip_button_ref = NodeRef::default();
+
         html! {
             <>
                 {include_inline()}
@@ -272,6 +274,14 @@ impl Component for Model {
                         <Button style={Color::Primary}>{"Primary"}</Button>
                         <Button style={Color::Secondary}>{"Secondary"}</Button>
                     </ButtonGroup>
+
+                    <h1>{"Button with tooltip"}</h1>
+                    <Button style={Color::Primary} ref={&tooltip_button_ref}>
+                        {"Button with tooltip"}
+                    </Button>
+                    <Tooltip target={&tooltip_button_ref}>
+                        {"Tooltip for the button with tooltip"}
+                    </Tooltip>
 
                     <h1>{"Links"}</h1>
                     <div class="d-grid gap-2">
