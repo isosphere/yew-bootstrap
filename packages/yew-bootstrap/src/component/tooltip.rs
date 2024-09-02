@@ -21,8 +21,9 @@ pub struct TooltipProps {
     /// The node which this tooltip is attached to.
     ///
     /// If the `target` can be `disabled`, pass the same value to
-    /// [Tooltip's `disabled` property][Self::disabled] to ensure that it will
-    /// be automatically hidden even if it had focus on was being hovered.
+    /// [Tooltip's `disabled` property][Self::disabled] to ensure that the
+    /// tooltip will be automatically hidden, even if it had focus, was being
+    /// hovered or clicked.
     pub target: NodeRef,
 
     /// ID of the tooltip.
@@ -59,10 +60,6 @@ pub struct TooltipProps {
     ///
     /// This defaults to `true`, but [will not trigger on `disabled` elements][0].
     ///
-    /// If the [`target`][Self::target] element can be disabled, pass the same
-    /// state to this component's [`disabled` property][Self::disabled] to
-    /// ensure that the [Tooltip] will be automatically hidden.
-    ///
     /// [0]: https://getbootstrap.com/docs/5.3/components/tooltips/#disabled-elements
     #[prop_or(true)]
     pub trigger_on_focus: bool,
@@ -74,10 +71,6 @@ pub struct TooltipProps {
     ///
     /// **Note:** this option has no effect on touchscreen devices. Make sure
     /// there are other ways of displaying the tooltip.
-    ///
-    /// If the [`target`][Self::target] element can be disabled, pass the same
-    /// state to this component's [`disabled` property][Self::disabled] to
-    /// ensure that the [Tooltip] will be automatically hidden.
     ///
     /// [0]: https://getbootstrap.com/docs/5.3/components/tooltips/#disabled-elements
     #[prop_or(true)]
@@ -92,7 +85,7 @@ pub struct TooltipProps {
     /// currently-focused element and `mouseleave` of a currently-hovered
     /// element.
     ///
-    /// This property allows you to hide a [Tooltip] which has
+    /// This property allows you to automatically hide a [Tooltip] which has
     /// [`trigger_on_focus = true`][Self::trigger_on_focus] or
     /// [`trigger_on_hover = true`][Self::trigger_on_hover] whenever the
     /// [`target`][Self::target] is disabled.
@@ -106,42 +99,95 @@ pub struct TooltipProps {
     pub disabled: bool,
 }
 
-/// [Bootstrap tooltip component][0].
+/// # Tooltip component
 ///
-/// Bootstrap's tooltips depend on Popper, which presumes control of the DOM.
-/// Yew *also* presumes complete control of the DOM, so this can lead to
-/// unexpected behaviour whenever it reuses DOM components.
+/// Tooltip which is automatically shown when an element is focused or hovered.
 ///
-/// This has a few differences from Bootstrap's implementation, which are
-/// [similar to `react-bootstrap`][2]:
+/// [Bootstrap's tooltips][0] depend on Popper, which assumes complete control
+/// of the DOM. Yew *also* assumes complete control of the DOM, so this can lead
+/// to unexpected behaviour whenever it reuses DOM components – so you can't
+/// just use `data-bs-toggle="tooltip"`.
 ///
-/// * Unlike ordinary Bootstrap, `<Tooltip>` is *always* present in the DOM,
-///   even when not displayed.
+/// This component is similar to [`react-bootstrap`'s Tooltip component][2] –
+/// it wires up Popper in a way that works nicely with Yew.
+/// 
+/// There are some similarities and differences between this component and
+/// Bootstrap's in-built implementation:
+/// 
+/// * There's no need to use `bootstrap.bundle.min.js` or `popper.min.js`. This
+///   component uses [`popper-rs`][], which comes with Popper.
+///
+/// * You can't trigger or describe tooltips with `data-bs-*` attributes.
+///
+/// * The `<Tooltip>`'s content is set with the [`children`][] property, which
+///   supports arbitrary HTML.
+///
+///   It doesn't support the `sanitize`, `sanitizeFn` or `title` attributes.
+///
+/// * Like Bootstrap, `<Tooltip>` is triggered by
+///   [input focus][trigger_on_focus] and [mouse hover][trigger_on_hover] by
+///   default.
+///
+///   These triggers can be individually disabled, and you can
+///   [control display manually][show] instead.
+/// 
+///   `<Tooltip>` *does not* support the `click` trigger.
+/// 
+/// * Like Bootstrap, tooltips exist in a shadow DOM ([portal][]) outside of the
+///   normal page hierarchy.
+///
+///   Unlike Bootstrap, the `<Tooltip>` is *always* present in the DOM, even
+///   when the tooltip is not displayed.
 ///
 ///   A `<Tooltip>` needs to remain part of the DOM if it *could* be shown in a
 ///   component. Use the [`show`][show] and [`disabled`][disabled] properties to
 ///   control its display.
 ///
 /// * When using a [`target`][target] which could be `disabled`, pass that
-///   state [to the `<Tooltip>` as well][disabled].
+///   state [to the `<Tooltip>` as well][disabled]. This prevents the tooltip
+///   from ever being displayed.
 ///
-/// * `<Tooltip>` doesn't support the `title` or `data-bs-title` attributes.
+///   Otherwise, a tooltip could be "stuck" being shown if it had focus or was
+///   hovered at the time it was disabled.
 ///
-///   Instead, `<Tooltip>` uses [`children`][], which supports arbitrary HTML.
+///   There's no need to use a wrapper element if the `disabled` state is kept
+///   in sync, or the tooltip is *only* triggered manually.
 ///
-/// * `<Tooltip>` supports [*all* of Popper's placement options][placement],
-///   [not just auto/left/right/top/bottom][1].
+/// ## Examples
+/// 
+/// Button with a tooltip, shown automatically on focus or hover:
 ///
-/// * This
+/// ```rust
+/// use yew::prelude::*;
+/// use yew_bootstrap::component::{Button, Tooltip};
+/// use yew_bootstrap::util::Color;
 ///
+/// fn test() -> Html {
+///     let btn_ref = NodeRef::default();
+///     html! {
+///         <>
+///             <Button style={Color::Primary} node_ref={btn_ref.clone()}>
+///                 {"Button with tooltip"}
+///             </Button>
+///             <Tooltip target={btn_ref}>
+///                 {format!("Tooltip for button, placed at {placement:?}.")}
+///             </Tooltip>
+///         </>
+///     }
+/// }
+/// ```
+/// 
 /// [0]: https://getbootstrap.com/docs/5.3/components/tooltips/
-/// [1]: https://getbootstrap.com/docs/5.3/components/tooltips/#directions
 /// [2]: https://github.com/react-bootstrap/react-bootstrap/blob/master/src/Tooltip.tsx
-/// [placement]: TooltipProps::placement
 /// [show]: TooltipProps::show
 /// [target]: TooltipProps::target
 /// [disabled]: TooltipProps::disabled
 /// [children]: TooltipProps::children
+/// [trigger_on_focus]: TooltipProps::trigger_on_focus
+/// [trigger_on_hover]: TooltipProps::trigger_on_hover
+/// [show]: TooltipProps::show
+/// [portal]: https://yew.rs/docs/advanced-topics/portals
+/// [popper-rs]: https://github.com/ctron/popper-rs/
 #[function_component]
 pub fn Tooltip(props: &TooltipProps) -> Html {
     let tooltip_ref = use_node_ref();
@@ -151,9 +197,9 @@ pub fn Tooltip(props: &TooltipProps) -> Html {
         placement: (*placement).into(),
         modifiers: vec![Modifier::Offset(Offset {
             skidding: 0,
-            distance: 8,
+            distance: 6,
         })],
-        strategy: Strategy::Absolute,
+        strategy: Strategy::Fixed,
         ..Default::default()
     });
 
@@ -302,7 +348,7 @@ pub fn Tooltip(props: &TooltipProps) -> Html {
     // elements, even when hidden.
     popper_style.insert("pointer-events".to_string(), "none".to_string());
 
-    let tooltip = create_portal(
+    create_portal(
         html_nested! {
             <div
                 ref={&tooltip_ref}
@@ -323,11 +369,5 @@ pub fn Tooltip(props: &TooltipProps) -> Html {
             </div>
         },
         gloo_utils::body().into(),
-    );
-
-    html! {
-        <>
-            {tooltip}
-        </>
-    }
+    )
 }

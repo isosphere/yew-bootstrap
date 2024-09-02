@@ -1,28 +1,53 @@
+use popper_rs::prelude::Placement;
 use yew::prelude::*;
 
 use yew_bootstrap::component::*;
 use yew_bootstrap::icons::*;
 use yew_bootstrap::util::*;
 
-enum Msg {}
-struct Model {}
+enum Msg {
+    ToggleTooltip,
+    ShowTooltip,
+    HideTooltip,
+}
+
+struct Model {
+    tooltip_show: bool,
+}
 
 impl Component for Model {
     type Message = Msg;
     type Properties = ();
 
     fn create(_ctx: &Context<Self>) -> Self {
-        Self {}
+        Self {
+            tooltip_show: false,
+        }
     }
 
-    fn view(&self, _ctx: &Context<Self>) -> Html {
+    fn update(&mut self, _ctx: &Context<Self>, msg: Self::Message) -> bool {
+        match msg {
+            Msg::ToggleTooltip => {
+                self.tooltip_show = !self.tooltip_show;
+            }
+            Msg::ShowTooltip => {
+                self.tooltip_show = true;
+            }
+            Msg::HideTooltip => {
+                self.tooltip_show = false;
+            }
+        }
+        true
+    }
+
+    fn view(&self, ctx: &Context<Self>) -> Html {
         let brand = BrandType::BrandIcon {
             text: AttrValue::from("Yew Bootstrap"),
             url: Some(AttrValue::from("https://yew.rs")),
             icon: BI::ROCKET,
         };
 
-        let tooltip_button_ref = NodeRef::default();
+        let tooltip_click_p_ref = NodeRef::default();
 
         html! {
             <>
@@ -275,14 +300,6 @@ impl Component for Model {
                         <Button style={Color::Secondary}>{"Secondary"}</Button>
                     </ButtonGroup>
 
-                    <h1>{"Button with tooltip"}</h1>
-                    <Button style={Color::Primary} ref={&tooltip_button_ref}>
-                        {"Button with tooltip"}
-                    </Button>
-                    <Tooltip target={&tooltip_button_ref}>
-                        {"Tooltip for the button with tooltip"}
-                    </Tooltip>
-
                     <h1>{"Links"}</h1>
                     <div class="d-grid gap-2">
                         <Link text={"Primary link"} style={Color::Primary} url={"https://github.com/isosphere/yew-bootstrap/"} />
@@ -342,6 +359,55 @@ impl Component for Model {
 
                     <h2>{"Animated"}</h2>
                     <Progress class={"mb-3"}><ProgressBar value=25 animated={true}/></Progress>
+
+                    <h1>{"Tooltip"}</h1>
+                    <h2>{"Buttons with tooltips (on focus or hover)"}</h2>
+                    {
+                        for [
+                            Placement::Top,
+                            Placement::Bottom,
+                            Placement::Left,
+                            Placement::Right,
+                        ].iter().map(|placement| {
+                            let btn_ref = NodeRef::default();
+
+                            html_nested! {
+                                <>
+                                    <Button style={Color::Primary} node_ref={btn_ref.clone()}>
+                                        {format!("Tooltip: {placement:?}")}
+                                    </Button>
+                                    <Tooltip target={btn_ref} placement={*placement}>
+                                        {format!("Tooltip for button, placed at {placement:?}.")}
+                                    </Tooltip>
+                                    {" "}
+                                </>
+                            }
+                        })
+                    }
+                    <h2>{"Manually-triggered tooltip"}</h2>
+                    <p ref={tooltip_click_p_ref.clone()}>
+                        {"Here is some long text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}
+                    </p>
+                    <ButtonGroup>
+                        <Button onclick={ctx.link().callback(|_| Msg::ToggleTooltip)}>
+                            {BI::TOGGLES}{" Toggle"}
+                        </Button>
+                        <Button onclick={ctx.link().callback(|_| Msg::ShowTooltip)}>
+                            {BI::TOGGLE_ON}{" Show"}
+                        </Button>
+                        <Button onclick={ctx.link().callback(|_| Msg::HideTooltip)}>
+                            {BI::TOGGLE_OFF}{" Hide"}
+                        </Button>
+                    </ButtonGroup>
+                    <Tooltip
+                        target={tooltip_click_p_ref}
+                        trigger_on_focus=false
+                        trigger_on_hover=false
+                        show={self.tooltip_show}
+                        placement={Placement::Top}
+                    >
+                        {format!("Tooltip toggled manually")}
+                    </Tooltip>
                 </div>
                 <div id="helpers" class="p-3">
                     <h1>{"Vertical/Horizontal rule"}</h1>
