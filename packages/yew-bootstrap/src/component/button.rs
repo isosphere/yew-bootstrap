@@ -139,6 +139,21 @@ pub struct ButtonProps {
     /// the button is not `disabled`.
     #[prop_or_default]
     pub target: Option<AttrValue>,
+
+    /// Reference to the [NodeRef] of the button's underlying `<button>` or
+    /// `<a>` element.
+    ///
+    /// Used by components which add custom event handlers directly to the DOM.
+    /// 
+    /// See [*Node Refs* in the Yew documentation][0] for more information.
+    /// 
+    /// [0]: https://yew.rs/docs/concepts/function-components/node-refs
+    #[prop_or_default]
+    pub node_ref: NodeRef,
+
+    /// Optional HTML element ID for the underlying `<button>` or `<a>` element.
+    #[prop_or_default]
+    pub id: Option<AttrValue>,
 }
 
 impl Component for Button {
@@ -182,6 +197,8 @@ impl Component for Button {
                     onclick={props.onclick.clone()}
                     data-bs-toggle="modal"
                     data-bs-target={format!("#{}",target.clone())}
+                    ref={props.node_ref.clone()}
+                    id={props.id.clone()}
                 >
                     { &props.text }
                     { for props.children.iter() }
@@ -197,6 +214,8 @@ impl Component for Button {
                     data-bs-dismiss={modal_dismiss}
                     href={url.clone()}
                     target={props.target.clone()}
+                    ref={props.node_ref.clone()}
+                    id={props.id.clone()}
                 >
                     { &props.text }
                     { for props.children.iter() }
@@ -210,6 +229,8 @@ impl Component for Button {
                     name={props.name.clone()}
                     onclick={props.onclick.clone()}
                     data-bs-dismiss={modal_dismiss}
+                    ref={props.node_ref.clone()}
+                    id={props.id.clone()}
                 >
                     { &props.text }
                     { for props.children.iter() }
