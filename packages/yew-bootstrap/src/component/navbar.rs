@@ -4,20 +4,30 @@ use crate::util::Dimension;
 use crate::icons::BI;
 
 /// # A singular dropdown item, child of [NavDropdown]
-/// Used as a child of [NavDropdown] to create a dropdown menu. 
-/// 
+/// Used as a child of [NavDropdown] to create a dropdown menu.
+///
 /// See [NavDropdownItemProps] for a listing of properties.
 pub struct NavDropdownItem { }
 
 /// # Properties for [NavDropdown]
-#[derive(Properties, Clone, PartialEq, Eq)]
+#[derive(Properties, Clone, PartialEq)]
 pub struct NavDropdownItemProps {
     /// Item text
     #[prop_or_default]
     pub text: AttrValue,
     /// Link for the item
     #[prop_or_default]
-    pub url: AttrValue,
+    pub url: Option<AttrValue>,
+    /// Callback when clicked.
+    ///
+    /// **Tip:** To make browsers show a "link" mouse cursor for the
+    /// [NavDropdownItem], set `url="#"` and call [`Event::prevent_default()`]
+    /// from your callback.
+    #[prop_or_default]
+    pub onclick: Callback<MouseEvent>,
+    /// Optional icon
+    #[prop_or_default]
+    pub icon: Option<&'static BI>,
 }
 
 impl Component for NavDropdownItem {
@@ -33,7 +43,16 @@ impl Component for NavDropdownItem {
 
         html! {
             <li>
-                <a class="dropdown-item" href={props.url.clone()}>{props.text.clone()}</a>
+                <a
+                    class="dropdown-item"
+                    href={props.url.clone()}
+                    onclick={props.onclick.clone()}
+                >
+                    if let Some(icon) = props.icon {
+                        {icon}{" "}
+                    }
+                    {props.text.clone()}
+                </a>
             </li>
         }
     }
@@ -59,7 +78,10 @@ pub struct NavDropdownProps {
     pub text: AttrValue,
     /// Top level path is the currently active one
     #[prop_or_default]
-    pub active: bool
+    pub active: bool,
+    /// Optional icon
+    #[prop_or_default]
+    pub icon: Option<&'static BI>,
 }
 
 impl Component for NavDropdown {
@@ -78,7 +100,7 @@ impl Component for NavDropdown {
             false => "false"
         });
 
-        
+
         let mut dropdown_toggle_classes = Classes::new();
         dropdown_toggle_classes.push(String::from("nav-link"));
         dropdown_toggle_classes.push(String::from("dropdown-toggle"));
@@ -90,6 +112,9 @@ impl Component for NavDropdown {
         html! {
             <li class="nav-item dropdown">
                 <a class={dropdown_toggle_classes} href="#" id={props.id.clone()} role="button" data-bs-toggle="dropdown" aria-expanded={expanded}>
+                    if let Some(icon) = props.icon {
+                        {icon}{" "}
+                    }
                     {props.text.clone()}
                 </a>
                 <ul class="dropdown-menu" aria-labelledby={props.id.clone()}>
@@ -102,7 +127,7 @@ impl Component for NavDropdown {
 
 /// # Item of a [NavBar]
 /// This typically contains text inside a link
-/// 
+///
 /// Refer to [NavItemProperties] for a listing of properties
 pub struct NavItem { }
 
@@ -126,7 +151,16 @@ pub struct NavItemProperties {
     pub id: AttrValue,
     /// dropdown items
     #[prop_or_default]
-    pub children: Children
+    pub children: Children,
+    /// Callback when clicked.
+    ///
+    /// **Tip:** To make browsers show a "link" mouse cursor for the [NavItem],
+    /// set `url="#"` and call [`Event::prevent_default()`] from your callback.
+    #[prop_or_default]
+    pub onclick: Callback<MouseEvent>,
+    /// Optional icon
+    #[prop_or_default]
+    pub icon: Option<&'static BI>,
 }
 
 impl Component for NavItem {
@@ -157,7 +191,16 @@ impl Component for NavItem {
                     true => {
                         html! {
                             <li class="nav-item">
-                                <a class={classes} tabindex="-1" aria-disabled="true" href={props.url.clone()}>
+                                <a
+                                    class={classes}
+                                    tabindex="-1"
+                                    aria-disabled="true"
+                                    href={props.url.clone()}
+                                    onclick={props.onclick.clone()}
+                                >
+                                    if let Some(icon) = props.icon {
+                                        {icon}{" "}
+                                    }
                                     {props.text.clone()}
                                 </a>
                             </li>
@@ -166,7 +209,14 @@ impl Component for NavItem {
                     false => {
                         html! {
                             <li class="nav-item">
-                                <a class={classes} href={props.url.clone()}>
+                                <a
+                                    class={classes}
+                                    href={props.url.clone()}
+                                    onclick={props.onclick.clone()}
+                                >
+                                    if let Some(icon) = props.icon {
+                                        {icon}{" "}
+                                    }
                                     {props.text.clone()}
                                 </a>
                             </li>
@@ -179,40 +229,40 @@ impl Component for NavItem {
                     <NavDropdown text={props.text.clone()} id={props.id.clone()} active={props.active}>
                         { for props.children.iter() }
                     </NavDropdown>
-                }                
+                }
             }
         }
     }
 }
 
 /// # Brand type for a [NavBar]
-/// 
+///
 /// This can contain a text, icon, image or combined (text and image)
 #[derive(Clone, PartialEq, Eq)]
 pub enum BrandType {
     /// Text with optional link
-    BrandSimple { 
+    BrandSimple {
         text: AttrValue, url: Option<AttrValue> },
-    /// a brand icon is a bootstrap icon, requiring bootstrap-icons to be imported; 
+    /// a brand icon is a bootstrap icon, requiring bootstrap-icons to be imported;
     /// see [crate::icons]
     BrandIcon { icon: BI, text: AttrValue, url: Option<AttrValue> },
     /// Image with optional dimensions, link and descriptive text
-    BrandImage { 
+    BrandImage {
         /// browser-accessible url to the brand image
-        image_url: AttrValue, 
+        image_url: AttrValue,
         /// descriptive text for screen reader users
-        alt: AttrValue, 
+        alt: AttrValue,
         dimension: Option<Dimension>
     },
     /// Combined image and text with URL
     BrandCombined {
-        text: AttrValue, 
+        text: AttrValue,
         /// hyperlink destination for brand text
         url: Option<AttrValue>,
         /// browser-accessible url to the brand image
-        image_url: AttrValue, 
+        image_url: AttrValue,
         /// descriptive text for screen reader users
-        alt: AttrValue, 
+        alt: AttrValue,
         dimension: Option<Dimension>
     }
 }
@@ -221,17 +271,17 @@ pub enum BrandType {
 /// The navbar is a responsive horizontal menu bar that can contain links, dropdowns, and text.
 /// We have broken up this component into several sub-components to make it easier to use: [NavItem], [NavDropdown], and [NavDropdownItem].
 /// The brand property is set using the [BrandType] enum.
-/// 
+///
 /// See [NavBarProps] for more information on properties supported by this component.
 /// # Example
 /// ```rust
 /// use yew::prelude::*;
 /// use yew_bootstrap::component::{BrandType, NavBar, NavDropdownItem, NavItem};
-/// 
+///
 /// fn test() -> Html {
-///     let brand = BrandType::BrandSimple { 
-///         text: AttrValue::from("Yew Bootstrap"), 
-///         url: Some(AttrValue::from("https://yew.rs")) 
+///     let brand = BrandType::BrandSimple {
+///         text: AttrValue::from("Yew Bootstrap"),
+///         url: Some(AttrValue::from("https://yew.rs"))
 ///     };
 ///     html!{
 ///         <NavBar nav_id={"test-nav"} class="navbar-expand-lg navbar-light bg-light" brand={brand}>
@@ -300,7 +350,7 @@ impl Component for NavBar {
             Some(b) => {
                 match b {
                     BrandType::BrandSimple{text, url} => {
-                        let url = match url { 
+                        let url = match url {
                             Some(u) => u.clone(),
                             None => AttrValue::from("#")
                         };
@@ -312,7 +362,7 @@ impl Component for NavBar {
                         }
                     },
                     BrandType::BrandIcon { text, icon, url } => {
-                        let url = match url { 
+                        let url = match url {
                             Some(u) => u.clone(),
                             None => AttrValue::from("#")
                         };
@@ -342,7 +392,7 @@ impl Component for NavBar {
                         }
                     }
                     BrandType::BrandCombined { text, url, image_url, alt, dimension } => {
-                        let url = match url { 
+                        let url = match url {
                             Some(u) => u.clone(),
                             None => AttrValue::from("#")
                         };

@@ -3,6 +3,9 @@ use yew::prelude::*;
 use yew_bootstrap::component::*;
 use yew_bootstrap::icons::*;
 use yew_bootstrap::util::*;
+use gloo_console::debug;
+use wasm_bindgen::JsCast;
+use web_sys::HtmlElement;
 
 enum Msg {}
 struct Model {}
@@ -22,16 +25,32 @@ impl Component for Model {
             icon: BI::ROCKET,
         };
 
+        // Show a message in the debug console whenever a NavItem or
+        // NavDropdownItem is clicked.
+        let onclick = Callback::from(move |event: MouseEvent| {
+            let Some(target) = event.target() else {
+                return;
+            };
+            let Ok(target) = target.dyn_into::<HtmlElement>() else {
+                return;
+            };
+            debug!("onclick for:", target.inner_text().trim());
+            // Stop the browser from actually following the "#" link.
+            event.prevent_default();
+        });
+
         html! {
             <>
                 {include_inline()}
                 {BIFiles::cdn()}
                 <NavBar nav_id={"test-nav"} class="navbar-expand-lg navbar-light bg-light" brand={brand}>
-                    <NavItem text="link 1" />
-                    <NavItem text="link 2" />
-                    <NavDropdown text="several items">
-                        <NavDropdownItem text="hello 1" />
-                        <NavDropdownItem text="hello 2" />
+                    <NavItem text="link 1" icon={&BI::EMOJI_SUNGLASSES} onclick={onclick.clone()} url="#" />
+                    <NavItem text="link 2" onclick={onclick.clone()} url="#" />
+                    <NavDropdown text="several items" icon={&BI::MENU_APP}>
+                        <NavDropdownItem text="Exclamation icon" icon={&BI::EXCLAMATION} onclick={onclick.clone()} url="#" />
+                        <NavDropdownItem text="Magic icon" icon={&BI::MAGIC} onclick={onclick.clone()} url="#" />
+                        <NavDropdownItem text="Tools icon" icon={&BI::TOOLS} onclick={onclick.clone()} url="#" />
+                        <NavDropdownItem text="No icon" onclick={onclick.clone()} url="#" />
                     </NavDropdown>
                 </NavBar>
                 <Modal id="ExampleModal">
@@ -45,7 +64,7 @@ impl Component for Model {
                     </ModalFooter>
                 </Modal>
                 <div id="layout" class="p-3">
-                    <h1>{ "Accordian" }</h1>
+                    <h1>{ "Accordion" }</h1>
                     <Accordion>
                         <AccordionItem title={"Heading 1"}>
                             <p>{"Some text inside "}<strong>{"THE BODY"}</strong>{" of the accordion item"}</p>
