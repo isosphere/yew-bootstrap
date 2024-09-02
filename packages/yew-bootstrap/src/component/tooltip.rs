@@ -36,7 +36,13 @@ pub struct TooltipProps {
     #[prop_or_default]
     pub children: Children,
 
-
+    /// Placement of the tooltip.
+    ///
+    /// [Popper's website shows all placement options][0].
+    ///
+    /// [0]: https://popper.js.org/
+    #[prop_or_default]
+    pub placement: Placement,
 
     /// Use fade transition when showing or hiding the tooltip.
     #[prop_or_default]
