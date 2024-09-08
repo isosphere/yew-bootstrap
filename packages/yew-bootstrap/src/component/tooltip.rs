@@ -14,8 +14,90 @@ use popper_rs::{
     state::ApplyAttributes,
 };
 use wasm_bindgen::{closure::Closure, JsCast};
-use web_sys::HtmlElement;
-use yew::{platform::spawn_local, prelude::*};
+use web_sys::{HtmlElement, MediaQueryList, MediaQueryListEvent};
+use yew::{html::IntoPropValue, platform::spawn_local, prelude::*};
+
+/// Media query to indicate that the primary pointing device is missing or does
+/// not support hovering.
+///
+/// Reference: [Media Queries Level 4: Hover Capability](https://www.w3.org/TR/mediaqueries-4/#hover)
+const MEDIA_QUERY_HOVER_NONE: &'static str = "(hover: none)";
+
+/// Media query to indicate that there is no pointing device which supports
+/// hovering.
+///
+/// Reference: [Media Queries Level 4: All Available Interaction Capabilities](https://www.w3.org/TR/mediaqueries-4/#any-input)
+const MEDIA_QUERY_ANY_HOVER_NONE: &'static str = "(any-hover: none)";
+
+/// Trigger options for [TooltipProps::trigger_on_focus].
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub enum TooltipFocusTrigger {
+    /// Always show the tooltip on element focus.
+    #[default]
+    Always,
+
+    /// Show the tooltip on element focus only if the primary pointing device
+    /// (last used device) does *not* support hovering (eg: touchscreen), or
+    /// there are no pointing devices connected.
+    ///
+    /// If the primary pointing device supports hovering (eg: mouse, trackpad,
+    /// trackball, smart pen, Wiimote), the tooltip will not be shown when
+    /// the element has focus.
+    IfNoHover,
+
+    /// Trigger showing the tooltip on element focus only if *all* pointing
+    /// devices connected to the device do not support hovering, or there there
+    /// are no pointing devices connected.
+    ///
+    /// For a device with *only* one non-hovering pointing device (eg: a mobile
+    /// phone with a touch screen or basic stylus), this is the same as
+    /// [`TooltipFocusTrigger::IfNoHover`].
+    ///
+    /// For a device with *both* hovering and non-hovering pointing device(s)
+    /// (eg: a laptop with a trackpad and touchscreen, or a tablet with both pen
+    /// and touch input), this will never trigger the tooltip.
+    IfNoAnyHover,
+
+    /// Never show the tooltip on element focus.
+    ///
+    /// Make sure there is some other way to trigger the tooltip which works on
+    /// all types of devices.
+    Never,
+}
+
+impl IntoPropValue<TooltipFocusTrigger> for bool {
+    fn into_prop_value(self) -> TooltipFocusTrigger {
+        if self {
+            TooltipFocusTrigger::Always
+        } else {
+            TooltipFocusTrigger::Never
+        }
+    }
+}
+
+impl TooltipFocusTrigger {
+    fn media_queries(&self) -> Option<MediaQueryList> {
+        let query = match self {
+            Self::Always | Self::Never => return None,
+            Self::IfNoHover => MEDIA_QUERY_HOVER_NONE,
+            Self::IfNoAnyHover => MEDIA_QUERY_ANY_HOVER_NONE,
+        };
+        let w = gloo_utils::window();
+        w.match_media(&query).ok().flatten()
+    }
+
+    fn should_trigger(&self) -> bool {
+        let Some(queries) = self.media_queries() else {
+            return match self {
+                Self::Always => true,
+                Self::Never => false,
+                _ => unreachable!(),
+            };
+        };
+
+        queries.matches()
+    }
+}
 
 #[derive(Properties, Clone, PartialEq)]
 pub struct TooltipProps {
@@ -59,19 +141,23 @@ pub struct TooltipProps {
     /// Show the tooltip when the [`target`][Self::target] node recieves input
     /// or keyboard focus.
     ///
-    /// This defaults to `true`, but [will not trigger on `disabled` elements][0].
+    /// This defaults to [`TooltipFocusTrigger::Always`], which always shows the
+    /// tooltip on input focus. See [`TooltipFocusTrigger`] for other options.
+    ///
+    /// This [will not trigger on `disabled` elements][0].
     ///
     /// [0]: https://getbootstrap.com/docs/5.3/components/tooltips/#disabled-elements
-    #[prop_or(true)]
-    pub trigger_on_focus: bool,
+    #[prop_or_default]
+    pub trigger_on_focus: TooltipFocusTrigger,
 
     /// Show the tooltip when the [`target`][Self::target] node has the mouse
     /// cursor hovered over it.
     ///
     /// This defaults to `true`, but [will not trigger on `disabled` elements][0].
     ///
-    /// **Note:** this option has no effect on touchscreen devices. Make sure
-    /// there are other ways of displaying the tooltip.
+    /// **Note:** touchscreen devices cannot trigger hover events. Make sure
+    /// there is some other way to trigger the tooltip on those devices (eg:
+    /// `trigger_on_focus={TooltipFocusTrigger::IfNoHover}`).
     ///
     /// [0]: https://getbootstrap.com/docs/5.3/components/tooltips/#disabled-elements
     #[prop_or(true)]
@@ -207,17 +293,28 @@ pub fn Tooltip(props: &TooltipProps) -> Html {
     let popper = use_popper(props.target.clone(), tooltip_ref.clone(), options).unwrap();
 
     let focused = use_state_eq(|| false);
+    let focus_should_trigger = use_state_eq(|| props.trigger_on_focus.should_trigger());
     let hovered = use_state_eq(|| false);
 
     let onshow = {
         let focused = focused.clone();
         let hovered = hovered.clone();
         Callback::from(move |evt_type: String| match evt_type.as_str() {
-            "mouseenter" => hovered.set(true),
-            "focusin" => focused.set(true),
-            _ => {
-                return;
+            "mouseenter" => {
+                // Ignore synthetic hover events on devices that don't support
+                // hover (iOS).
+                if let Ok(Some(query)) =
+                    gloo_utils::window().match_media(MEDIA_QUERY_ANY_HOVER_NONE)
+                {
+                    if query.matches() {
+                        return;
+                    }
+                }
+
+                hovered.set(true);
             }
+            "focusin" => focused.set(true),
+            _ => {}
         })
     };
 
@@ -227,11 +324,48 @@ pub fn Tooltip(props: &TooltipProps) -> Html {
         Callback::from(move |evt_type: String| match evt_type.as_str() {
             "mouseleave" => hovered.set(false),
             "focusout" => focused.set(false),
-            _ => {
-                return;
-            }
+            _ => {}
         })
     };
+
+    let focus_should_trigger_listener = {
+        let focus_should_trigger = focus_should_trigger.clone();
+
+        Callback::from(move |v: bool| {
+            focus_should_trigger.set(v);
+        })
+    };
+
+    use_effect_with(props.trigger_on_focus, |trigger_on_focus| {
+        let r = if let Some(media_query_list) = trigger_on_focus.media_queries() {
+            let media_query_list_listener = Closure::<dyn Fn(MediaQueryListEvent)>::wrap(Box::new(
+                move |e: MediaQueryListEvent| {
+                    focus_should_trigger_listener.emit(e.matches());
+                },
+            ));
+
+            let _ = media_query_list.add_event_listener_with_callback(
+                "change",
+                media_query_list_listener.as_ref().unchecked_ref(),
+            );
+
+            Some((media_query_list_listener, media_query_list))
+        } else {
+            // Current trigger_on_focus rule doesn't need a MediaQueryList change event listener.
+            None
+        };
+
+        move || {
+            if let Some((media_query_list_listener, media_query_list)) = r {
+                let _ = media_query_list.remove_event_listener_with_callback(
+                    "change",
+                    media_query_list_listener.as_ref().unchecked_ref(),
+                );
+
+                drop(media_query_list_listener);
+            }
+        }
+    });
 
     if props.disabled {
         // Whenever this component is disabled, explicitly set our focus and
@@ -242,7 +376,7 @@ pub fn Tooltip(props: &TooltipProps) -> Html {
 
     let show = !props.disabled
         && (props.show
-            || (*focused && props.trigger_on_focus)
+            || (*focused && *focus_should_trigger)
             || (*hovered && props.trigger_on_hover));
     let data_show = show.then(AttrValue::default);
 

@@ -169,7 +169,6 @@ impl Component for Model {
             icon: BI::ROCKET,
         };
 
-        let tooltip_input_ref = NodeRef::default();
         let tooltip_select_ref = NodeRef::default();
         let tooltip_checkbox_ref = NodeRef::default();
         let tooltip_textarea_ref = NodeRef::default();
@@ -390,13 +389,13 @@ impl Component for Model {
                     <Container size={ContainerSize::ExtraLarge}>
                         <FormControl
                             id="input-tooltip-text"
-                            ctype={FormControlType::Text}
+                            ctype={FormControlType::TextArea { cols: None, rows: None }}
                             class="mb-3" label="Text with tooltip on focus only"
                             placeholder="Placeholder text"
-                            node_ref={tooltip_input_ref.clone()}
+                            node_ref={tooltip_textarea_ref.clone()}
                         />
                         <Tooltip
-                            target={tooltip_input_ref}
+                            target={tooltip_textarea_ref}
                             trigger_on_focus=true
                             trigger_on_hover=false
                         >
@@ -416,7 +415,7 @@ impl Component for Model {
                         </FormControl>
                         <Tooltip
                             target={tooltip_select_ref}
-                            placement={Placement::Right}
+                            placement={Placement::Bottom}
                         >
                             {"Tooltip for select control, shown when focussed or hovered."}
                         </Tooltip>
@@ -438,23 +437,38 @@ impl Component for Model {
                             placement={Placement::BottomStart}
                             fade={true}
                         >
-                            {"You must accept the terms and conditions to hide this tooltip. Even though this tooltip visually blocks other form elewents, they still receive events."}
+                            {"You must accept the terms and conditions to hide this tooltip. Even though this "}
+                            {"tooltip visually blocks other form elements, they can still receive events."}
                         </Tooltip>
-                        <FormControl
-                            id="input-tooltip-textarea"
-                            ctype={FormControlType::TextArea { cols: None, rows: None }}
-                            class="mb-3"
-                            label="Text area with tooltip on hover only"
-                            placeholder="Placeholder text"
-                            node_ref={tooltip_textarea_ref.clone()}
-                        />
-                        <Tooltip
-                            target={tooltip_textarea_ref}
-                            trigger_on_focus=false
-                            trigger_on_hover=true
-                        >
-                            {"Tooltip for textarea, only shown when hovered. This isn't a good idea because it requires use of a pointing device."}
-                        </Tooltip>
+                        {
+                            for [
+                                TooltipFocusTrigger::IfNoHover,
+                                TooltipFocusTrigger::IfNoAnyHover,
+                                TooltipFocusTrigger::Never,
+                            ].iter().enumerate().map(|(i, trigger_on_focus)| {
+                                let input_ref = NodeRef::default();
+
+                                html_nested! {
+                                    <>
+                                        <FormControl
+                                            id={format!("input-focus-trigger{i}")}
+                                            ctype={FormControlType::Text}
+                                            class="mb-3"
+                                            label={format!("Input with tooltip on hover and on focus {trigger_on_focus:?}")}
+                                            placeholder="Placeholder text"
+                                            node_ref={input_ref.clone()}
+                                        />
+                                        <Tooltip
+                                            target={input_ref}
+                                            trigger_on_focus={*trigger_on_focus}
+                                            trigger_on_hover=true
+                                        >
+                                            {format!("Tooltip for input with {trigger_on_focus:?}.")}
+                                        </Tooltip>
+                                    </>
+                                }
+                            })
+                        }
                     </Container>
                     <h2>{ "Floating fields " }</h2>
                     <Container size={ContainerSize::ExtraLarge}>
