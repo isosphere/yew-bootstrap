@@ -67,7 +67,6 @@ impl Component for Model {
         html! {
             <>
                 {include_inline()}
-                {include_cdn_icons()}
                 <div id="layout" class="p-3">
 
                 <h1>{"Basic Cards"}</h1>
