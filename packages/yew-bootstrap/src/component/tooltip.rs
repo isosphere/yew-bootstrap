@@ -171,7 +171,7 @@ pub struct TooltipProps {
 ///                 {"Button with tooltip"}
 ///             </Button>
 ///             <Tooltip target={btn_ref}>
-///                 {format!("Tooltip for button, placed at {placement:?}.")}
+///                 {"Tooltip for button."}
 ///             </Tooltip>
 ///         </>
 ///     }
