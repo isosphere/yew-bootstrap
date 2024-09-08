@@ -33,16 +33,33 @@ const MEDIA_QUERY_ANY_HOVER_NONE: &'static str = "(any-hover: none)";
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub enum TooltipFocusTrigger {
     /// Always show the tooltip on element focus.
+    ///
+    /// This is the default option, and provides a reliable alternative when
+    /// using a non-hover-capable device (such as a touchscreen) or navigating
+    /// with a keyboard.
     #[default]
     Always,
 
     /// Show the tooltip on element focus only if the primary pointing device
-    /// (last used device) does *not* support hovering (eg: touchscreen), or
-    /// there are no pointing devices connected.
+    /// does *not* support hovering (eg: touchscreen), or there are no pointing
+    /// devices connected.
     ///
     /// If the primary pointing device supports hovering (eg: mouse, trackpad,
     /// trackball, smart pen, Wiimote), the tooltip will not be shown when
     /// the element has focus.
+    ///
+    /// On desktop browsers, figuring out what a "primary pointing device"
+    /// actually is [can be complicated to answer for some devices][0]. They
+    /// generally err towards reporting the use and presence of an ordinary
+    /// mouse with hover capabilities (eg: [Firefox bug 1851244][1]), even when
+    /// there are no pointing devices connected, or used with a touchscreen.
+    ///
+    /// **Note:** someone who primarily uses a keyboard to interact with their
+    /// computer, but has a mouse plugged in would still have their browser
+    /// report a primary pointing device which is "hover capable".
+    ///
+    /// [0]: https://firefox-source-docs.mozilla.org/widget/windows/windows-pointing-device/index.html#selection-of-the-primary-pointing-device
+    /// [1]: https://bugzilla.mozilla.org/show_bug.cgi?id=1851244
     IfNoHover,
 
     /// Trigger showing the tooltip on element focus only if *all* pointing
@@ -56,12 +73,28 @@ pub enum TooltipFocusTrigger {
     /// For a device with *both* hovering and non-hovering pointing device(s)
     /// (eg: a laptop with a trackpad and touchscreen, or a tablet with both pen
     /// and touch input), this will never trigger the tooltip.
+    ///
+    /// Most desktop browsers will *always* report the presence of an ordinary
+    /// (hover-capable) mouse, even if none is attached. This can be caused by:
+    ///
+    /// * a wireless mouse dongle which is plugged in, but the wireless mouse
+    ///   itself is turned off
+    ///
+    /// * the presence of a PS/2 mouse controller
+    ///
+    /// * the presence of a virtual mouse device
+    ///
+    /// * a touch screen which does not have an automatic rotation sensor
+    ///   (but this will report hover events from touch)
+    ///
+    /// These issues may also impact someone who primarily uses a keyboard to
+    /// interact with their computer.
     IfNoAnyHover,
 
     /// Never show the tooltip on element focus.
     ///
     /// Make sure there is some other way to trigger the tooltip which works on
-    /// all types of devices.
+    /// all types of devices and meets users' preferred input modalities.
     Never,
 }
 
@@ -142,7 +175,8 @@ pub struct TooltipProps {
     /// or keyboard focus.
     ///
     /// This defaults to [`TooltipFocusTrigger::Always`], which always shows the
-    /// tooltip on input focus. See [`TooltipFocusTrigger`] for other options.
+    /// tooltip on input focus. See [`TooltipFocusTrigger`] for other options,
+    /// and full caveats on each.
     ///
     /// This [will not trigger on `disabled` elements][0].
     ///
@@ -155,9 +189,13 @@ pub struct TooltipProps {
     ///
     /// This defaults to `true`, but [will not trigger on `disabled` elements][0].
     ///
-    /// **Note:** touchscreen devices cannot trigger hover events. Make sure
-    /// there is some other way to trigger the tooltip on those devices (eg:
-    /// `trigger_on_focus={TooltipFocusTrigger::IfNoHover}`).
+    /// **Note:** touchscreen devices *may not* trigger hover events. Ensure
+    /// there is some other way to trigger the tooltip on those devices, such as
+    /// with `trigger_on_focus={TooltipFocusTrigger::IfNoHover}`.
+    ///
+    /// This will attempt to ignore synthetic `mouseenter` events from
+    /// touchscreen devices which report `(any-hover: none)` (iOS). Desktop
+    /// browsers with touchscreens may still send hover events from touch.
     ///
     /// [0]: https://getbootstrap.com/docs/5.3/components/tooltips/#disabled-elements
     #[prop_or(true)]
@@ -302,7 +340,16 @@ pub fn Tooltip(props: &TooltipProps) -> Html {
         Callback::from(move |evt_type: String| match evt_type.as_str() {
             "mouseenter" => {
                 // Ignore synthetic hover events on devices that don't support
-                // hover (iOS).
+                // hover at all (iOS), to make it work the same as on Android.
+                //
+                // Desktop versions of Chromium and Firefox *also* send
+                // MouseEnter and MouseLeave events from touchscreens, but
+                // generally report `hover: hover` and `any-hover: hover`, even
+                // when using a touchscreen, or if there is no hover-capable
+                // device attached.
+                //
+                // See the docs at TooltipFocusTrigger::IfNoAnyHover for more
+                // detail.
                 if let Ok(Some(query)) =
                     gloo_utils::window().match_media(MEDIA_QUERY_ANY_HOVER_NONE)
                 {
