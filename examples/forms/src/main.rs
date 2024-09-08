@@ -392,7 +392,7 @@ impl Component for Model {
                             id="input-tooltip-text"
                             ctype={FormControlType::Text}
                             class="mb-3" label="Text with tooltip on focus only"
-                            placeholder={ Some(AttrValue::from("Placeholder")) }
+                            placeholder="Placeholder text"
                             node_ref={tooltip_input_ref.clone()}
                         />
                         <Tooltip
@@ -404,9 +404,9 @@ impl Component for Model {
                         </Tooltip>
                         <FormControl
                             id="input-tooltip-select1"
-                            ctype={ FormControlType::Select}
+                            ctype={FormControlType::Select}
                             class="mb-3"
-                            label={ "Select control with tooltip on hover or focus"}
+                            label="Select control with tooltip on hover or focus"
                             node_ref={tooltip_select_ref.clone()}
                         >
                             <SelectOption key=0 label="Select an option" selected=true />
@@ -423,12 +423,12 @@ impl Component for Model {
                         <FormControl
                             id="input-tooltip-checkbox"
                             name="input-tooltip-checkbox"
-                            ctype={ FormControlType::Checkbox }
+                            ctype={FormControlType::Checkbox}
                             class="mb-3"
                             label="I accept the terms and conditions to be able to hide the tooltip."
                             node_ref={tooltip_checkbox_ref.clone()}
                             onchange={onchange.clone()}
-                            checked={ !self.show_checkbox_tooltip }
+                            checked={!self.show_checkbox_tooltip}
                         />
                         <Tooltip
                             target={tooltip_checkbox_ref}
@@ -438,14 +438,14 @@ impl Component for Model {
                             placement={Placement::BottomStart}
                             fade={true}
                         >
-                            {"You must accept the terms and conditions to hide this tooltip. Even though this tooltip visually blocks the textarea below, the textarea still receives events."}
+                            {"You must accept the terms and conditions to hide this tooltip. Even though this tooltip visually blocks other form elewents, they still receive events."}
                         </Tooltip>
                         <FormControl
                             id="input-tooltip-textarea"
-                            ctype={ FormControlType::TextArea { cols: None, rows: None } }
+                            ctype={FormControlType::TextArea { cols: None, rows: None }}
                             class="mb-3"
                             label="Text area with tooltip on hover only"
-                            placeholder={ Some(AttrValue::from("Text as placeholder")) }
+                            placeholder="Placeholder text"
                             node_ref={tooltip_textarea_ref.clone()}
                         />
                         <Tooltip

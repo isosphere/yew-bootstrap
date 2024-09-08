@@ -381,31 +381,37 @@ impl Component for Model {
                         {"Open the Forms example on "}{BI::GITHUB}{" GitHub"}
                     </Tooltip>
                     <h2>{"Buttons with tooltips (on focus or hover)"}</h2>
-                    {
-                        for [
-                            Placement::Top,
-                            Placement::Bottom,
-                            Placement::Left,
-                            Placement::Right,
-                        ].iter().map(|placement| {
-                            let btn_ref = NodeRef::default();
+                    <ButtonGroup>
+                        {
+                            for [
+                                (Color::Primary, Placement::Top),
+                                (Color::Secondary, Placement::Bottom),
+                                (Color::Success, Placement::Left),
+                                (Color::Warning, Placement::Right),
+                            ].iter().map(|(color, placement)| {
+                                let btn_ref = NodeRef::default();
 
-                            html_nested! {
-                                <>
-                                    <Button style={Color::Primary} node_ref={btn_ref.clone()}>
-                                        {format!("Tooltip: {placement:?}")}
-                                    </Button>
-                                    <Tooltip target={btn_ref} placement={*placement}>
-                                        {format!("Tooltip for button, placed at {placement:?}.")}
-                                    </Tooltip>
-                                    {" "}
-                                </>
-                            }
-                        })
-                    }
-                    <h2>{"Manually-triggered tooltip"}</h2>
+                                html_nested! {
+                                    <>
+                                        <Button style={color.clone()} node_ref={btn_ref.clone()}>
+                                            {format!("Tooltip: {placement:?}")}
+                                        </Button>
+                                        <Tooltip target={btn_ref} placement={*placement}>
+                                            {format!("Tooltip for button, placed at {placement:?}.")}
+                                        </Tooltip>
+                                    </>
+                                }
+                            })
+                        }
+                    </ButtonGroup>
+                    <h2>{"Manually-triggered tooltip on an element"}</h2>
                     <p ref={tooltip_click_p_ref.clone()}>
-                        {"Here is some long text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."}
+                        {"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt "}
+                        {"ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation "}
+                        {"ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in "}
+                        {"reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur "}
+                        {"sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id "}
+                        {"est laborum."}
                     </p>
                     <ButtonGroup>
                         <Button onclick={ctx.link().callback(|_| Msg::ToggleTooltip)}>
@@ -423,9 +429,11 @@ impl Component for Model {
                         trigger_on_focus=false
                         trigger_on_hover=false
                         show={self.tooltip_show}
-                        placement={Placement::Top}
+                        placement={Placement::BottomEnd}
                     >
-                        {format!("Tooltip toggled manually")}
+                        {"Tooltip toggled manually, targetted to the "}
+                        <code>{"<p>"}</code>
+                        {" tag."}
                     </Tooltip>
                 </div>
                 <div id="helpers" class="p-3">
