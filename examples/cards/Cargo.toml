@@ -1,6 +1,6 @@
 [package]
 name = "cards"
-version = "0.2.0"
+version = "0.2.1"
 authors = ["Cédric Airaud <cairaud@gmail.com>", "CraftSpider <runetynan@gmail.com>"]
 edition = "2021"
 license = "MIT"
