@@ -29,6 +29,7 @@ struct Model {
     value_checkbox: bool,
     number_value: AttrValue,
     number_feedback: FormControlValidation,
+    show_checkbox_tooltip: bool,
 }
 
 impl Component for Model {
@@ -49,6 +50,7 @@ impl Component for Model {
             value_checkbox: false,
             number_value: AttrValue::from(""),
             number_feedback: FormControlValidation::None,
+            show_checkbox_tooltip: true,
         }
     }
 
@@ -101,9 +103,16 @@ impl Component for Model {
             },
             Msg::InputBoolChanged { name, value } => {
                 self.input_changes.push(format!("{name} changed: {}", if value { "checked " } else { "unchecked" }));
-                if &name[..] == "input-checkbox-callback" {
-                    self.value_checkbox = value;
+                match &name[..] {
+                    "input-checkbox-callback" => {
+                        self.value_checkbox = value;
+                    }
+                    "input-tooltip-checkbox" => {
+                        self.show_checkbox_tooltip = !value;
+                    }
+                    _ => {}
                 }
+                
                 true
             },
             _ => false
@@ -159,6 +168,10 @@ impl Component for Model {
             url: Some(AttrValue::from("https://yew.rs")),
             icon: BI::ROCKET,
         };
+
+        let tooltip_select_ref = NodeRef::default();
+        let tooltip_checkbox_ref = NodeRef::default();
+        let tooltip_textarea_ref = NodeRef::default();
 
         html! {
             <>
@@ -371,6 +384,91 @@ impl Component for Model {
                             disabled=true
                             value="05:00"
                         />
+                    </Container>
+                    <h2>{ "Fields with tooltips"}</h2>
+                    <Container size={ContainerSize::ExtraLarge}>
+                        <FormControl
+                            id="input-tooltip-text"
+                            ctype={FormControlType::TextArea { cols: None, rows: None }}
+                            class="mb-3" label="Text with tooltip on focus only"
+                            placeholder="Placeholder text"
+                            node_ref={tooltip_textarea_ref.clone()}
+                        />
+                        <Tooltip
+                            target={tooltip_textarea_ref}
+                            trigger_on_focus=true
+                            trigger_on_hover=false
+                        >
+                            {"Tooltip for input control, shown when focussed."}
+                        </Tooltip>
+                        <FormControl
+                            id="input-tooltip-select1"
+                            ctype={FormControlType::Select}
+                            class="mb-3"
+                            label="Select control with tooltip on hover or focus"
+                            node_ref={tooltip_select_ref.clone()}
+                        >
+                            <SelectOption key=0 label="Select an option" selected=true />
+                            <SelectOption key=1 label="Option 1" value="1"/>
+                            <SelectOption key=2 label="Option 2" value="2"/>
+                            <SelectOption key=3 label="Option 3" value="3"/>
+                        </FormControl>
+                        <Tooltip
+                            target={tooltip_select_ref}
+                            placement={Placement::Bottom}
+                        >
+                            {"Tooltip for select control, shown when focussed or hovered."}
+                        </Tooltip>
+                        <FormControl
+                            id="input-tooltip-checkbox"
+                            name="input-tooltip-checkbox"
+                            ctype={FormControlType::Checkbox}
+                            class="mb-3"
+                            label="I accept the terms and conditions to be able to hide the tooltip."
+                            node_ref={tooltip_checkbox_ref.clone()}
+                            onchange={onchange.clone()}
+                            checked={!self.show_checkbox_tooltip}
+                        />
+                        <Tooltip
+                            target={tooltip_checkbox_ref}
+                            trigger_on_focus=false
+                            trigger_on_hover=false
+                            show={self.show_checkbox_tooltip}
+                            placement={Placement::BottomStart}
+                            fade={true}
+                        >
+                            {"You must accept the terms and conditions to hide this tooltip. Even though this "}
+                            {"tooltip visually blocks other form elements, they can still receive events."}
+                        </Tooltip>
+                        {
+                            for [
+                                TooltipFocusTrigger::IfNoHover,
+                                TooltipFocusTrigger::IfNoAnyHover,
+                                TooltipFocusTrigger::Never,
+                            ].iter().enumerate().map(|(i, trigger_on_focus)| {
+                                let input_ref = NodeRef::default();
+
+                                html_nested! {
+                                    <>
+                                        <FormControl
+                                            id={format!("input-focus-trigger{i}")}
+                                            ctype={FormControlType::Text}
+                                            class="mb-3"
+                                            label={format!("Input with tooltip on hover and on focus {trigger_on_focus:?}")}
+                                            placeholder="Placeholder text"
+                                            node_ref={input_ref.clone()}
+                                        />
+                                        <Tooltip
+                                            target={input_ref}
+                                            trigger_on_focus={*trigger_on_focus}
+                                            trigger_on_hover=true
+                                        >
+                                            {format!("Tooltip for input with {trigger_on_focus:?}.")}
+                                        </Tooltip>
+                                    </>
+                                }
+                            })
+                        }
                     </Container>
                     <h2>{ "Floating fields " }</h2>
                     <Container size={ContainerSize::ExtraLarge}>
