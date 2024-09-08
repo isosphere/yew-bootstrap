@@ -17,6 +17,7 @@ mod navbar;
 mod row;
 mod spinner;
 mod progress;
+mod tooltip;
 
 pub use self::accordion::*;
 pub use self::alert::*;
@@ -35,3 +36,4 @@ pub use self::navbar::*;
 pub use self::row::*;
 pub use self::spinner::*;
 pub use self::progress::*;
+pub use self::tooltip::*;
