@@ -49,7 +49,7 @@ impl Component for NavDropdownItem {
                     onclick={props.onclick.clone()}
                 >
                     if let Some(icon) = props.icon {
-                        {icon}{" "}
+                        {icon}{" "} // add a space after the icon, otherwise it looks squished
                     }
                     {props.text.clone()}
                 </a>
