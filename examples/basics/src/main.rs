@@ -47,6 +47,7 @@ impl Component for Model {
         };
 
         let tooltip_click_p_ref = NodeRef::default();
+        let tooltip_link_ref = NodeRef::default();
 
         html! {
             <>
@@ -360,6 +361,25 @@ impl Component for Model {
                     <Progress class={"mb-3"}><ProgressBar value=25 animated={true}/></Progress>
 
                     <h1>{"Tooltip"}</h1>
+                    <p>
+                        {"The "}
+                        <Link
+                            url="https://github.com/isosphere/yew-bootstrap/tree/main/examples/forms"
+                            node_ref={tooltip_link_ref.clone()}
+                            target="_blank"
+                        >
+                            <code>{"yew-bootstrap"}</code>
+                            {" forms example"}
+                        </Link>
+                        {" demonstrates using a tooltip with many types of form control."}
+                    </p>
+                    <Tooltip
+                        target={tooltip_link_ref}
+                        placement={Placement::TopStart}
+                        fade=true
+                    >
+                        {"Open the Forms example on "}{BI::GITHUB}{" GitHub"}
+                    </Tooltip>
                     <h2>{"Buttons with tooltips (on focus or hover)"}</h2>
                     {
                         for [
