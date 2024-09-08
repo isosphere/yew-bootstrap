@@ -8,11 +8,11 @@
 //! * <https://github.com/react-bootstrap/react-bootstrap/blob/master/src/Tooltip.tsx>
 //! * <https://github.com/twbs/bootstrap/blob/main/js/src/tooltip.js>
 
+pub use popper_rs::prelude::Placement;
 use popper_rs::{
     prelude::{use_popper, Modifier, Offset, Options, Strategy},
     state::ApplyAttributes,
 };
-pub use popper_rs::prelude::Placement;
 use wasm_bindgen::{closure::Closure, JsCast};
 use web_sys::HtmlElement;
 use yew::{platform::spawn_local, prelude::*};
@@ -111,10 +111,10 @@ pub struct TooltipProps {
 ///
 /// This component is similar to [`react-bootstrap`'s Tooltip component][2] –
 /// it wires up Popper in a way that works nicely with Yew.
-/// 
+///
 /// There are some similarities and differences between this component and
 /// Bootstrap's in-built implementation:
-/// 
+///
 /// * There's no need to use `bootstrap.bundle.min.js` or `popper.min.js`. This
 ///   component uses [`popper-rs`][], which comes with Popper.
 ///
@@ -131,9 +131,9 @@ pub struct TooltipProps {
 ///
 ///   These triggers can be individually disabled, and you can
 ///   [control display manually][show] instead.
-/// 
+///
 ///   `<Tooltip>` *does not* support the `click` trigger.
-/// 
+///
 /// * Like Bootstrap, tooltips exist in a shadow DOM ([portal][]) outside of the
 ///   normal page hierarchy.
 ///
@@ -155,7 +155,7 @@ pub struct TooltipProps {
 ///   in sync, or the tooltip is *only* triggered manually.
 ///
 /// ## Examples
-/// 
+///
 /// Button with a tooltip, shown automatically on focus or hover:
 ///
 /// ```rust
@@ -177,7 +177,7 @@ pub struct TooltipProps {
 ///     }
 /// }
 /// ```
-/// 
+///
 /// [0]: https://getbootstrap.com/docs/5.3/components/tooltips/
 /// [2]: https://github.com/react-bootstrap/react-bootstrap/blob/master/src/Tooltip.tsx
 /// [show]: TooltipProps::show
