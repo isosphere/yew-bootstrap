@@ -1,4 +1,3 @@
-use popper_rs::prelude::Placement;
 use yew::prelude::*;
 
 use yew_bootstrap::component::*;

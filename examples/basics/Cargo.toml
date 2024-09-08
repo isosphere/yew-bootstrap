@@ -6,6 +6,5 @@ edition = "2021"
 license = "MIT"
 
 [dependencies]
-popper-rs = { version = "0.3.0", features = ["yew"] }
 yew = { version = "0.21", features = ["csr"] }
 yew-bootstrap = { path = "../../packages/yew-bootstrap" }

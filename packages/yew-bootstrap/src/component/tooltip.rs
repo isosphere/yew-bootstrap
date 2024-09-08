@@ -9,9 +9,10 @@
 //! * <https://github.com/twbs/bootstrap/blob/main/js/src/tooltip.js>
 
 use popper_rs::{
-    prelude::{use_popper, Modifier, Offset, Options, Placement, Strategy},
+    prelude::{use_popper, Modifier, Offset, Options, Strategy},
     state::ApplyAttributes,
 };
+pub use popper_rs::prelude::Placement;
 use wasm_bindgen::{closure::Closure, JsCast};
 use web_sys::HtmlElement;
 use yew::{platform::spawn_local, prelude::*};
