@@ -257,7 +257,7 @@ pub struct AccordionProps {
 /// ```
 #[function_component]
 pub fn Accordion(props: &AccordionProps) -> Html {
-    let mut classes = classes!("accordian");
+    let mut classes = classes!("accordion");
     if props.flush {
         classes.push("accordion-flush");
     }
