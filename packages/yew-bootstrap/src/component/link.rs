@@ -52,6 +52,16 @@ pub struct LinkProps {
     /// Optional text for the link
     #[prop_or_default]
     pub text: String,
+
+    /// Reference to the [NodeRef] of the link's underlying `<a>` element.
+    ///
+    /// Used by components which add custom event handlers directly to the DOM.
+    ///
+    /// See [*Node Refs* in the Yew documentation][0] for more information.
+    ///
+    /// [0]: https://yew.rs/docs/concepts/function-components/node-refs
+    #[prop_or_default]
+    pub node_ref: NodeRef,
 }
 
 impl Component for Link {
@@ -79,6 +89,7 @@ impl Component for Link {
                 role={props.url.is_none().then_some("button")}
                 href={props.url.clone()}
                 target={props.target.clone()}
+                ref={props.node_ref.clone()}
             >
                 { &props.text }
                 { for props.children.iter() }
