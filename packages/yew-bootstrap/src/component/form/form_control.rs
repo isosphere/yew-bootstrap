@@ -100,6 +100,17 @@ pub struct FormControlProps {
     /// Optional onclick event applied on the input
     #[prop_or_default]
     pub onclick: Callback<MouseEvent>,
+
+    /// Reference to the [NodeRef] of the form control's underlying `<input>`,
+    /// `<select>`, `<textarea>` element.
+    ///
+    /// Used by components which add custom event handlers directly to the DOM.
+    ///
+    /// See [*Node Refs* in the Yew documentation][0] for more information.
+    ///
+    /// [0]: https://yew.rs/docs/concepts/function-components/node-refs
+    #[prop_or_default]
+    pub node_ref: NodeRef,
 }
 
 
@@ -338,6 +349,7 @@ pub fn FormControl(props: &FormControlProps) -> Html {
                         onclick={ props.onclick.clone() }
                         required={ props.required }
                         autocomplete={ props.autocomplete.to_str() }
+                        ref={ props.node_ref.clone() }
                     />
                     { label_after }
                     { help }
@@ -367,6 +379,7 @@ pub fn FormControl(props: &FormControlProps) -> Html {
                         onchange={ props.onchange.clone() }
                         onclick={ props.onclick.clone() }
                         required={ props.required }
+                        ref={ props.node_ref.clone() }
                     >
                         { for props.children.clone() }
                     </select>
@@ -395,6 +408,7 @@ pub fn FormControl(props: &FormControlProps) -> Html {
                         onchange={ props.onchange.clone() }
                         onclick={ props.onclick.clone() }
                         required={ props.required }
+                        ref={ props.node_ref.clone() }
                     />
                     { label }
                     { help }
@@ -463,6 +477,7 @@ pub fn FormControl(props: &FormControlProps) -> Html {
                         oninput={ props.oninput.clone() }
                         required={ props.required }
                         autocomplete={ props.autocomplete.to_str() }
+                        ref={ props.node_ref.clone() }
                     />
                     { label_after }
                     { help }
