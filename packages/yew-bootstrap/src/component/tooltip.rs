@@ -29,50 +29,83 @@ const MEDIA_QUERY_HOVER_NONE: &'static str = "(hover: none)";
 /// Reference: [Media Queries Level 4: All Available Interaction Capabilities](https://www.w3.org/TR/mediaqueries-4/#any-input)
 const MEDIA_QUERY_ANY_HOVER_NONE: &'static str = "(any-hover: none)";
 
+/// Media query to indicate that there are either no pointing devices, or a
+/// pointing device only supports coarse input.
+///
+/// Reference: [Media Queries Level 4: All Available Interaction Capabilities](https://www.w3.org/TR/mediaqueries-4/#any-input)
+const MEDIA_QUERY_ANY_POINTER_NONE_OR_COARSE: &'static str =
+    "(any-pointer: none) or (any-pointer: coarse)";
+
 /// Trigger options for [TooltipProps::trigger_on_focus].
+///
+/// This allows tooltips to be selectively enabled on focus, depending on the
+/// result of which [Interaction Media Features][0] the user's device supports.
+///
+/// [0]: https://www.w3.org/TR/mediaqueries-4/#mf-interaction
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub enum TooltipFocusTrigger {
     /// Always show the tooltip on element focus.
     ///
-    /// This is the default option, and provides a reliable alternative when
-    /// using a non-hover-capable device (such as a touchscreen) or navigating
-    /// with a keyboard.
+    /// This is the default option, and provides a reliable and accessible
+    /// alternative when using a non-hover-capable device (such as a
+    /// touchscreen) or navigating with a keyboard on a device that *also* has a
+    /// pointing device.
+    ///
+    /// Because of the many side-effects, browser and platform bugs that come
+    /// from attempting to *selectively* disable showing tooltips on focus, this
+    /// is generally the best choice, but may lead to unexpecte tooltip display
+    /// for users on a desktop browser with a traditional mouse.
     #[default]
     Always,
 
-    /// Show the tooltip on element focus only if the primary pointing device
+    /// Show the tooltip on element focus only if the *primary* pointing device
     /// does *not* support hovering (eg: touchscreen), or there are no pointing
-    /// devices connected.
+    /// devices connected (`hover: none`).
     ///
     /// If the primary pointing device supports hovering (eg: mouse, trackpad,
     /// trackball, smart pen, Wiimote), the tooltip will not be shown when
     /// the element has focus.
     ///
-    /// On desktop browsers, figuring out what a "primary pointing device"
-    /// actually is [can be complicated to answer for some devices][0]. They
-    /// generally err towards reporting the use and presence of an ordinary
-    /// mouse with hover capabilities (eg: [Firefox bug 1851244][1]), even when
-    /// there are no pointing devices connected, or used with a touchscreen.
+    /// Figuring out what the "primary" pointing device actually is
+    /// [can be complicated to answer for some devices][0]. They generally err
+    /// towards reporting the use and presence of an ordinary mouse with hover
+    /// capabilities (eg: [Firefox bug 1851244][1]), even when there are no
+    /// pointing devices connected, or used with a touchscreen.
     ///
-    /// **Note:** someone who primarily uses a keyboard to interact with their
-    /// computer, but has a mouse plugged in would still have their browser
-    /// report a primary pointing device which is "hover capable".
+    /// Both [Chromium][2] and [Firefox][3] on Windows erroneously report
+    /// touch-only devices as having an ordinary mouse with hover capabilities
+    /// if the device lacks an auto-rotation sensor (as is the case for
+    /// non-tablet devices like external touchscreen monitors and all-in-one
+    /// PCs).
+    ///
+    /// For someone who primarily uses a keyboard to interact with their
+    /// computer, but has a mouse plugged in (which could a laptop with a
+    /// built-in trackpad, or a virtual device), their browser will still report
+    /// a primary pointing device which is "hover capable", even when they have
+    /// no way to hover.
+    ///
+    /// These implementation problems and shortfalls make the `hover: none`
+    /// media query unreliable.
     ///
     /// [0]: https://firefox-source-docs.mozilla.org/widget/windows/windows-pointing-device/index.html#selection-of-the-primary-pointing-device
     /// [1]: https://bugzilla.mozilla.org/show_bug.cgi?id=1851244
-    IfNoHover,
+    /// [2]: https://issues.chromium.org/issues/366055333
+    /// [3]: https://bugzilla.mozilla.org/show_bug.cgi?id=1918292
+    IfHoverNone,
 
     /// Trigger showing the tooltip on element focus only if *all* pointing
     /// devices connected to the device do not support hovering, or there there
-    /// are no pointing devices connected.
+    /// are no pointing devices connected (`any-hover: none`).
     ///
     /// For a device with *only* one non-hovering pointing device (eg: a mobile
     /// phone with a touch screen or basic stylus), this is the same as
-    /// [`TooltipFocusTrigger::IfNoHover`].
+    /// [`TooltipFocusTrigger::IfHoverNone`].
+    ///
+    /// Unfortunately, [there is no way suppress triggering if not *all* pointer devices support hovering][1].
     ///
     /// For a device with *both* hovering and non-hovering pointing device(s)
     /// (eg: a laptop with a trackpad and touchscreen, or a tablet with both pen
-    /// and touch input), this will never trigger the tooltip.
+    /// and touch input), this option will never trigger the tooltip.
     ///
     /// Most desktop browsers will *always* report the presence of an ordinary
     /// (hover-capable) mouse, even if none is attached. This can be caused by:
@@ -85,11 +118,44 @@ pub enum TooltipFocusTrigger {
     /// * the presence of a virtual mouse device
     ///
     /// * a touch screen which does not have an automatic rotation sensor
-    ///   (but this will report hover events from touch)
+    ///   (but this will report hover events from touch), due to [Chromium][2]
+    ///   and [Firefox][3] bugs.
+    ///
+    /// * Android platform bugs (eg: some
+    ///   [Samsung, OnePlus, and Android-on-ChromeOS][0] devices)
     ///
     /// These issues may also impact someone who primarily uses a keyboard to
     /// interact with their computer.
-    IfNoAnyHover,
+    ///
+    /// [0]: https://issues.chromium.org/issues/41445959
+    /// [1]: https://github.com/w3c/csswg-drafts/issues/5462
+    /// [2]: https://issues.chromium.org/issues/366055333
+    /// [3]: https://bugzilla.mozilla.org/show_bug.cgi?id=1918292
+    IfAnyHoverNone,
+
+    /// Trigger showing tooltips on element focus only if:
+    ///
+    /// * there are no pointer devices present (`any-pointer: none`), **or**,
+    /// * there are no *coarse* pointer devices present (`any-pointer: coarse`),
+    ///   such as a touchscreen or Wiimote
+    ///
+    /// This is a work-around for there being
+    /// [no way for a browser to report that not all devices support `hover`][1],
+    /// and the complex heuristics required (which all browsers lack) to
+    /// determine which is the "primary" pointing device.
+    ///
+    /// The intent is that tooltips will be shown on devices with touchscreens,
+    /// regardless of whether they have an auto-rotation sensor.
+    ///
+    /// The side-effects are:
+    ///
+    /// * hovering `coarse` pointer devices (like the Wiimote) will *also* show
+    ///   tooltips on focus, even though they can hover
+    /// * non-hovering `fine` pointer devices (like basic stylus digitisers)
+    ///   will *not* show tooltips on focus, even though they can't hover
+    ///
+    /// [1]: https://github.com/w3c/csswg-drafts/issues/5462
+    IfAnyPointerNoneOrCoarse,
 
     /// Never show the tooltip on element focus.
     ///
@@ -112,8 +178,9 @@ impl TooltipFocusTrigger {
     fn media_queries(&self) -> Option<MediaQueryList> {
         let query = match self {
             Self::Always | Self::Never => return None,
-            Self::IfNoHover => MEDIA_QUERY_HOVER_NONE,
-            Self::IfNoAnyHover => MEDIA_QUERY_ANY_HOVER_NONE,
+            Self::IfHoverNone => MEDIA_QUERY_HOVER_NONE,
+            Self::IfAnyHoverNone => MEDIA_QUERY_ANY_HOVER_NONE,
+            Self::IfAnyPointerNoneOrCoarse => MEDIA_QUERY_ANY_POINTER_NONE_OR_COARSE,
         };
         let w = gloo_utils::window();
         w.match_media(&query).ok().flatten()
@@ -189,9 +256,10 @@ pub struct TooltipProps {
     ///
     /// This defaults to `true`, but [will not trigger on `disabled` elements][0].
     ///
-    /// **Note:** touchscreen devices *may not* trigger hover events. Ensure
-    /// there is some other way to trigger the tooltip on those devices, such as
-    /// with `trigger_on_focus={TooltipFocusTrigger::IfNoHover}`.
+    /// **Note:** touchscreen devices and keyboard-only users *may not* trigger
+    /// hover events. Ensure there is some other way to trigger the tooltip on
+    /// those devices, such as with
+    /// `trigger_on_focus={TooltipFocusTrigger::Always}`.
     ///
     /// This will attempt to ignore synthetic `mouseenter` events from
     /// touchscreen devices which report `(any-hover: none)` (iOS). Desktop
@@ -348,8 +416,8 @@ pub fn Tooltip(props: &TooltipProps) -> Html {
                 // when using a touchscreen, or if there is no hover-capable
                 // device attached.
                 //
-                // See the docs at TooltipFocusTrigger::IfNoAnyHover for more
-                // detail.
+                // See the docs at TooltipFocusTrigger::IfAnyHoverNone for more
+                // details.
                 if let Ok(Some(query)) =
                     gloo_utils::window().match_media(MEDIA_QUERY_ANY_HOVER_NONE)
                 {
