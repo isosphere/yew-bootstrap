@@ -379,7 +379,7 @@ impl Component for Model {
                     <h2>{"Animated"}</h2>
                     <Progress class={"mb-3"}><ProgressBar value=25 animated={true}/></Progress>
 
-                    <h1>{"Tooltip"}</h1>
+                    <h1 id="tooltip">{"Tooltip"}</h1>
                     <p>
                         {"The "}
                         <Link
@@ -400,13 +400,15 @@ impl Component for Model {
                         {"Open the Forms example on "}{BI::GITHUB}{" GitHub"}
                     </Tooltip>
                     <h2>{"Buttons with tooltips (on focus or hover)"}</h2>
+                    <p>{"These buttons always show tooltips on focus or on hover."}</p>
                     <ButtonGroup>
                         {
                             for [
-                                (Color::Primary, Placement::Top),
-                                (Color::Secondary, Placement::Bottom),
+                                (Color::Primary, Placement::Auto),
+                                (Color::Secondary, Placement::Top),
+                                (Color::Warning, Placement::Bottom),
                                 (Color::Success, Placement::Left),
-                                (Color::Warning, Placement::Right),
+                                (Color::Info, Placement::Right),
                             ].iter().map(|(color, placement)| {
                                 let btn_ref = NodeRef::default();
 
@@ -423,7 +425,7 @@ impl Component for Model {
                             })
                         }
                     </ButtonGroup>
-                    <h2>{"Manually-triggered tooltip on an element"}</h2>
+                    <h2 id="tooltip-manual">{"Manually-triggered tooltip on an element"}</h2>
                     <p ref={tooltip_click_p_ref.clone()}>
                         {"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt "}
                         {"ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation "}
@@ -454,6 +456,75 @@ impl Component for Model {
                         <code>{"<p>"}</code>
                         {" tag."}
                     </Tooltip>
+                    <h2 id="tooltip-trigger"><code>{"trigger_on_focus"}</code>{" and "}<code>{"trigger_on_hover"}</code>{" options"}</h2>
+                    <p>
+                        {"These buttons will always show tooltips on hover, but have different rules for showing on "}
+                        {"focus depending on how your browser responds to the "}<code>{"hover"}</code>{", "}
+                        <code>{"any-hover"}</code>{" and "}<code>{"any-pointer"}</code>{" "}
+                        <a href="https://www.w3.org/TR/mediaqueries-4/#mf-interaction" target="_blank">
+                            {"Interaction Media Features"}
+                        </a>
+                        {" media queries. "}
+                        <a href="https://github.com/mdn/browser-compat-data/issues/24451" target="_blank">
+                            {"Depending on browser support"}
+                        </a>
+                        {", These will trigger based on which types of pointing devices (eg: mouse, touchscreen, "}
+                        {"Wiimote, stylus) are available or in use."}
+                    </p>
+                    <ButtonGroup>
+                        {
+                            for [
+                                (Color::Primary, TooltipFocusTrigger::Always),
+                                (Color::Secondary, TooltipFocusTrigger::IfAnyPointerNoneOrCoarse),
+                                (Color::Danger, TooltipFocusTrigger::IfHoverNone),
+                                (Color::Warning, TooltipFocusTrigger::IfAnyHoverNone),
+                                (Color::Info, TooltipFocusTrigger::Never),
+                            ].iter().map(|(color, trigger_on_focus)| {
+                                let btn_ref = NodeRef::default();
+
+                                html_nested! {
+                                    <>
+                                        <Button style={color.clone()} node_ref={btn_ref.clone()}>
+                                            {format!("on_focus={trigger_on_focus:?}")}
+                                        </Button>
+                                        <Tooltip target={btn_ref} trigger_on_focus={*trigger_on_focus}>
+                                            {"Tooltip for button with "}
+                                            <code>
+                                                {format!("trigger_on_focus={trigger_on_focus:?}")}
+                                            </code>
+                                        </Tooltip>
+                                    </>
+                                }
+                            })
+                        }
+                    </ButtonGroup>
+                    <p>{"These buttons either always or never trigger on focus or on hover, regardless of media queries."}</p>
+                    <ButtonGroup>
+                        {
+                            for [
+                                (Color::Primary, TooltipFocusTrigger::Always, true),
+                                (Color::Secondary, TooltipFocusTrigger::Always, false),
+                                (Color::Info, TooltipFocusTrigger::Never, true),
+                                (Color::Warning, TooltipFocusTrigger::Never, false),
+                            ].iter().map(|(color, trigger_on_focus, trigger_on_hover)| {
+                                let btn_ref = NodeRef::default();
+
+                                html_nested! {
+                                    <>
+                                        <Button style={color.clone()} node_ref={btn_ref.clone()}>
+                                            {format!("on_focus={trigger_on_focus:?}, on_hover={trigger_on_hover:?}")}
+                                        </Button>
+                                        <Tooltip target={btn_ref} trigger_on_focus={*trigger_on_focus} {trigger_on_hover}>
+                                            {"Tooltip for button with "}
+                                            <code>
+                                                {format!("trigger_on_focus={trigger_on_focus:?} trigger_on_hover={trigger_on_hover:?}")}
+                                            </code>
+                                        </Tooltip>
+                                    </>
+                                }
+                            })
+                        }
+                    </ButtonGroup>
                 </div>
                 <div id="helpers" class="p-3">
                     <h1>{"Vertical/Horizontal rule"}</h1>
