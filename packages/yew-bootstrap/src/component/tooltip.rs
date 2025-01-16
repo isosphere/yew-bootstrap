@@ -53,7 +53,7 @@ pub enum TooltipFocusTrigger {
     ///
     /// Because of the many side-effects, browser and platform bugs that come
     /// from attempting to *selectively* disable showing tooltips on focus, this
-    /// is generally the best choice, but may lead to unexpecte tooltip display
+    /// is generally the best choice, but may lead to unexpected tooltip display
     /// for users on a desktop browser with a traditional mouse.
     #[default]
     Always,
