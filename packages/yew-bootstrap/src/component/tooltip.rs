@@ -413,28 +413,7 @@ pub fn Tooltip(props: &TooltipProps) -> Html {
         let focused = focused.clone();
         let hovered = hovered.clone();
         Callback::from(move |evt_type: String| match evt_type.as_str() {
-            "mouseenter" => {
-                // Ignore synthetic hover events on devices that don't support
-                // hover at all (iOS), to make it work the same as on Android.
-                //
-                // Desktop versions of Chromium and Firefox *also* send
-                // MouseEnter and MouseLeave events from touchscreens, but
-                // generally report `hover: hover` and `any-hover: hover`, even
-                // when using a touchscreen, or if there is no hover-capable
-                // device attached.
-                //
-                // See the docs at TooltipFocusTrigger::IfAnyHoverNone for more
-                // details.
-                if let Ok(Some(query)) =
-                    gloo_utils::window().match_media(MEDIA_QUERY_ANY_HOVER_NONE)
-                {
-                    if query.matches() {
-                        return;
-                    }
-                }
-
-                hovered.set(true);
-            }
+            "mouseenter" => hovered.set(true),
             "focusin" => focused.set(true),
             _ => {}
         })
