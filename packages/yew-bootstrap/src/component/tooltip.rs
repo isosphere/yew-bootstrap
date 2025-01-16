@@ -78,6 +78,9 @@ pub enum TooltipFocusTrigger {
     /// non-tablet devices like external touchscreen monitors and all-in-one
     /// PCs).
     ///
+    /// [Some Android devices also erroneously report `hover: hover`][4], even
+    /// when they have a touch screen.
+    ///
     /// For someone who primarily uses a keyboard to interact with their
     /// computer, but has a mouse plugged in (which could a laptop with a
     /// built-in trackpad, or a virtual device), their browser will still report
@@ -91,6 +94,7 @@ pub enum TooltipFocusTrigger {
     /// [1]: https://bugzilla.mozilla.org/show_bug.cgi?id=1851244
     /// [2]: https://issues.chromium.org/issues/366055333
     /// [3]: https://bugzilla.mozilla.org/show_bug.cgi?id=1918292
+    /// [4]: https://issues.chromium.org/issues/41445959
     IfHoverNone,
 
     /// Trigger showing the tooltip on element focus only if *all* pointing
@@ -101,11 +105,12 @@ pub enum TooltipFocusTrigger {
     /// phone with a touch screen or basic stylus), this is the same as
     /// [`TooltipFocusTrigger::IfHoverNone`].
     ///
-    /// Unfortunately, [there is no way suppress triggering if not *all* pointer devices support hovering][1].
+    /// Unfortunately, [there is no way to detect if not *all* pointer devices support hovering][1].
     ///
     /// For a device with *both* hovering and non-hovering pointing device(s)
     /// (eg: a laptop with a trackpad and touchscreen, or a tablet with both pen
-    /// and touch input), this option will never trigger the tooltip.
+    /// and touch input), this option will never show will never show the
+    /// tooltip on focus.
     ///
     /// Most desktop browsers will *always* report the presence of an ordinary
     /// (hover-capable) mouse, even if none is attached. This can be caused by:
@@ -121,13 +126,12 @@ pub enum TooltipFocusTrigger {
     ///   (but this will report hover events from touch), due to [Chromium][2]
     ///   and [Firefox][3] bugs.
     ///
-    /// * Android platform bugs (eg: some
-    ///   [Samsung, OnePlus, and Android-on-ChromeOS][0] devices)
-    ///
     /// These issues may also impact someone who primarily uses a keyboard to
     /// interact with their computer.
     ///
-    /// [0]: https://issues.chromium.org/issues/41445959
+    /// These implementation problems and shortfalls make the `any-hover: none`
+    /// media query unreliable.
+    ///
     /// [1]: https://github.com/w3c/csswg-drafts/issues/5462
     /// [2]: https://issues.chromium.org/issues/366055333
     /// [3]: https://bugzilla.mozilla.org/show_bug.cgi?id=1918292
@@ -153,6 +157,9 @@ pub enum TooltipFocusTrigger {
     ///   tooltips on focus, even though they can hover
     /// * non-hovering `fine` pointer devices (like basic stylus digitisers)
     ///   will *not* show tooltips on focus, even though they can't hover
+    /// * a user primarily using non-pointer (keyboard) input but with at least
+    ///   one pointing device connected (such as a laptop with built-in
+    ///   trackpad) will never see tooltips
     ///
     /// [1]: https://github.com/w3c/csswg-drafts/issues/5462
     IfAnyPointerNoneOrCoarse,
