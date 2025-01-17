@@ -254,7 +254,19 @@ pub struct TooltipProps {
     ///
     /// This [will not trigger on `disabled` elements][0].
     ///
+    /// *Unlike* most other web browsers (even on macOS), Safari and other
+    /// browsers using the WebKit renderer[^1] do not fire `focus` events for
+    /// `<a>` or `<button>` elements when clicked or touched,
+    /// [because clicking a button on macOS does not focus it][2]. In Safari on
+    /// macOS, you can press <kbd>Tab</kbd> to focus a button (and fire a
+    /// `focus` event) if [keyboard navigation is enabled in System Settings][3].
+    ///
+    /// [^1]: all browsers on iOS not using an [alternative engine][4] (European Union only)
+    ///
     /// [0]: https://getbootstrap.com/docs/5.3/components/tooltips/#disabled-elements
+    /// [2]: https://webkit.org/b/22261#c68
+    /// [3]: https://support.apple.com/en-au/guide/mac-help/mchlp1399/14.0/mac/14.0
+    /// [4]: https://developer.apple.com/support/alternative-browser-engines/
     #[prop_or_default]
     pub trigger_on_focus: TooltipFocusTrigger,
 
@@ -268,9 +280,8 @@ pub struct TooltipProps {
     /// those devices, such as with
     /// `trigger_on_focus={TooltipFocusTrigger::Always}`.
     ///
-    /// This will attempt to ignore synthetic `mouseenter` events from
-    /// touchscreen devices which report `(any-hover: none)` (iOS). Desktop
-    /// browsers with touchscreens may still send hover events from touch.
+    /// Safari on iOS reports synthetic `mouseenter` events on touchscreen
+    /// devices, but Android and desktop browsers traditionally do not.
     ///
     /// [0]: https://getbootstrap.com/docs/5.3/components/tooltips/#disabled-elements
     #[prop_or(true)]
@@ -283,7 +294,7 @@ pub struct TooltipProps {
     ///
     /// [Disabled elements don't fire events][0], including `focusout` on a
     /// currently-focused element and `mouseleave` of a currently-hovered
-    /// element.
+    /// element. This could cause a tooltip to be "stuck" being shown.
     ///
     /// This property allows you to automatically hide a [Tooltip] which has
     /// [`trigger_on_focus = true`][Self::trigger_on_focus] or
@@ -329,9 +340,11 @@ pub struct TooltipProps {
 ///   default.
 ///
 ///   These triggers can be individually disabled, and you can
-///   [control display manually][show] instead.
+///   [control display manually][`show`] instead.
 ///
-///   `<Tooltip>` *does not* support the `click` trigger.
+///   `<Tooltip>` *does not* support the `click` trigger – use input focus
+///   instead. This makes it possible to trigger tooltips when there is *no*
+///   pointing device available or it cannot be used.
 ///
 /// * Like Bootstrap, tooltips exist in a shadow DOM ([portal][]) outside of the
 ///   normal page hierarchy.
@@ -340,18 +353,21 @@ pub struct TooltipProps {
 ///   when the tooltip is not displayed.
 ///
 ///   A `<Tooltip>` needs to remain part of the DOM if it *could* be shown in a
-///   component. Use the [`show`][show] and [`disabled`][disabled] properties to
+///   component. Use the [`show`][] and [`disabled`][] properties to
 ///   control its display.
 ///
-/// * When using a [`target`][target] which could be `disabled`, pass that
-///   state [to the `<Tooltip>` as well][disabled]. This prevents the tooltip
-///   from ever being displayed.
+/// * When using a [`target`][] which could be `disabled` and triggering
+///   on focus and/or on hover, you can prevent the tooltip from being displayed
+///   by setting the [`disabled`][] property on the on the `<Tooltip>`
+///   as well. Otherwise, the `target` won't fire an event to *hide* the tooltip
+///   when it loses focus or isn't hovered.
 ///
-///   Otherwise, a tooltip could be "stuck" being shown if it had focus or was
-///   hovered at the time it was disabled.
+///   If you only ever trigger tooltips manually, then there's no need to sync
+///   the `disabled` state.
 ///
-///   There's no need to use a wrapper element if the `disabled` state is kept
-///   in sync, or the tooltip is *only* triggered manually.
+/// * Like Bootstrap, if you want the tooltip to be displayed on focus or on
+///   hover on a `disabled` [`target`][], you'll need to use a
+///   [wrapper element][].
 ///
 /// ## Examples
 ///
@@ -379,15 +395,15 @@ pub struct TooltipProps {
 ///
 /// [0]: https://getbootstrap.com/docs/5.3/components/tooltips/
 /// [2]: https://github.com/react-bootstrap/react-bootstrap/blob/master/src/Tooltip.tsx
-/// [show]: TooltipProps::show
-/// [target]: TooltipProps::target
-/// [disabled]: TooltipProps::disabled
-/// [children]: TooltipProps::children
+/// [`children`]: TooltipProps::children
+/// [`disabled`]: TooltipProps::disabled
+/// [portal]: https://yew.rs/docs/advanced-topics/portals
+/// [`popper-rs`]: https://github.com/ctron/popper-rs/
+/// [`show`]: TooltipProps::show
+/// [`target`]: TooltipProps::target
 /// [trigger_on_focus]: TooltipProps::trigger_on_focus
 /// [trigger_on_hover]: TooltipProps::trigger_on_hover
-/// [show]: TooltipProps::show
-/// [portal]: https://yew.rs/docs/advanced-topics/portals
-/// [popper-rs]: https://github.com/ctron/popper-rs/
+/// [wrapper element]: https://getbootstrap.com/docs/5.3/components/tooltips/#disabled-elements
 #[function_component]
 pub fn Tooltip(props: &TooltipProps) -> Html {
     let tooltip_ref = use_node_ref();
