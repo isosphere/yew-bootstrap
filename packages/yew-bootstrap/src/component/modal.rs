@@ -1,18 +1,13 @@
 use yew::prelude::*;
 
 /// Represents the optional size of a Modal dialog, described [here](https://getbootstrap.com/docs/5.1/components/modal/#optional-sizes)
-#[derive(Clone, PartialEq, Eq)]
+#[derive(Clone, Default, PartialEq, Eq)]
 pub enum ModalSize {
     ExtraLarge,
     Large,
+    #[default]
     Normal,
     Small,
-}
-
-impl Default for ModalSize {
-    fn default() -> Self {
-        ModalSize::Normal
-    }
 }
 
 /// # Modal dialog

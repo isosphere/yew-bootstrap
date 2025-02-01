@@ -61,15 +61,14 @@ impl Component for Badge {
     fn view(&self, ctx: &Context<Self>) -> Html {
         let props = ctx.props();
         let mut classes = Classes::new();
-        match &props.position {
-            Some(position) => {
-                classes.push("position-absolute".to_string());
-                classes.push(format!("{}", position.0));
-                classes.push(format!("{}", position.1));
-                classes.push("translate-middle".to_string());
-            }
-            None => {}
+
+        if let Some(position) = &props.position {
+            classes.push("position-absolute".to_string());
+            classes.push(format!("{}", position.0));
+            classes.push(format!("{}", position.1));
+            classes.push("translate-middle".to_string());
         }
+
         classes.push("badge");
         if props.pill {
             classes.push("rounded-pill");

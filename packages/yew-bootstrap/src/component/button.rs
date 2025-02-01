@@ -1,17 +1,12 @@
 use crate::util::Color;
 use yew::prelude::*;
 
-#[derive(Clone, PartialEq, Eq)]
+#[derive(Clone, Default, PartialEq, Eq)]
 pub enum ButtonSize {
     Large,
+    #[default]
     Normal,
     Small,
-}
-
-impl Default for ButtonSize {
-    fn default() -> Self {
-        ButtonSize::Normal
-    }
 }
 
 /// # Button component

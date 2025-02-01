@@ -3,19 +3,15 @@ use crate::util::Color;
 use super::*;
 
 /// The variant style of a [ListGroup]
-#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+#[derive(Copy, Clone, Debug, Default, PartialEq, Eq)]
 pub enum ListGroupVariant {
     /// Default style, with rounded corners and outer borders.
+    #[default]
     Default,
     /// Flush style, removes rounding and border.
     Flush,
 }
 
-impl Default for ListGroupVariant {
-    fn default() -> Self {
-        ListGroupVariant::Default
-    }
-}
 
 /// A size threshold to trigger a property at
 #[derive(Clone, Debug, PartialEq, Eq)]

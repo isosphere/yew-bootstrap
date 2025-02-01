@@ -36,7 +36,6 @@ use crate::util::Color;
 ///     }
 /// }
 /// ```
-
 /// Properties for [Progress]
 #[derive(Properties, Clone, PartialEq)]
 pub struct ProgressProps {
