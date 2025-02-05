@@ -858,6 +858,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1ad4cc8da4ef723ed60bced201181d83791ad433213d8c24efffda1eec85d741"
 
 [[package]]
+name = "searchable_select"
+version = "0.0.1"
+dependencies = [
+ "gloo-console 0.3.0",
+ "wasm-bindgen",
+ "yew",
+ "yew-bootstrap",
+]
+
+[[package]]
 name = "serde"
 version = "1.0.188"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1161,11 +1171,15 @@ dependencies = [
 
 [[package]]
 name = "yew-bootstrap"
-version = "0.11.0"
+version = "0.12.0"
 dependencies = [
  "anyhow",
  "convert_case",
  "gloo-console 0.3.0",
+ "gloo-utils 0.2.0",
+ "js-sys",
+ "wasm-bindgen",
+ "web-sys",
  "yew",
 ]
 
