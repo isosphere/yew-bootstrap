@@ -69,11 +69,15 @@ pub struct SearchableSelectProps {
 /// for filtering. Options can be selected using up and down keys followed by Enter.
 /// This Select is also compatible with multiple selections.
 ///
+/// ## Enable the feature
+///
 /// It requires the `searchable_select` feature:
 ///
 /// ```toml
 /// yew-bootstrap = { version="...", features=["searchable_select"] }
 /// ```
+///
+/// ## Options to display
 ///
 /// Options for the Select are not provided as children but as a vector inside the
 /// properties, directly setting the fields. For example:
@@ -98,6 +102,8 @@ pub struct SearchableSelectProps {
 /// ```
 ///
 /// The `placeholder` field show the value displayed in the component when `title` is empty.
+///
+/// ## Control of the selected value
 ///
 /// Control of the selection is done by:
 ///
@@ -144,12 +150,16 @@ pub struct SearchableSelectProps {
 /// }
 /// ```
 ///
+/// ## Use in forms
+///
 /// The Searchable Select component can be used in forms, and additional fields are available in
 /// this purpose:
 ///
 /// - `label` to display a label before the component. Note that floating labels are not supported.
 /// - `id` to set an identifier, required when `label` is provided
 /// - `validation` field, which accepts a [FormControlValidation] value.
+///
+/// ## Filtering function
 ///
 /// By default the filtering function filters function in a case insensitive way. The `filter` field
 /// can be modified to:
