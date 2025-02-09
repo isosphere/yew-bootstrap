@@ -177,8 +177,11 @@ pub fn SearchableSelect(props: &SearchableSelectProps) -> Html {
     // A ref to the active element to ensure it stays visible
     let active_ref = use_node_ref();
 
-    // Index of the active element when dropbox is open. It is reset to 0
-    // when dropbox opens or search value changes, but can be controlled by arrows.
+    // Index of the active element when dropbox is open. It is:
+    // - set to first selected when dropdown opens, or 0 if none is selected
+    // - 0 when search value changes
+    //
+    // It can be controlled by arrows.
     let active_index = use_state(|| 0);
 
     let filtered_options = filter_by_group(
@@ -197,6 +200,8 @@ pub fn SearchableSelect(props: &SearchableSelectProps) -> Html {
         let is_open = is_open.clone();
         let active_index = active_index.clone();
         let search_text = search_text.clone();
+
+        let first_selected = props.options.iter().position(|option| option.selected);
 
         Callback::from(move |_| {
             let new_open = !*is_open;
@@ -368,10 +373,10 @@ pub fn SearchableSelect(props: &SearchableSelectProps) -> Html {
     });
 
     html! {
-        <div ref={container_ref} class="position-relative" >
+        <div ref={container_ref} class={ classes!("searchable_select", "position-relative", props.class.clone()) }>
             // Select input and toggle button
             { label }
-            <div class={ classes!("input-group", props.class.clone() ) }>
+            <div class="input-group" onclick={on_toggle_dropdown.clone()}>
                 // Readonly input to show current selection
                 <input
                     id={ props.id.clone() }
