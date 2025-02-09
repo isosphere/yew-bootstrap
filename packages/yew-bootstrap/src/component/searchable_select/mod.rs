@@ -166,6 +166,16 @@ pub struct SearchableSelectProps {
 ///
 /// - Use case-sensitive filtering, using function [filter_case],
 /// - Create your own function returning a [FilterFn] structure.
+///
+/// ## CSS styling
+///
+/// Some additional styling can be performed:
+///
+/// - The top level of the component has `searchable_select` class
+/// - The list of elements is inside a `list-group` class
+/// - Each element including header have class `list-group-item`
+/// - Items which are not headers have class `list-group-item-action`, possibly with `selected`, `active` or `disabled` class
+/// - Headers elements have class `header`
 #[function_component]
 pub fn SearchableSelect(props: &SearchableSelectProps) -> Html {
     if props.label != "" && props.id == "" {
@@ -217,7 +227,7 @@ pub fn SearchableSelect(props: &SearchableSelectProps) -> Html {
             let new_open = !*is_open;
             is_open.set(new_open);
             if new_open {
-                active_index.set(0);
+                active_index.set(first_selected.unwrap_or(0));
                 search_text.set(AttrValue::from(""));
             }
         })

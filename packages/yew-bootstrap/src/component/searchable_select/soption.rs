@@ -78,6 +78,8 @@ pub (crate) fn SOptionComp(props: &SOptionProps) -> Html {
         (!props.attrs.header).then_some("list-group-item-action"),
         active.then_some("active"),
         disabled.then_some("disabled"),
+        props.attrs.selected.then_some("selected"),
+        props.attrs.header.then_some("header"),
         props.attrs.classes.clone()
     );
 
