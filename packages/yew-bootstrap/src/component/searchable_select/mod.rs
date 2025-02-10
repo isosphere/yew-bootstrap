@@ -1,7 +1,7 @@
 use yew::prelude::*;
 use wasm_bindgen::closure::Closure;
 use wasm_bindgen::JsCast;
-use web_sys::{Document, Node};
+use web_sys::{Document, Node, ScrollBehavior, ScrollIntoViewOptions, ScrollLogicalPosition};
 
 use crate::component::form::FormControlValidation;
 
@@ -247,8 +247,13 @@ pub fn SearchableSelect(props: &SearchableSelectProps) -> Html {
                     if let Some(input) = input_ref.cast::<web_sys::HtmlInputElement>() {
                         input.focus().unwrap();
                     }
+
+                    // Make active element visible into the list container, only scrolling this container.
                     if let Some(element) = active_ref.cast::<web_sys::Element>() {
-                        element.scroll_into_view();
+                        let scroll_options = ScrollIntoViewOptions::new();
+                        scroll_options.set_block(ScrollLogicalPosition::Nearest);
+                        scroll_options.set_behavior(ScrollBehavior::Auto);
+                        element.scroll_into_view_with_scroll_into_view_options(&scroll_options);
                     }
                 }
             }
