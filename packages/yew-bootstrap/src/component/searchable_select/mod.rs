@@ -407,7 +407,7 @@ pub fn SearchableSelect(props: &SearchableSelectProps) -> Html {
                     id={ props.id.clone() }
                     type="text"
                     class={ classes!("form-control", validation_class) }
-                    value={props.title.clone()}
+                    value={ props.title.clone().unwrap_or("".into()) }
                     placeholder={props.placeholder.clone()}
                     readonly={true}
                 />
