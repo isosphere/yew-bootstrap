@@ -48,7 +48,7 @@ type FilterFnInner = dyn Fn(AttrValue, &SOption) -> bool;
 ///
 /// ```rust
 /// use yew::prelude::*;
-/// use yew_bootstrap::component::FilterFn;
+/// use yew_bootstrap::component::{FilterFn, SOption};
 ///
 /// let my_filter = FilterFn::from(|value: AttrValue, option: &SOption|
 ///   option.title.starts_with(value.as_str())
@@ -73,7 +73,7 @@ impl PartialEq for FilterFn {
 ///
 /// ```rust
 /// use yew::prelude::*;
-/// use yew_bootstrap::component::FilterFn;
+/// use yew_bootstrap::component::{FilterFn, SOption};
 ///
 /// let my_filter = FilterFn::from(|value: AttrValue, option: &SOption|
 ///   option.title.starts_with(value.as_str())
