@@ -64,6 +64,10 @@ pub struct SearchableSelectProps {
     /// Note: you must always validate user input server-side as well, this is only provided for better user experience
     #[prop_or(FormControlValidation::None)]
     pub validation: FormControlValidation,
+
+    /// Disable autoscroll when opening the component
+    #[prop_or_default]
+    pub noautoscroll: bool,
 }
 
 
@@ -182,6 +186,11 @@ pub struct SearchableSelectProps {
 /// - Each element including header have class `list-group-item`
 /// - Items which are not headers have class `list-group-item-action`, possibly with `selected`, `active` or `disabled` class
 /// - Headers elements have class `header`
+///
+/// ## Misc
+///
+/// When opening, the component scrolls to the currently selected element. This can be disabled with
+/// `noautoscroll` if this behaviour is not wanted.
 #[function_component]
 pub fn SearchableSelect(props: &SearchableSelectProps) -> Html {
     if props.label != "" && props.id == "" {
@@ -250,6 +259,7 @@ pub fn SearchableSelect(props: &SearchableSelectProps) -> Html {
         let active_index = active_index.clone();
         let input_ref = input_ref.clone();
         let active_ref = active_ref.clone();
+        let noautoscroll = props.noautoscroll;
         use_effect_with(
             (*is_open, *active_index),
             move |(is_open, _)| {
@@ -259,11 +269,13 @@ pub fn SearchableSelect(props: &SearchableSelectProps) -> Html {
                     }
 
                     // Make active element visible into the list container, only scrolling this container.
-                    if let Some(element) = active_ref.cast::<web_sys::Element>() {
-                        let scroll_options = ScrollIntoViewOptions::new();
-                        scroll_options.set_block(ScrollLogicalPosition::Nearest);
-                        scroll_options.set_behavior(ScrollBehavior::Auto);
-                        element.scroll_into_view_with_scroll_into_view_options(&scroll_options);
+                    if !noautoscroll {
+                        if let Some(element) = active_ref.cast::<web_sys::Element>() {
+                            let scroll_options = ScrollIntoViewOptions::new();
+                            scroll_options.set_block(ScrollLogicalPosition::Nearest);
+                            scroll_options.set_behavior(ScrollBehavior::Auto);
+                            element.scroll_into_view_with_scroll_into_view_options(&scroll_options);
+                        }
                     }
                 }
             }
