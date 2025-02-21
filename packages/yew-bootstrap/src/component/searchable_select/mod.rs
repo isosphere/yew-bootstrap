@@ -48,6 +48,10 @@ pub struct SearchableSelectProps {
     #[prop_or_default]
     pub class: Classes,
 
+    /// Disabled if True
+    #[prop_or_default]
+    pub disabled: bool,
+
     /// Optional label
     #[prop_or_default]
     pub label: AttrValue,
@@ -68,6 +72,8 @@ pub struct SearchableSelectProps {
 /// This component is similar to a Bootstrap Select components but adds the capability
 /// for filtering. Options can be selected using up and down keys followed by Enter.
 /// This Select is also compatible with multiple selections.
+///
+/// See [SearchableSelectProps] for a list of all properties.
 ///
 /// ## Enable the feature
 ///
@@ -217,20 +223,24 @@ pub fn SearchableSelect(props: &SearchableSelectProps) -> Html {
 
     // Toggle the dropdown open/closed
     let on_toggle_dropdown = {
-        let is_open = is_open.clone();
-        let active_index = active_index.clone();
-        let search_text = search_text.clone();
+        if props.disabled {
+            Callback::from(|_| {})
+        } else {
+            let is_open = is_open.clone();
+            let active_index = active_index.clone();
+            let search_text = search_text.clone();
 
-        let first_selected = props.options.iter().position(|option| option.selected);
+            let first_selected = props.options.iter().position(|option| option.selected);
 
-        Callback::from(move |_| {
-            let new_open = !*is_open;
-            is_open.set(new_open);
-            if new_open {
-                active_index.set(first_selected.unwrap_or(0));
-                search_text.set(AttrValue::from(""));
-            }
-        })
+            Callback::from(move |_| {
+                let new_open = !*is_open;
+                is_open.set(new_open);
+                if new_open {
+                    active_index.set(first_selected.unwrap_or(0));
+                    search_text.set(AttrValue::from(""));
+                }
+            })
+        }
     };
 
     // Monitor when is_open or active_index changes to set focus to the search box and ensure
@@ -409,15 +419,17 @@ pub fn SearchableSelect(props: &SearchableSelectProps) -> Html {
                     class={ classes!("form-control", validation_class) }
                     value={ props.title.clone().unwrap_or("".into()) }
                     placeholder={props.placeholder.clone()}
+                    disabled={ props.disabled }
                     readonly={true}
                 />
                 // Toggle button
                 <button
-                    class="btn btn-outline-secondary"
+                    class="btn btn-outline-secondary dropdown-toggle"
                     type="button"
+                    disabled={ props.disabled }
                     onclick={on_toggle_dropdown}
                 >
-                    { if *is_open { "▲" } else { "▼" } }
+                    { "" }
                 </button>
                 if ! *is_open {
                     { validation }
