@@ -81,6 +81,12 @@ pub enum TooltipFocusTrigger {
     /// [Some Android devices also erroneously report `hover: hover`][4], even
     /// when they only have a touch screen.
     ///
+    /// Safari on iOS *always* reports `hover: none`, even when using an iPad
+    /// with hover-capable pointing devices, such as the Apple Pencil (stylus),
+    /// Magic Keyboard (trackpad) or an ordinary mouse with an external display.
+    /// All hover-capable devices *except* the Pencil are reported via
+    /// `any-hover: hover`.
+    ///
     /// For someone who primarily uses a keyboard to interact with their
     /// computer, but has a mouse plugged in (eg: a laptop with a built-in
     /// trackpad, or a virtual device), their browser will still report a
