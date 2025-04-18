@@ -442,8 +442,9 @@ impl Component for Model {
                         </Tooltip>
                         {
                             for [
-                                TooltipFocusTrigger::IfNoHover,
-                                TooltipFocusTrigger::IfNoAnyHover,
+                                TooltipFocusTrigger::IfHoverNone,
+                                TooltipFocusTrigger::IfAnyHoverNone,
+                                TooltipFocusTrigger::IfAnyPointerNoneOrCoarse,
                                 TooltipFocusTrigger::Never,
                             ].iter().enumerate().map(|(i, trigger_on_focus)| {
                                 let input_ref = NodeRef::default();
@@ -463,7 +464,7 @@ impl Component for Model {
                                             trigger_on_focus={*trigger_on_focus}
                                             trigger_on_hover=true
                                         >
-                                            {format!("Tooltip for input with {trigger_on_focus:?}.")}
+                                            {format!("Tooltip for input with trigger on focus = {trigger_on_focus:?}.")}
                                         </Tooltip>
                                     </>
                                 }
