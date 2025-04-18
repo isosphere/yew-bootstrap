@@ -468,7 +468,7 @@ impl Component for Model {
                         <a href="https://github.com/mdn/browser-compat-data/issues/24451" target="_blank">
                             {"Depending on browser support"}
                         </a>
-                        {", These will trigger based on which types of pointing devices (eg: mouse, touchscreen, "}
+                        {", these will trigger based on which types of pointing devices (eg: mouse, touchscreen, "}
                         {"Wiimote, stylus) are available or in use."}
                     </p>
                     <ButtonGroup>
