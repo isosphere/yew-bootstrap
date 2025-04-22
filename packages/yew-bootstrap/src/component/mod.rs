@@ -17,8 +17,12 @@ mod navbar;
 mod row;
 mod spinner;
 mod progress;
+
 #[cfg(feature = "searchable_select")]
 mod searchable_select;
+
+mod tooltip;
+
 
 pub use self::accordion::*;
 pub use self::alert::*;
@@ -37,5 +41,8 @@ pub use self::navbar::*;
 pub use self::row::*;
 pub use self::spinner::*;
 pub use self::progress::*;
+
 #[cfg(feature = "searchable_select")]
 pub use self::searchable_select::*;
+
+pub use self::tooltip::*;

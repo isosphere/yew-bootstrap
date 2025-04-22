@@ -19,6 +19,10 @@ name = "yew_bootstrap"
 [dependencies]
 yew = { version = "0.21", features = ["csr"] }
 gloo-console = "0.3"
+wasm-bindgen = "0.2.*"
+web-sys = { version = "0.3.*", features = ["HtmlElement", "MediaQueryList", "MediaQueryListEvent"] }
+popper-rs = { version = "0.3.0", features = ["yew"] }
+gloo-utils = "0.2.0"
 
 # Dependencies for feature searchable_select
 wasm-bindgen = { version = "0.2", optional = true }
@@ -28,7 +32,7 @@ js-sys = { version = "0.3", optional = true }
 
 [dev-dependencies]
 wasm-bindgen = "0.2"
-web-sys = { version = "0.3", features = ["HtmlTextAreaElement", "HtmlSelectElement"] }
+web-sys = { version = "0.3.*", features = ["HtmlTextAreaElement", "HtmlSelectElement"] }
 
 [features]
 searchable_select = ["dep:wasm-bindgen", "dep:gloo-utils", "dep:js-sys"]

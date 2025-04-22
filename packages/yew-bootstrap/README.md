@@ -84,7 +84,7 @@ This project uses [semantic versioning](https://semver.org/).
 - [ ] Scrollspy
 - [x] Spinner ([component::Spinner])
 - [ ] Toast
-- [ ] Tooltips
+- [x] Tooltips ([component::Tooltip])
 
 ### Helpers
 
