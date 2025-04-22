@@ -737,6 +737,34 @@ dependencies = [
 ]
 
 [[package]]
+name = "popper-rs"
+version = "0.3.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a14458f5df1782ff0999819ae4cc310d2fcddd2ec62ae61585dacf3af72ccb4f"
+dependencies = [
+ "gloo-utils 0.2.0",
+ "js-sys",
+ "popper-rs-sys",
+ "serde",
+ "serde_json",
+ "wasm-bindgen",
+ "web-sys",
+ "yew",
+]
+
+[[package]]
+name = "popper-rs-sys"
+version = "0.3.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "21ef286df3991db98cfab510303f0d7a73b185364f6bfde3584a0b99d2119c17"
+dependencies = [
+ "js-sys",
+ "wasm-bindgen",
+ "wasm-bindgen-futures",
+ "web-sys",
+]
+
+[[package]]
 name = "prettyplease"
 version = "0.2.32"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1223,11 +1251,13 @@ dependencies = [
 
 [[package]]
 name = "yew-bootstrap"
-version = "0.11.1"
+version = "0.12.0"
 dependencies = [
  "anyhow",
  "convert_case",
  "gloo-console 0.3.0",
+ "gloo-utils 0.2.0",
+ "popper-rs",
  "wasm-bindgen",
  "web-sys",
  "yew",
