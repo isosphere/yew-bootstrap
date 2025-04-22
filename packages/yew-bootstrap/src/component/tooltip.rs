@@ -21,20 +21,19 @@ use yew::{html::IntoPropValue, platform::spawn_local, prelude::*};
 /// not support hovering.
 ///
 /// Reference: [Media Queries Level 4: Hover Capability](https://www.w3.org/TR/mediaqueries-4/#hover)
-const MEDIA_QUERY_HOVER_NONE: &'static str = "(hover: none)";
+const MEDIA_QUERY_HOVER_NONE: &str = "(hover: none)";
 
 /// Media query to indicate that there is no pointing device which supports
 /// hovering.
 ///
 /// Reference: [Media Queries Level 4: All Available Interaction Capabilities](https://www.w3.org/TR/mediaqueries-4/#any-input)
-const MEDIA_QUERY_ANY_HOVER_NONE: &'static str = "(any-hover: none)";
+const MEDIA_QUERY_ANY_HOVER_NONE: &str = "(any-hover: none)";
 
 /// Media query to indicate that there are either no pointing devices, or a
 /// pointing device only supports coarse input.
 ///
 /// Reference: [Media Queries Level 4: All Available Interaction Capabilities](https://www.w3.org/TR/mediaqueries-4/#any-input)
-const MEDIA_QUERY_ANY_POINTER_NONE_OR_COARSE: &'static str =
-    "(any-pointer: none) or (any-pointer: coarse)";
+const MEDIA_QUERY_ANY_POINTER_NONE_OR_COARSE: &str = "(any-pointer: none) or (any-pointer: coarse)";
 
 /// Trigger options for [`TooltipProps::trigger_on_focus`].
 ///
@@ -206,7 +205,7 @@ impl TooltipFocusTrigger {
             Self::IfAnyPointerNoneOrCoarse => MEDIA_QUERY_ANY_POINTER_NONE_OR_COARSE,
         };
         let w = gloo_utils::window();
-        w.match_media(&query).ok().flatten()
+        w.match_media(query).ok().flatten()
     }
 
     fn should_trigger(&self) -> bool {
@@ -448,7 +447,7 @@ pub fn Tooltip(props: &TooltipProps) -> Html {
 
     // Adapted from https://github.com/ctron/popper-rs/blob/main/examples/yew/src/example/basic.rs
     let options = use_memo(props.placement, |placement| Options {
-        placement: (*placement).into(),
+        placement: *placement,
         modifiers: vec![Modifier::Offset(Offset {
             skidding: 0,
             distance: 6,
