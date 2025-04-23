@@ -1251,12 +1251,13 @@ dependencies = [
 
 [[package]]
 name = "yew-bootstrap"
-version = "0.12.0"
+version = "0.13.0"
 dependencies = [
  "anyhow",
  "convert_case",
  "gloo-console 0.3.0",
  "gloo-utils 0.2.0",
+ "js-sys",
  "popper-rs",
  "wasm-bindgen",
  "web-sys",
