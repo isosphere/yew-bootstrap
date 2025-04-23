@@ -1251,7 +1251,7 @@ dependencies = [
 
 [[package]]
 name = "yew-bootstrap"
-version = "0.12.0"
+version = "0.13.0"
 dependencies = [
  "anyhow",
  "convert_case",
