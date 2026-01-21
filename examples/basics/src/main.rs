@@ -80,7 +80,7 @@ impl Component for Model {
                         <NavDropdownItem text="No icon" onclick={onclick.clone()} url="#" />
                     </NavDropdown>
                 </NavBar>
-                <Modal id="ExampleModal">
+                <Modal id="ExampleModal" on_hide={Callback::from(|_| debug!("Modal hidden"))}>
                     <ModalHeader title="Modal title" id="ExampleModal" />
                     <ModalBody>
                         <p>{"Modal body text goes here."}</p>
