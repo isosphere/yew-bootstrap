@@ -1,4 +1,7 @@
+use web_sys::EventTarget;
 use yew::prelude::*;
+use gloo_events::EventListenerOptions;
+use gloo_utils::body;
 
 /// Represents the optional size of a Modal dialog, described [here](https://getbootstrap.com/docs/5.1/components/modal/#optional-sizes)
 #[derive(Clone, PartialEq, Eq)]
@@ -40,7 +43,9 @@ impl Default for ModalSize {
 ///     }
 /// }
 /// ```
-pub struct Modal { }
+pub struct Modal {
+    on_hide: OnHide,
+}
 
 /// # Header for a [Modal] dialog
 /// See [ModalHeaderProps] for a listing of properties
@@ -138,6 +143,28 @@ impl Component for ModalBody {
     }
 }
 
+pub struct OnHide {
+    listener: Option<gloo_events::EventListener>,
+}
+
+impl OnHide {
+    pub fn new(target: &EventTarget, callback: Option<Callback<(Event)>>) -> Self {
+        let Some(callback) = callback else {
+            return Self { listener: None };
+        };
+
+        let listener = {
+            let option = EventListenerOptions::enable_prevent_default();
+
+            Some(gloo_events::EventListener::new_with_options(target, "hide.bs.modal", option, move |_event| {
+                callback.emit(_event.clone());
+            }))
+        };
+
+        Self { listener }
+    }
+}
+
 /// Properties for Modal
 #[derive(Properties, Clone, PartialEq)]
 pub struct ModalProps {
@@ -152,6 +179,9 @@ pub struct ModalProps {
     /// Size of the modal
     #[prop_or_default]
     pub size: ModalSize,
+    /// Function to be called on the 'hide.bs.modal' event, takes no parameters
+    #[prop_or_default]
+    pub on_hide: Option<Callback<Event>>,
 }
 
 impl Component for Modal {
@@ -159,7 +189,12 @@ impl Component for Modal {
     type Properties = ModalProps;
 
     fn create(_ctx: &Context<Self>) -> Self {
-        Self {}
+        let body = body();
+        Self { on_hide: OnHide::new(
+            &body,
+            _ctx.props().on_hide.clone(),
+        )
+        }
     }
 
     fn view(&self, ctx: &Context<Self>) -> Html {
