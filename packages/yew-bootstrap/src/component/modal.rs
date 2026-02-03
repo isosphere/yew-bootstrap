@@ -39,7 +39,7 @@ pub enum ModalSize {
 /// }
 /// ```
 pub struct Modal {
-    on_hide: OnHide,
+    _on_hide: OnHide,
 }
 
 /// # Header for a [Modal] dialog
@@ -139,16 +139,16 @@ impl Component for ModalBody {
 }
 
 pub struct OnHide {
-    listener: Option<gloo_events::EventListener>,
+    _listener: Option<gloo_events::EventListener>,
 }
 
 impl OnHide {
-    pub fn new(target: &EventTarget, callback: Option<Callback<(Event)>>) -> Self {
+    pub fn new(target: &EventTarget, callback: Option<Callback<Event>>) -> Self {
         let Some(callback) = callback else {
-            return Self { listener: None };
+            return Self { _listener: None };
         };
 
-        let listener = {
+        let _listener = {
             let option = EventListenerOptions::enable_prevent_default();
 
             Some(gloo_events::EventListener::new_with_options(target, "hide.bs.modal", option, move |_event| {
@@ -156,7 +156,7 @@ impl OnHide {
             }))
         };
 
-        Self { listener }
+        Self { _listener }
     }
 }
 
@@ -185,7 +185,7 @@ impl Component for Modal {
 
     fn create(_ctx: &Context<Self>) -> Self {
         let body = body();
-        Self { on_hide: OnHide::new(
+        Self { _on_hide: OnHide::new(
             &body,
             _ctx.props().on_hide.clone(),
         )}

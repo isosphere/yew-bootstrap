@@ -6,7 +6,7 @@ edition = "2021"
 license = "MIT"
 
 [dependencies]
-yew = { version = "0.21", features = ["csr"] }
+yew = { version = "0.22", features = ["csr"] }
 yew-bootstrap = { path = "../../packages/yew-bootstrap" }
 
 [[bin]]

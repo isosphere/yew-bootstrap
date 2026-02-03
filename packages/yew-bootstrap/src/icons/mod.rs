@@ -93,7 +93,7 @@
 use core::hash::{Hash, Hasher};
 use yew::html::{ChildrenRenderer, IntoPropValue};
 use yew::virtual_dom::{VNode, VRaw};
-use yew::{AttrValue, Html, ToHtml};
+use yew::{AttrValue, Html};
 
 /// Represents an bootstrap-icon.
 ///
@@ -178,13 +178,31 @@ impl IntoPropValue<ChildrenRenderer<VNode>> for &BI {
     }
 }
 
-impl ToHtml for BI {
-    #[allow(clippy::inline_always)]
-    #[inline(always)]
-    fn to_html(&self) -> Html {
+impl IntoPropValue<Html> for BI {
+    #[inline]
+    fn into_prop_value(self) -> Html {
         self.html()
     }
 }
+
+impl IntoPropValue<Html> for &BI {
+    #[allow(clippy::inline_always)]
+    #[inline(always)]
+    fn into_prop_value(self) -> Html {
+        (*self).into_prop_value()
+    }
+}
+
+
+
+// // ToHtml removed in yew 0.22
+// impl ToHtml for BI {
+//     #[allow(clippy::inline_always)]
+//     #[inline(always)]
+//     fn to_html(&self) -> Html {
+//         self.html()
+//     }
+// }
 
 /// Holds all bootstrap-icons data.
 ///

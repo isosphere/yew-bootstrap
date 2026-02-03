@@ -17,12 +17,12 @@ crate-type = ["rlib", "cdylib"]
 name = "yew_bootstrap"
 
 [dependencies]
-yew = { version = "0.21", features = ["csr"] }
+yew = { version = "0.22", features = ["csr"] }
 gloo-console = "0.3"
 wasm-bindgen = "0.2.*"
 web-sys = { version = "0.3.*", features = ["HtmlElement", "MediaQueryList", "MediaQueryListEvent", "ScrollBehavior", "ScrollIntoViewOptions", "ScrollLogicalPosition"] }
 gloo-events = "0.2.0"
-popper-rs = { version = "0.3.0", features = ["yew"] }
+popper-rs = { version = "0.4.0", features = ["yew"] }
 gloo-utils = "0.2.0"
 
 # Dependencies for feature searchable_select

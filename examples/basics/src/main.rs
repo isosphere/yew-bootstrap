@@ -415,10 +415,10 @@ impl Component for Model {
                                 html_nested! {
                                     <>
                                         <Button style={color.clone()} node_ref={btn_ref.clone()}>
-                                            {format!("Tooltip: {placement:?}")}
+                                            {Html::from(format!("Tooltip: {placement:?}"))}
                                         </Button>
                                         <Tooltip target={btn_ref} placement={*placement}>
-                                            {format!("Tooltip for button, placed at {placement:?}.")}
+                                            {Html::from(format!("Tooltip for button, placed at {placement:?}."))}
                                         </Tooltip>
                                     </>
                                 }
@@ -485,7 +485,8 @@ impl Component for Model {
                                 html_nested! {
                                     <>
                                         <Button style={color.clone()} node_ref={btn_ref.clone()}>
-                                            {format!("on_focus={trigger_on_focus:?}")}
+                                            // {Html::from(format!("on_focus={trigger_on_focus:?}"))}
+                                            {Html::from(format!("on_focus={trigger_on_focus:?}"))}
                                         </Button>
                                         <Tooltip target={btn_ref} trigger_on_focus={*trigger_on_focus}>
                                             {"Tooltip for button with "}
@@ -512,7 +513,7 @@ impl Component for Model {
                                 html_nested! {
                                     <>
                                         <Button style={color.clone()} node_ref={btn_ref.clone()}>
-                                            {format!("on_focus={trigger_on_focus:?}, on_hover={trigger_on_hover:?}")}
+                                            {Html::from(format!("on_focus={trigger_on_focus:?}, on_hover={trigger_on_hover:?}"))}
                                         </Button>
                                         <Tooltip target={btn_ref} trigger_on_focus={*trigger_on_focus} {trigger_on_hover}>
                                             {"Tooltip for button with "}
