@@ -1,6 +1,6 @@
 [package]
 name = "yew-bootstrap"
-version = "0.13.1"
+version = "0.14.0"
 authors = ["Matthew Scheffel <matt@dataheck.com>", "Foorack <max@foorack.com>"]
 edition = "2021"
 license = "MIT"
@@ -17,12 +17,12 @@ crate-type = ["rlib", "cdylib"]
 name = "yew_bootstrap"
 
 [dependencies]
-yew = { version = "0.21", features = ["csr"] }
+yew = { version = "0.22", features = ["csr"] }
 gloo-console = "0.3"
 wasm-bindgen = "0.2.*"
 web-sys = { version = "0.3.*", features = ["HtmlElement", "MediaQueryList", "MediaQueryListEvent", "ScrollBehavior", "ScrollIntoViewOptions", "ScrollLogicalPosition"] }
 gloo-events = "0.2.0"
-popper-rs = { version = "0.3.0", features = ["yew"] }
+popper-rs = { version = "0.4.0", features = ["yew"] }
 gloo-utils = "0.2.0"
 
 # Dependencies for feature searchable_select
@@ -36,6 +36,6 @@ web-sys = { version = "0.3.*", features = ["HtmlTextAreaElement", "HtmlSelectEle
 searchable_select = ["dep:js-sys"]
 
 [build-dependencies]
-convert_case = { version = "0.6.0", default-features = false }
+convert_case = { version = "0.11.0", default-features = false }
 anyhow = { version = "1.0.75", default-features = false, features = ["std"] }
 

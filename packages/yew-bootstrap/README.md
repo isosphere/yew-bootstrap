@@ -6,7 +6,7 @@ Add the dependency next to the regular yew dependency:
 
 ```toml
 [dependencies]
-yew = "0.21"
+yew = "0.22"
 yew-bootstrap = "*"
 ```
 
@@ -22,7 +22,7 @@ Some components need features to be enabled, for example:
 
 ```toml
 [dependencies]
-yew = "0.21"
+yew = "0.22"
 yew-bootstrap = { version = "*", features = ["searchable_select"] }
 ```
 

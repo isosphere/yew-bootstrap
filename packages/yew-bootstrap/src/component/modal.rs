@@ -39,6 +39,7 @@ pub enum ModalSize {
 /// }
 /// ```
 pub struct Modal {
+    #[allow(dead_code)]
     on_hide: OnHide,
 }
 
@@ -139,11 +140,12 @@ impl Component for ModalBody {
 }
 
 pub struct OnHide {
+    #[allow(dead_code)]
     listener: Option<gloo_events::EventListener>,
 }
 
 impl OnHide {
-    pub fn new(target: &EventTarget, callback: Option<Callback<(Event)>>) -> Self {
+    pub fn new(target: &EventTarget, callback: Option<Callback<Event>>) -> Self {
         let Some(callback) = callback else {
             return Self { listener: None };
         };

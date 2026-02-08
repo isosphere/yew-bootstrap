@@ -464,7 +464,7 @@ impl Component for Model {
                                             trigger_on_focus={*trigger_on_focus}
                                             trigger_on_hover=true
                                         >
-                                            {format!("Tooltip for input with trigger on focus = {trigger_on_focus:?}.")}
+                                            {Html::from(format!("Tooltip for input with trigger on focus = {trigger_on_focus:?}."))}
                                         </Tooltip>
                                     </>
                                 }
