@@ -1,6 +1,6 @@
 [package]
 name = "yew-bootstrap"
-version = "0.13.1"
+version = "0.14.0"
 authors = ["Matthew Scheffel <matt@dataheck.com>", "Foorack <max@foorack.com>"]
 edition = "2021"
 license = "MIT"
@@ -36,6 +36,6 @@ web-sys = { version = "0.3.*", features = ["HtmlTextAreaElement", "HtmlSelectEle
 searchable_select = ["dep:js-sys"]
 
 [build-dependencies]
-convert_case = { version = "0.6.0", default-features = false }
+convert_case = { version = "0.11.0", default-features = false }
 anyhow = { version = "1.0.75", default-features = false, features = ["std"] }
 

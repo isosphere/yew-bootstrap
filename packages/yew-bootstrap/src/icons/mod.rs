@@ -193,17 +193,6 @@ impl IntoPropValue<Html> for &BI {
     }
 }
 
-
-
-// // ToHtml removed in yew 0.22
-// impl ToHtml for BI {
-//     #[allow(clippy::inline_always)]
-//     #[inline(always)]
-//     fn to_html(&self) -> Html {
-//         self.html()
-//     }
-// }
-
 /// Holds all bootstrap-icons data.
 ///
 /// Intended use:

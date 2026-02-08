@@ -485,7 +485,6 @@ impl Component for Model {
                                 html_nested! {
                                     <>
                                         <Button style={color.clone()} node_ref={btn_ref.clone()}>
-                                            // {Html::from(format!("on_focus={trigger_on_focus:?}"))}
                                             {Html::from(format!("on_focus={trigger_on_focus:?}"))}
                                         </Button>
                                         <Tooltip target={btn_ref} trigger_on_focus={*trigger_on_focus}>
